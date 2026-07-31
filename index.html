@@ -3,43 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Moving Eye Button</title>
+    <title>Interactive Components Showcase</title>
     <style>
-        /* 
-           --- PERFORMANCE & SMOOTHNESS ---
-           We use only hardware-accelerated CSS properties (transform, opacity) 
-           for all animations and interactions to achieve 60fps smoothness.
-        */
-
+        /* ==========================================
+           1. SHARED ROOT & GLOBAL RESETS
+           ========================================== */
         :root {
+            /* Eye Button Variables */
             --bg-color: #f7f7f7;
             --button-bg: #000000;
             --button-text: #ffffff;
             --eye-bg: #ffffff;
             --pupil-bg: #000000;
-            --eyelid-bg: #000000; /* Color of eyelid closing */
-            --transition-speed: 0.1s; /* Pupil tracking smooth speed */
+            --eyelid-bg: #000000;
+            --transition-speed: 0.1s;
             --shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+            /* Carousel Variables */
+            --card-width: 320px;
+            --card-height: 380px;
+            --card-radius: 20px;
+            --tag-bg: rgba(255, 255, 255, 0.7);
+            --tag-text: #000000;
+            --text-primary: #000000;
+            --text-secondary: #aaaaaa;
+
+            /* Text Reveal Variables */
+            --text-inactive: #e0e0e0;
+            --text-active: #000000;
         }
 
-        /* Essential Reset for layout consistency */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-shadow: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Page Container to center the button for demonstration */
+        /* Allow normal page scrolling */
         body {
-            display: grid;
-            place-items: center;
-            height: 100vh;
-            background-color: var(--bg-color);
-            overflow: hidden; /* Prevents scrollbars during massive cursor moves */
+            background-color: #ffffff;
+            color: #000000;
+            overflow-x: hidden; /* Prevents side-scroll while allowing normal page scrolling */
         }
 
-        /* --- THE BUTTON --- */
+        /* ==========================================
+           2. EYE BUTTON HERO SECTION
+           ========================================== */
+        .hero-eye-section {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            padding: 60px 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
         .dynamic-button {
             display: flex;
             align-items: center;
@@ -47,16 +70,15 @@
             background-color: var(--button-bg);
             color: var(--button-text);
             border: none;
-            padding: 12px 28px;
+            padding: 14px 32px;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
             position: relative;
-            overflow: hidden; /* Contains the eye tracking and blink elements */
+            overflow: hidden;
         }
 
-        /* Slight lift on hover */
         .dynamic-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -66,19 +88,17 @@
             transform: translateY(0);
         }
 
-        /* Button Text */
         .button-text {
             font-size: 18px;
             font-weight: 600;
             letter-spacing: -0.5px;
-            pointer-events: none; /* Text doesn't interfere with eye tracking */
+            pointer-events: none;
         }
 
-        /* --- THE EYES --- */
         .eyes-container {
             display: flex;
             gap: 5px;
-            pointer-events: none; /* Eyes don't interfere with button clicks */
+            pointer-events: none;
         }
 
         .eye {
@@ -89,27 +109,23 @@
             position: relative;
             display: grid;
             place-items: center;
-            overflow: hidden; /* Eyelid and pupil are masked by eye circle */
-            transform: translateZ(0); /* Hardware Acceleration trigger */
+            overflow: hidden;
+            transform: translateZ(0);
         }
 
-        /* --- THE PUPILS (Cursor Tracking) --- */
         .pupil {
             width: 11px;
             height: 11px;
             background-color: var(--pupil-bg);
             border-radius: 50%;
             position: absolute;
-            /* Initial centered position */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            /* Smooth transitions for tracking */
             transition: transform var(--transition-speed) ease-out;
-            will-change: transform; /* Hint for browser optimization */
+            will-change: transform;
         }
 
-        /* --- THE EYELIDS (Blinking) --- */
         .eyelid {
             position: absolute;
             top: 0;
@@ -118,203 +134,54 @@
             height: 100%;
             background-color: var(--eyelid-bg);
             border-radius: 50%;
-            /* Eyelid starts fully retracted (height 0) */
             transform: scaleY(0);
-            transform-origin: top; /* Blinks from top to bottom */
-            will-change: transform; /* Hint for browser optimization */
-            z-index: 1; /* Sits above the pupil */
+            transform-origin: top;
+            will-change: transform;
+            z-index: 1;
         }
 
-        /* --- BLINK ANIMATION --- */
         @keyframes blink {
-            0%, 80%, 100% {
-                transform: scaleY(0); /* Eyelid Open */
-            }
-            85% {
-                transform: scaleY(1); /* Eyelid Closed (at 85% of 2.5s) */
-            }
-            90% {
-                transform: scaleY(0); /* Eyelid Re-open */
-            }
+            0%, 80%, 100% { transform: scaleY(0); }
+            85% { transform: scaleY(1); }
+            90% { transform: scaleY(0); }
         }
 
-        /* Class applied by JavaScript to trigger blink */
         .eye.blinking .eyelid {
-            animation: blink 2.5s infinite; /* Blink occurs every 2.5s */
+            animation: blink 2.5s infinite;
         }
 
-    </style>
-</head>
-<body>
-
-    <!-- 
-       Semantic Button with Accessibility.
-       Uses aria-label for screen readers.
-    -->
-    <button class="copy-button dynamic-button" aria-label="Click to copy information">
-        <span class="button-text">Click to Copy</span>
-        <div class="eyes-container">
-            <!-- Left Eye -->
-            <div class="eye blinking"> <!-- Trigger blinking with this class -->
-                <div class="eyelid"></div>
-                <div class="pupil"></div>
-            </div>
-            <!-- Right Eye -->
-            <div class="eye blinking"> <!-- Trigger blinking with this class -->
-                <div class="eyelid"></div>
-                <div class="pupil"></div>
-            </div>
-        </div>
-    </button>
-
-    <script>
-        /* 
-           --- ULTRA-SMOOTH JAVASCRIPT ---
-           We optimize event listeners and use hardware-accelerated 
-           CSS properties for maximum performance.
-        */
-
-        const pupils = document.querySelectorAll('.pupil');
-        const eyes = document.querySelectorAll('.eye');
-        const button = document.querySelector('.dynamic-button');
-
-        // Maximum distance the pupil can travel from center (in pixels)
-        const maxPupilTravel = 8; 
-
-        // 1. --- CURSOR TRACKING LOGIC ---
-        // We track across the entire document for a globally responsive effect.
-        document.addEventListener('mousemove', (e) => {
-            
-            eyes.forEach((eye, index) => {
-                const pupil = pupils[index];
-                
-                // Get the center of the eye relative to the viewport
-                const rect = eye.getBoundingClientRect();
-                const eyeCenterX = rect.left + rect.width / 2;
-                const eyeCenterY = rect.top + rect.height / 2;
-
-                // Calculate angle from eye center to cursor
-                const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
-                
-                // Determine normalized movement vector (direction)
-                const ux = Math.cos(angle);
-                const uy = Math.sin(angle);
-
-                // Calculate responsive displacement. 
-                // Close cursors make pupils center, far cursors make pupils track.
-                // We clamp the maximum travel to keep pupils inside the eye.
-                const dx = e.clientX - eyeCenterX;
-                const dy = e.clientY - eyeCenterY;
-                const cursorDistance = Math.hypot(dx, dy);
-
-                // Pupil travel scales up with distance, but capped at max travel
-                const travelDist = Math.min(maxPupilTravel, cursorDistance * 0.03); 
-
-                const pupilDisplacementX = ux * travelDist;
-                const pupilDisplacementY = uy * travelDist;
-
-                /* 
-                   PERFORMANCE CRITICAL: We only use translate() 
-                   for movement to leverage hardware acceleration.
-                */
-                pupil.style.transform = `translate(calc(-50% + ${pupilDisplacementX}px), calc(-50% + ${pupilDisplacementY}px))`;
-            });
-        });
-
-
-        // 2. --- OPTIONAL: BUTTON FUNCTIONALITY ---
-        // Example "Click to Copy" logic
-        button.addEventListener('click', () => {
-            const textToCopy = "Your specific information to copy"; // Update this
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const textSpan = button.querySelector('.button-text');
-                const originalText = textSpan.innerText;
-                textSpan.innerText = "Copied!";
-                
-                // Feedback state animation
-                button.style.backgroundColor = "#4caf50"; // Green feedback
-                
-                setTimeout(() => {
-                    textSpan.innerText = originalText;
-                    button.style.backgroundColor = ""; // Reset background
-                }, 1500);
-            });
-        });
-
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lifted Carousel • Centered Focus</title>
-    <style>
-        /* 
-         --- CORE PERFORMANCE SETUP ---
-         We optimize for composite-only animations (transform, opacity)
-         and native scrolling mechanisms.
-        */
-        :root {
-            --bg-page: #ffffff;
-            --card-width: 320px;
-            --card-height: 380px;
-            --card-radius: 20px;
-            --tag-bg: rgba(255, 255, 255, 0.7);
-            --tag-text: #000000;
-            --text-primary: #000000;
-            --text-secondary: #aaaaaa;
-            
-            /* Performance: Hardware acceleration hint */
-            will-change: transform, opacity;
+        /* ==========================================
+           3. CAROUSEL SECTION
+           ========================================== */
+        .carousel-section {
+            padding: 60px 0 100px 0;
+            background-color: #ffffff;
+            position: relative;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-page);
-            display: grid;
-            place-items: center;
-            min-height: 100vh;
-            overflow: hidden; /* Recommended for focused carousels to prevent page scroll */
-        }
-
-        /* --- CAROUSEL CONTAINER & NATIVE SNAP --- */
         .carousel-viewport {
             width: 100vw;
             overflow-x: auto;
             display: flex;
             align-items: center;
-            padding-top: 50px;
-            padding-bottom: 150px; /* Space for the meta text to avoid layout shifts */
-            
-            /* Modern native scrolling feel */
+            padding-top: 30px;
+            padding-bottom: 120px;
             scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Firefox: hide scrollbar */
-            -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Hide scrollbar for Chrome/Safari/Edge */
         .carousel-viewport::-webkit-scrollbar {
             display: none;
         }
 
-        /* Essential padding to allow first/last item to center */
         .carousel-track {
             display: flex;
-            gap: 20px; /* Space between side cards */
+            gap: 20px;
             padding-left: calc(50vw - (var(--card-width) / 2));
             padding-right: calc(50vw - (var(--card-width) / 2));
         }
 
-        /* --- THE CAROUSEL ITEM (Base State) --- */
         .carousel-item {
             flex: 0 0 var(--card-width);
             width: var(--card-width);
@@ -322,21 +189,16 @@
             border-radius: var(--card-radius);
             position: relative;
             cursor: pointer;
-            scroll-snap-align: center; /* Crucial for CSS Snap */
-            
-            /* Performance: Set initial transformation state */
+            scroll-snap-align: center;
             transform: translateZ(0) scale(0.9);
             filter: grayscale(80%) opacity(0.7);
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
-                        filter 0.4s ease;
-            
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Align meta text inside at bottom */
-            overflow: visible; /* Let meta text grow outside when active */
+            justify-content: flex-end;
+            overflow: visible;
         }
 
-        /* --- THE IMAGES --- */
         .card-image-wrapper {
             position: absolute;
             top: 0;
@@ -354,7 +216,6 @@
             object-fit: cover;
         }
 
-        /* --- TAGS (e.g., Branding, Strategy) --- */
         .tag {
             position: absolute;
             top: 15px;
@@ -366,30 +227,26 @@
             font-size: 11px;
             font-weight: 600;
             text-transform: capitalize;
-            backdrop-filter: blur(4px); /* Mat frosted glass effect */
+            backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             z-index: 2;
             pointer-events: none;
         }
 
-        /* --- ACTIVE / FOCUSED STATE --- */
         .carousel-item.active {
-            /* The 'Lifted' effect: Larger scale and full presence */
             transform: translateZ(0) scale(1.1);
             filter: grayscale(0%) opacity(1);
             cursor: default;
         }
 
-        /* Darken tag on active dark cards per design */
         .carousel-item.active .tag {
             background: rgba(0,0,0,0.5);
             color: white;
         }
 
-        /* --- META TEXT SECTION (Under Image) --- */
         .meta-text-block {
             position: absolute;
-            bottom: -80px; /* Positioned below the card structure */
+            bottom: -80px;
             left: 0;
             width: 100%;
             padding: 10px 0;
@@ -397,15 +254,12 @@
             justify-content: space-between;
             align-items: flex-start;
             z-index: 3;
-            
-            /* Performance: Pre-hide elements with opacity for smooth fade-in */
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* Delayed show */
-            pointer-events: none; /* Prevent clicking empty space */
+            transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+            pointer-events: none;
         }
 
-        /* Show meta only on active card */
         .carousel-item.active .meta-text-block {
             opacity: 1;
             transform: translateY(0);
@@ -450,197 +304,11 @@
             stroke-linejoin: round;
         }
 
-        /* Performance Optimizations: Set compositing layers */
-        .carousel-item, .card-image-wrapper, .meta-text-block {
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform-style: preserve-3d;
-        }
-
-    </style>
-</head>
-<body>
-
-    <!-- 
-      THE VIEWPORT: Contains the scrollable area and manages snap points.
-      Data tags contain the localized content for the active meta area.
-    -->
-    <section class="carousel-viewport" id="js-carousel">
-        <div class="carousel-track">
-
-            <!-- Card 1 (Placeholder) -->
-            <article class="carousel-item">
-                <span class="tag">Strategy</span>
-                <div class="card-image-wrapper">
-                    <img src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="B&W minimal architecture">
-                </div>
-                <div class="meta-text-block">
-                    <div class="text-group">
-                        <h3 class="title">Strategy</h3>
-                        <p class="subtitle">Defined direction</p>
-                    </div>
-                    <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                </div>
-            </article>
-
-            <!-- Card 2 (Smiling Man) -->
-            <article class="carousel-item">
-                <span class="tag">Product</span>
-                <div class="card-image-wrapper">
-                    <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Smiling bearded man on coastline">
-                </div>
-                <div class="meta-text-block">
-                    <div class="text-group">
-                        <h3 class="title">Product</h3>
-                        <p class="subtitle">Design execution</p>
-                    </div>
-                    <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                </div>
-            </article>
-
-            <!-- Card 3 (ACTIVE IN DESIGN - Red Coat) -->
-            <article class="carousel-item active">
-                <span class="tag">Branding</span>
-                <div class="card-image-wrapper">
-                    <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Person in red leather jacket at night">
-                </div>
-                <!-- This meta text is visible -->
-                <div class="meta-text-block">
-                    <div class="text-group">
-                        <h3 class="title">Identity</h3>
-                        <p class="subtitle">Consistent brand presence</p>
-                    </div>
-                    <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                </div>
-            </article>
-
-            <!-- Card 4 (Short hair woman) -->
-            <article class="carousel-item">
-                <span class="tag">Interaction</span>
-                <div class="card-image-wrapper">
-                    <img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Short hair woman B&W portrait">
-                </div>
-                <div class="meta-text-block">
-                    <div class="text-group">
-                        <h3 class="title">Usability</h3>
-                        <p class="subtitle">Seamless flow</p>
-                    </div>
-                    <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                </div>
-            </article>
-
-            <!-- Card 5 (Cello) -->
-            <article class="carousel-item">
-                <span class="tag">Detail</span>
-                <div class="card-image-wrapper">
-                    <img src="https://images.pexels.com/photos/34221/violoncello-music-instrument-close-up.jpg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Cello head close up on red background">
-                </div>
-                <div class="meta-text-block">
-                    <div class="text-group">
-                        <h3 class="title">Details</h3>
-                        <p class="subtitle">Refining elements</p>
-                    </div>
-                    <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                </div>
-            </article>
-
-        </div>
-    </section>
-
-    <script>
-        /* 
-           --- PERFORMANCE FOCUSED LOGIC ---
-           We use Intersection Observer to detect the center element.
-           This runs off the main thread when possible, ensuring superior smoothness.
-        */
-
-        const viewport = document.getElementById('js-carousel');
-        const cards = document.querySelectorAll('.carousel-item');
-
-        // Setup Intersection Observer options
-        const observerOptions = {
-            root: viewport,
-            rootMargin: '0px -40% 0px -40%', // Creates a narrow detection window in exact center
-            threshold: 0.1 // Detect as soon as 10% of card enters the window
-        };
-
-        // Efficient callback handles adding/removing classes
-        const observerCallback = (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Optimized: Only update DOM on changes
-                    if (!entry.target.classList.contains('active')) {
-                        // Remove active from any other card
-                        cards.forEach(card => card.classList.remove('active'));
-                        // Add active to current card
-                        entry.target.classList.contains('carousel-item') && entry.target.classList.add('active');
-                    }
-                }
-            });
-        };
-
-        // Initialize Observer
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-        // Observe all cards
-        cards.forEach(card => observer.observe(card));
-
-        // Click to center functionality (Smooth scroll)
-        viewport.addEventListener('click', (e) => {
-            const cardClicked = e.target.closest('.carousel-item');
-            if (cardClicked && !cardClicked.classList.contains('active')) {
-                // native smooth scroll allows CSS snap to take over
-                cardClicked.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-        });
-
-        // Initialize position: Snap to center card on load
-        window.addEventListener('load', () => {
-            const initialActive = document.querySelector('.carousel-item.active');
-            if (initialActive) {
-                // Safari fix: Use instant scroll on load before observer starts
-                initialActive.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-            }
-        });
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smooth Scroll Text Reveal</title>
-    <style>
-        /* 
-           --- PERFORMANCE & TYPOGRAPHY SETUP ---
-           System font stack with optimized rendering for crisp text.
-        */
-        :root {
-            --bg-color: #ffffff;
-            --text-inactive: #e0e0e0; /* Unrevealed light gray */
-            --text-active: #000000;   /* Revealed bold black */
-            --accent-color: #000000;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-active);
-            overflow-x: hidden;
-        }
-
-        /* Hero Spacer to allow normal scrolling before reveal section starts */
+        /* ==========================================
+           4. TEXT REVEAL SECTION
+           ========================================== */
         .scroll-spacer {
-            height: 40vh;
+            height: 20vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -650,12 +318,8 @@
             text-transform: uppercase;
         }
 
-        /* 
-           --- STICKY SCROLL SECTION ---
-           Gives height to the page so user can scroll smoothly while text stays pinned.
-        */
         .reveal-scroll-container {
-            height: 300vh; /* Scroll distance for the animation */
+            height: 250vh; /* Scroll track distance */
             position: relative;
         }
 
@@ -671,7 +335,6 @@
             padding: 0 2rem;
         }
 
-        /* --- TYPOGRAPHY & WORD STYLING --- */
         .reveal-header {
             font-size: clamp(2rem, 4.5vw, 4rem);
             font-weight: 700;
@@ -696,26 +359,21 @@
             transition: color 0.3s ease;
         }
 
-        /* 
-           Individual words wrapper 
-           Uses hardware-accelerated color/opacity transitions
-        */
         .reveal-word {
             display: inline-block;
             color: var(--text-inactive);
             will-change: color, opacity;
             transition: color 0.15s ease-out, opacity 0.15s ease-out;
-            margin-right: 0.25em; /* Preserves word spacing */
-            transform: translateZ(0); /* Hardware acceleration */
+            margin-right: 0.25em;
+            transform: translateZ(0);
         }
 
         .reveal-word.is-revealed {
             color: var(--text-active);
         }
 
-        /* Footer Spacer to smoothly exit scroll effect */
         .footer-spacer {
-            height: 50vh;
+            height: 30vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -726,29 +384,118 @@
 </head>
 <body>
 
+    <!-- 1. EYE BUTTON SECTION -->
+    <section class="hero-eye-section">
+        <button class="copy-button dynamic-button" aria-label="Click to copy information">
+            <span class="button-text">Click to Copy</span>
+            <div class="eyes-container">
+                <div class="eye blinking">
+                    <div class="eyelid"></div>
+                    <div class="pupil"></div>
+                </div>
+                <div class="eye blinking">
+                    <div class="eyelid"></div>
+                    <div class="pupil"></div>
+                </div>
+            </div>
+        </button>
+    </section>
+
+    <!-- 2. CAROUSEL SECTION -->
+    <section class="carousel-section">
+        <div class="carousel-viewport" id="js-carousel">
+            <div class="carousel-track">
+
+                <article class="carousel-item">
+                    <span class="tag">Strategy</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="B&W minimal architecture">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Strategy</h3>
+                            <p class="subtitle">Defined direction</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item">
+                    <span class="tag">Product</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Smiling bearded man">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Product</h3>
+                            <p class="subtitle">Design execution</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item active">
+                    <span class="tag">Branding</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Person in red jacket">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Identity</h3>
+                            <p class="subtitle">Consistent brand presence</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item">
+                    <span class="tag">Interaction</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Woman portrait">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Usability</h3>
+                            <p class="subtitle">Seamless flow</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item">
+                    <span class="tag">Detail</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/34221/violoncello-music-instrument-close-up.jpg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Cello close up">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Details</h3>
+                            <p class="subtitle">Refining elements</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TEXT REVEAL SECTION -->
     <div class="scroll-spacer">
         <span>↓ Scroll down to view effect</span>
     </div>
 
-    <!-- Scroll Track Container -->
     <div class="reveal-scroll-container" id="revealTrack">
         <div class="sticky-wrapper">
-            
-            <!-- Heading -->
             <h1 class="reveal-header js-reveal-text">
                 Commercial Awnings for Shops, Restaurants, Hotels & Bars
             </h1>
-
-            <!-- Main Body Paragraph -->
             <p class="reveal-paragraph js-reveal-text">
                 For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism and our awnings can be seen in iconic shops, restaurants, hotels, flagship stores, bars and pubs across the UK.
             </p>
-
-            <!-- CTA -->
             <p class="reveal-cta js-reveal-text">
                 Call our team on 020 8858 2083 today to discuss your project
             </p>
-
         </div>
     </div>
 
@@ -756,21 +503,102 @@
         <p>© Commercial Awnings London</p>
     </div>
 
+    <!-- COMBINED JAVASCRIPT LOGIC -->
     <script>
-        /*
-           --- HIGH-PERFORMANCE SCROLL ENGINE ---
-           1. Splitting text into individual span words dynamically on boot.
-           2. RequestAnimationFrame scroll handler to eliminate jank/lag.
-        */
-
         document.addEventListener('DOMContentLoaded', () => {
+
+            /* --- 1. EYE TRACKING LOGIC --- */
+            const pupils = document.querySelectorAll('.pupil');
+            const eyes = document.querySelectorAll('.eye');
+            const copyButton = document.querySelector('.dynamic-button');
+            const maxPupilTravel = 8; 
+
+            document.addEventListener('mousemove', (e) => {
+                eyes.forEach((eye, index) => {
+                    const pupil = pupils[index];
+                    const rect = eye.getBoundingClientRect();
+                    const eyeCenterX = rect.left + rect.width / 2;
+                    const eyeCenterY = rect.top + rect.height / 2;
+
+                    const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                    const ux = Math.cos(angle);
+                    const uy = Math.sin(angle);
+
+                    const dx = e.clientX - eyeCenterX;
+                    const dy = e.clientY - eyeCenterY;
+                    const cursorDistance = Math.hypot(dx, dy);
+
+                    const travelDist = Math.min(maxPupilTravel, cursorDistance * 0.03); 
+                    const pupilDisplacementX = ux * travelDist;
+                    const pupilDisplacementY = uy * travelDist;
+
+                    pupil.style.transform = `translate(calc(-50% + ${pupilDisplacementX}px), calc(-50% + ${pupilDisplacementY}px))`;
+                });
+            });
+
+            if (copyButton) {
+                copyButton.addEventListener('click', () => {
+                    const textToCopy = "Your specific information to copy"; 
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const textSpan = copyButton.querySelector('.button-text');
+                        const originalText = textSpan.innerText;
+                        textSpan.innerText = "Copied!";
+                        copyButton.style.backgroundColor = "#4caf50";
+                        
+                        setTimeout(() => {
+                            textSpan.innerText = originalText;
+                            copyButton.style.backgroundColor = ""; 
+                        }, 1500);
+                    });
+                });
+            }
+
+
+            /* --- 2. CAROUSEL OBSERVER & SCROLL LOGIC --- */
+            const viewport = document.getElementById('js-carousel');
+            const cards = document.querySelectorAll('.carousel-item');
+
+            const observerOptions = {
+                root: viewport,
+                rootMargin: '0px -40% 0px -40%',
+                threshold: 0.1
+            };
+
+            const observerCallback = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (!entry.target.classList.contains('active')) {
+                            cards.forEach(card => card.classList.remove('active'));
+                            entry.target.classList.add('active');
+                        }
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            cards.forEach(card => observer.observe(card));
+
+            viewport.addEventListener('click', (e) => {
+                const cardClicked = e.target.closest('.carousel-item');
+                if (cardClicked && !cardClicked.classList.contains('active')) {
+                    cardClicked.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+
+            // Set initial snap position
+            const initialActive = document.querySelector('.carousel-item.active');
+            if (initialActive) {
+                initialActive.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+            }
+
+
+            /* --- 3. TEXT REVEAL SCROLL ENGINE --- */
             const textContainers = document.querySelectorAll('.js-reveal-text');
             let allWords = [];
 
-            // 1. SPLIT TEXT INTO INDIVIDUAL WORD SPANS
             textContainers.forEach(container => {
                 const text = container.innerText;
-                container.innerHTML = ''; // Clear raw text
+                container.innerHTML = ''; 
 
                 const words = text.split(/\s+/);
                 words.forEach(word => {
@@ -783,7 +611,6 @@
                 });
             });
 
-            // 2. SCROLL REVEAL CALCULATION
             const track = document.getElementById('revealTrack');
             const totalWords = allWords.length;
             let ticking = false;
@@ -792,20 +619,13 @@
                 const rect = track.getBoundingClientRect();
                 const windowHeight = window.innerHeight;
 
-                // Total distance available to scroll within sticky element
                 const totalScrollDistance = rect.height - windowHeight;
-                
-                // Current scroll progression within the container (0.0 to 1.0)
                 const scrolledDistance = -rect.top;
                 let progress = scrolledDistance / totalScrollDistance;
 
-                // Clamp progress between 0 and 1
                 progress = Math.max(0, Math.min(1, progress));
-
-                // Determine how many words should be active based on scroll progress
                 const wordsToReveal = Math.floor(progress * totalWords);
 
-                // Update DOM state cleanly
                 allWords.forEach((wordSpan, index) => {
                     if (index <= wordsToReveal && progress > 0) {
                         wordSpan.classList.add('is-revealed');
@@ -817,7 +637,6 @@
                 ticking = false;
             }
 
-            // 3. OPTIMIZED SCROLL LISTENER (60FPS)
             window.addEventListener('scroll', () => {
                 if (!ticking) {
                     requestAnimationFrame(updateWordReveal);
@@ -825,7 +644,6 @@
                 }
             }, { passive: true });
 
-            // Initial trigger calculation
             updateWordReveal();
         });
     </script>
