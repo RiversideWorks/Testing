@@ -1,168 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Moving Eye Button</title>
+    <style>
+        /* 
+           --- PERFORMANCE & SMOOTHNESS ---
+           We use only hardware-accelerated CSS properties (transform, opacity) 
+           for all animations and interactions to achieve 60fps smoothness.
+        */
 
-<title>Moving Eye Button</title>
+        :root {
+            --bg-color: #f7f7f7;
+            --button-bg: #000000;
+            --button-text: #ffffff;
+            --eye-bg: #ffffff;
+            --pupil-bg: #000000;
+            --eyelid-bg: #000000; /* Color of eyelid closing */
+            --transition-speed: 0.1s; /* Pupil tracking smooth speed */
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
 
-<style>
+        /* Essential Reset for layout consistency */
+        * {
+            margin: 0;
+            padding: 0;
+            box-shadow: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        /* Page Container to center the button for demonstration */
+        body {
+            display: grid;
+            place-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            overflow: hidden; /* Prevents scrollbars during massive cursor moves */
+        }
 
-body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f7f7f7;
-    font-family: Arial, Helvetica, sans-serif;
-}
+        /* --- THE BUTTON --- */
+        .dynamic-button {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden; /* Contains the eye tracking and blink elements */
+        }
 
+        /* Slight lift on hover */
+        .dynamic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
 
-/* BUTTON */
+        .dynamic-button:active {
+            transform: translateY(0);
+        }
 
-.copy-button {
-    height: 48px;
-    padding: 0 12px 0 18px;
-    background: #000;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 12px 20px rgba(0,0,0,0.18);
-    transition: transform .25s ease;
-}
+        /* Button Text */
+        .button-text {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            pointer-events: none; /* Text doesn't interfere with eye tracking */
+        }
 
-.copy-button:hover {
-    transform: translateY(-2px);
-}
+        /* --- THE EYES --- */
+        .eyes-container {
+            display: flex;
+            gap: 5px;
+            pointer-events: none; /* Eyes don't interfere with button clicks */
+        }
 
+        .eye {
+            width: 32px;
+            height: 32px;
+            background-color: var(--eye-bg);
+            border-radius: 50%;
+            position: relative;
+            display: grid;
+            place-items: center;
+            overflow: hidden; /* Eyelid and pupil are masked by eye circle */
+            transform: translateZ(0); /* Hardware Acceleration trigger */
+        }
 
-/* EYES HOLDER */
+        /* --- THE PUPILS (Cursor Tracking) --- */
+        .pupil {
+            width: 11px;
+            height: 11px;
+            background-color: var(--pupil-bg);
+            border-radius: 50%;
+            position: absolute;
+            /* Initial centered position */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Smooth transitions for tracking */
+            transition: transform var(--transition-speed) ease-out;
+            will-change: transform; /* Hint for browser optimization */
+        }
 
-.eyes {
-    display: flex;
-    gap: 8px;
-}
+        /* --- THE EYELIDS (Blinking) --- */
+        .eyelid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--eyelid-bg);
+            border-radius: 50%;
+            /* Eyelid starts fully retracted (height 0) */
+            transform: scaleY(0);
+            transform-origin: top; /* Blinks from top to bottom */
+            will-change: transform; /* Hint for browser optimization */
+            z-index: 1; /* Sits above the pupil */
+        }
 
+        /* --- BLINK ANIMATION --- */
+        @keyframes blink {
+            0%, 80%, 100% {
+                transform: scaleY(0); /* Eyelid Open */
+            }
+            85% {
+                transform: scaleY(1); /* Eyelid Closed (at 85% of 2.5s) */
+            }
+            90% {
+                transform: scaleY(0); /* Eyelid Re-open */
+            }
+        }
 
-/* WHITE EYE */
+        /* Class applied by JavaScript to trigger blink */
+        .eye.blinking .eyelid {
+            animation: blink 2.5s infinite; /* Blink occurs every 2.5s */
+        }
 
-.eye {
-    width: 27px;
-    height: 27px;
-    background: white;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-}
-
-
-/* BLACK PUPIL */
-
-.pupil {
-    width: 10px;
-    height: 10px;
-    background: black;
-    border-radius: 50%;
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    transition: transform .08s linear;
-}
-
-</style>
-
+    </style>
 </head>
-
-
 <body>
 
-
-<div class="copy-button">
-
-    <span>Click to Copy</span>
-
-    <div class="eyes">
-
-        <div class="eye">
-            <div class="pupil"></div>
+    <!-- 
+       Semantic Button with Accessibility.
+       Uses aria-label for screen readers.
+    -->
+    <button class="copy-button dynamic-button" aria-label="Click to copy information">
+        <span class="button-text">Click to Copy</span>
+        <div class="eyes-container">
+            <!-- Left Eye -->
+            <div class="eye blinking"> <!-- Trigger blinking with this class -->
+                <div class="eyelid"></div>
+                <div class="pupil"></div>
+            </div>
+            <!-- Right Eye -->
+            <div class="eye blinking"> <!-- Trigger blinking with this class -->
+                <div class="eyelid"></div>
+                <div class="pupil"></div>
+            </div>
         </div>
+    </button>
 
-        <div class="eye">
-            <div class="pupil"></div>
-        </div>
+    <script>
+        /* 
+           --- ULTRA-SMOOTH JAVASCRIPT ---
+           We optimize event listeners and use hardware-accelerated 
+           CSS properties for maximum performance.
+        */
 
-    </div>
+        const pupils = document.querySelectorAll('.pupil');
+        const eyes = document.querySelectorAll('.eye');
+        const button = document.querySelector('.dynamic-button');
 
-</div>
+        // Maximum distance the pupil can travel from center (in pixels)
+        const maxPupilTravel = 8; 
 
+        // 1. --- CURSOR TRACKING LOGIC ---
+        // We track across the entire document for a globally responsive effect.
+        document.addEventListener('mousemove', (e) => {
+            
+            eyes.forEach((eye, index) => {
+                const pupil = pupils[index];
+                
+                // Get the center of the eye relative to the viewport
+                const rect = eye.getBoundingClientRect();
+                const eyeCenterX = rect.left + rect.width / 2;
+                const eyeCenterY = rect.top + rect.height / 2;
 
+                // Calculate angle from eye center to cursor
+                const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                
+                // Determine normalized movement vector (direction)
+                const ux = Math.cos(angle);
+                const uy = Math.sin(angle);
 
-<script>
+                // Calculate responsive displacement. 
+                // Close cursors make pupils center, far cursors make pupils track.
+                // We clamp the maximum travel to keep pupils inside the eye.
+                const dx = e.clientX - eyeCenterX;
+                const dy = e.clientY - eyeCenterY;
+                const cursorDistance = Math.hypot(dx, dy);
 
+                // Pupil travel scales up with distance, but capped at max travel
+                const travelDist = Math.min(maxPupilTravel, cursorDistance * 0.03); 
 
-const pupils = document.querySelectorAll(".pupil");
+                const pupilDisplacementX = ux * travelDist;
+                const pupilDisplacementY = uy * travelDist;
 
-
-document.addEventListener("mousemove", (event)=>{
-
-
-    pupils.forEach(pupil=>{
-
-
-        const eye = pupil.parentElement;
-
-        const eyeRect = eye.getBoundingClientRect();
-
-
-        // Eye centre
-
-        const eyeX = eyeRect.left + eyeRect.width / 2;
-        const eyeY = eyeRect.top + eyeRect.height / 2;
-
-
-        // Cursor direction
-
-        const angle = Math.atan2(
-            event.clientY - eyeY,
-            event.clientX - eyeX
-        );
-
-
-        // Maximum pupil movement
-
-        const distance = 6;
-
-
-        const moveX = Math.cos(angle) * distance;
-        const moveY = Math.sin(angle) * distance;
-
-
-        pupil.style.transform =
-        `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
-
-
-    });
-
-
-});
-
-</script>
+                /* 
+                   PERFORMANCE CRITICAL: We only use translate() 
+                   for movement to leverage hardware acceleration.
+                */
+                pupil.style.transform = `translate(calc(-50% + ${pupilDisplacementX}px), calc(-50% + ${pupilDisplacementY}px))`;
+            });
+        });
 
 
+        // 2. --- OPTIONAL: BUTTON FUNCTIONALITY ---
+        // Example "Click to Copy" logic
+        button.addEventListener('click', () => {
+            const textToCopy = "Your specific information to copy"; // Update this
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const textSpan = button.querySelector('.button-text');
+                const originalText = textSpan.innerText;
+                textSpan.innerText = "Copied!";
+                
+                // Feedback state animation
+                button.style.backgroundColor = "#4caf50"; // Green feedback
+                
+                setTimeout(() => {
+                    textSpan.innerText = originalText;
+                    button.style.backgroundColor = ""; // Reset background
+                }, 1500);
+            });
+        });
+
+    </script>
 </body>
 </html>
