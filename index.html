@@ -605,3 +605,229 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Scroll Text Reveal</title>
+    <style>
+        /* 
+           --- PERFORMANCE & TYPOGRAPHY SETUP ---
+           System font stack with optimized rendering for crisp text.
+        */
+        :root {
+            --bg-color: #ffffff;
+            --text-inactive: #e0e0e0; /* Unrevealed light gray */
+            --text-active: #000000;   /* Revealed bold black */
+            --accent-color: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-active);
+            overflow-x: hidden;
+        }
+
+        /* Hero Spacer to allow normal scrolling before reveal section starts */
+        .scroll-spacer {
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 
+           --- STICKY SCROLL SECTION ---
+           Gives height to the page so user can scroll smoothly while text stays pinned.
+        */
+        .reveal-scroll-container {
+            height: 300vh; /* Scroll distance for the animation */
+            position: relative;
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- TYPOGRAPHY & WORD STYLING --- */
+        .reveal-header {
+            font-size: clamp(2rem, 4.5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 2.5rem;
+        }
+
+        .reveal-paragraph {
+            font-size: clamp(1.25rem, 2.8vw, 2.25rem);
+            font-weight: 500;
+            line-height: 1.35;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+        }
+
+        .reveal-cta {
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-inactive);
+            transition: color 0.3s ease;
+        }
+
+        /* 
+           Individual words wrapper 
+           Uses hardware-accelerated color/opacity transitions
+        */
+        .reveal-word {
+            display: inline-block;
+            color: var(--text-inactive);
+            will-change: color, opacity;
+            transition: color 0.15s ease-out, opacity 0.15s ease-out;
+            margin-right: 0.25em; /* Preserves word spacing */
+            transform: translateZ(0); /* Hardware acceleration */
+        }
+
+        .reveal-word.is-revealed {
+            color: var(--text-active);
+        }
+
+        /* Footer Spacer to smoothly exit scroll effect */
+        .footer-spacer {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            border-top: 1px solid #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-spacer">
+        <span>↓ Scroll down to view effect</span>
+    </div>
+
+    <!-- Scroll Track Container -->
+    <div class="reveal-scroll-container" id="revealTrack">
+        <div class="sticky-wrapper">
+            
+            <!-- Heading -->
+            <h1 class="reveal-header js-reveal-text">
+                Commercial Awnings for Shops, Restaurants, Hotels & Bars
+            </h1>
+
+            <!-- Main Body Paragraph -->
+            <p class="reveal-paragraph js-reveal-text">
+                For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism and our awnings can be seen in iconic shops, restaurants, hotels, flagship stores, bars and pubs across the UK.
+            </p>
+
+            <!-- CTA -->
+            <p class="reveal-cta js-reveal-text">
+                Call our team on 020 8858 2083 today to discuss your project
+            </p>
+
+        </div>
+    </div>
+
+    <div class="footer-spacer">
+        <p>© Commercial Awnings London</p>
+    </div>
+
+    <script>
+        /*
+           --- HIGH-PERFORMANCE SCROLL ENGINE ---
+           1. Splitting text into individual span words dynamically on boot.
+           2. RequestAnimationFrame scroll handler to eliminate jank/lag.
+        */
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const textContainers = document.querySelectorAll('.js-reveal-text');
+            let allWords = [];
+
+            // 1. SPLIT TEXT INTO INDIVIDUAL WORD SPANS
+            textContainers.forEach(container => {
+                const text = container.innerText;
+                container.innerHTML = ''; // Clear raw text
+
+                const words = text.split(/\s+/);
+                words.forEach(word => {
+                    if (word.length === 0) return;
+                    const span = document.createElement('span');
+                    span.className = 'reveal-word';
+                    span.textContent = word;
+                    container.appendChild(span);
+                    allWords.push(span);
+                });
+            });
+
+            // 2. SCROLL REVEAL CALCULATION
+            const track = document.getElementById('revealTrack');
+            const totalWords = allWords.length;
+            let ticking = false;
+
+            function updateWordReveal() {
+                const rect = track.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+
+                // Total distance available to scroll within sticky element
+                const totalScrollDistance = rect.height - windowHeight;
+                
+                // Current scroll progression within the container (0.0 to 1.0)
+                const scrolledDistance = -rect.top;
+                let progress = scrolledDistance / totalScrollDistance;
+
+                // Clamp progress between 0 and 1
+                progress = Math.max(0, Math.min(1, progress));
+
+                // Determine how many words should be active based on scroll progress
+                const wordsToReveal = Math.floor(progress * totalWords);
+
+                // Update DOM state cleanly
+                allWords.forEach((wordSpan, index) => {
+                    if (index <= wordsToReveal && progress > 0) {
+                        wordSpan.classList.add('is-revealed');
+                    } else {
+                        wordSpan.classList.remove('is-revealed');
+                    }
+                });
+
+                ticking = false;
+            }
+
+            // 3. OPTIMIZED SCROLL LISTENER (60FPS)
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateWordReveal);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            // Initial trigger calculation
+            updateWordReveal();
+        });
+    </script>
+</body>
+</html>
