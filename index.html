@@ -1418,13 +1418,26 @@
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2);
             cursor: crosshair;
-            background-color: var(--blueprint-blue);
+            background-color: #000;
+        }
+
+        .blueprint-canvas-wrapper img.base-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
         }
 
         .blueprint-canvas-wrapper canvas {
-            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            z-index: 2;
         }
 
         .blueprint-hint {
@@ -1432,7 +1445,7 @@
             bottom: 18px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 15, 45, 0.75);
+            background: rgba(0, 15, 45, 0.85);
             color: #93c5fd;
             font-size: 12px;
             font-weight: 500;
@@ -1440,8 +1453,9 @@
             padding: 8px 18px;
             border-radius: 30px;
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(147, 197, 253, 0.2);
+            border: 1px solid rgba(147, 197, 253, 0.3);
             pointer-events: none;
+            z-index: 3;
             transition: opacity 0.4s ease;
         }
 
@@ -1646,6 +1660,9 @@
         </div>
 
         <div class="blueprint-canvas-wrapper" id="blueprintWrapper">
+            <!-- Real Photo Layer (CORS Safe Standard Element) -->
+            <img class="base-photo" src="https://morcoblinds.co.uk/wp-content/uploads/news_images/Architectural-Premium-Canopy-London.jpg" alt="George Canopy">
+            <!-- Blueprint Line Art Layer -->
             <canvas id="blueprintCanvas"></canvas>
             <div class="blueprint-hint">Hover or move cursor over drawing to reveal</div>
         </div>
@@ -1801,35 +1818,7 @@
             const canvas = document.getElementById('blueprintCanvas');
             const ctx = canvas.getContext('2d');
 
-            const sourceImageUrl = "https://morcoblinds.co.uk/wp-content/uploads/news_images/Architectural-Premium-Canopy-London.jpg";
-            
-            const realImg = new Image();
-            realImg.crossOrigin = "anonymous";
-            realImg.src = sourceImageUrl;
-
-            const blueprintImg = new Image();
-            blueprintImg.crossOrigin = "anonymous";
-
-            // Prepare Blueprint Image Buffer
-            let imgLoaded = false;
-            realImg.onload = () => {
-                const offCanvas = document.createElement('canvas');
-                offCanvas.width = realImg.width;
-                offCanvas.height = realImg.height;
-                const offCtx = offCanvas.getContext('2d');
-
-                // Render Inverted/Cyan Blueprint Version of Photo
-                offCtx.filter = 'brightness(1.2) contrast(180%) invert(100%) sepia(100%) hue-rotate(180deg) saturate(400%)';
-                offCtx.drawImage(realImg, 0, 0);
-
-                blueprintImg.onload = () => {
-                    imgLoaded = true;
-                    resizeCanvas();
-                };
-                blueprintImg.src = offCanvas.toDataURL();
-            };
-
-            const GRID_SIZE = 36; // Size of each blocky splash pixel tile
+            const GRID_SIZE = 34; // Pixel tile width/height matching reference screenshot
             const activeTiles = new Map(); // Stores tile opacities: key `${col}_${row}` => opacity
 
             function resizeCanvas() {
@@ -1838,12 +1827,108 @@
                 canvas.height = rect.height;
             }
 
+            resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
-            // Handle Pointer Movement to Trigger Grid Splash
-            function triggerSplash(clientX, clientY) {
-                if (!imgLoaded) return;
+            // Renders the Architectural Vector Blueprint Drawing onto Canvas
+            function drawBlueprintVectorArt(width, height) {
+                // 1. Deep Architectural Blue Background
+                ctx.fillStyle = '#0047ba';
+                ctx.fillRect(0, 0, width, height);
 
+                // 2. Overlay Blueprint Grid Lines
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.lineWidth = 1;
+
+                for (let x = 0; x < width; x += GRID_SIZE) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, height);
+                    ctx.stroke();
+                }
+                for (let y = 0; y < height; y += GRID_SIZE) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(width, y);
+                    ctx.stroke();
+                }
+
+                // 3. Render Architectural Linework (Building + Canopy + Measurements)
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 1.5;
+
+                // Main Building Facade Perspective
+                ctx.beginPath();
+                ctx.moveTo(width * 0.10, height * 0.82);
+                ctx.lineTo(width * 0.10, height * 0.32);
+                ctx.lineTo(width * 0.48, height * 0.18);
+                ctx.lineTo(width * 0.88, height * 0.32);
+                ctx.lineTo(width * 0.88, height * 0.82);
+                ctx.stroke();
+
+                // Ridge Center Line
+                ctx.beginPath();
+                ctx.moveTo(width * 0.48, height * 0.18);
+                ctx.lineTo(width * 0.48, height * 0.82);
+                ctx.stroke();
+
+                // Detailed Commercial Awning / Canopy CAD Linework
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(width * 0.08, height * 0.60);
+                ctx.lineTo(width * 0.48, height * 0.44);
+                ctx.lineTo(width * 0.88, height * 0.60);
+                ctx.lineTo(width * 0.88, height * 0.72);
+                ctx.lineTo(width * 0.48, height * 0.58);
+                ctx.lineTo(width * 0.08, height * 0.72);
+                ctx.closePath();
+                ctx.stroke();
+
+                // Canopy Rib Structural Sections
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+                for (let i = 1; i <= 6; i++) {
+                    let t = i / 7;
+                    // Left facet
+                    ctx.beginPath();
+                    ctx.moveTo(width * 0.08 + (width * 0.40) * t, height * 0.60 - (height * 0.16) * t);
+                    ctx.lineTo(width * 0.08 + (width * 0.40) * t, height * 0.72 - (height * 0.14) * t);
+                    ctx.stroke();
+                    // Right facet
+                    ctx.beginPath();
+                    ctx.moveTo(width * 0.48 + (width * 0.40) * t, height * 0.44 + (height * 0.16) * t);
+                    ctx.lineTo(width * 0.48 + (width * 0.40) * t, height * 0.58 + (height * 0.14) * t);
+                    ctx.stroke();
+                }
+
+                // Architectural Window Frames
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.strokeRect(width * 0.18, height * 0.34, width * 0.09, height * 0.12);
+                ctx.strokeRect(width * 0.31, height * 0.28, width * 0.09, height * 0.12);
+                ctx.strokeRect(width * 0.56, height * 0.28, width * 0.09, height * 0.12);
+                ctx.strokeRect(width * 0.69, height * 0.34, width * 0.09, height * 0.12);
+
+                // Measurement Annotations & CAD Dimensions
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                ctx.font = '11px monospace';
+                ctx.fillText("37' - 12\"", width * 0.22, height * 0.88);
+                ctx.fillText("21' - 10\"", width * 0.62, height * 0.88);
+                ctx.fillText("ELEVATION A-104", width * 0.04, height * 0.95);
+                ctx.fillText("SCALE: 1/4\" = 1'-0\"", width * 0.78, height * 0.95);
+
+                // Dimension Lines
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+                ctx.beginPath();
+                ctx.moveTo(width * 0.10, height * 0.86);
+                ctx.lineTo(width * 0.44, height * 0.86);
+                ctx.moveTo(width * 0.52, height * 0.86);
+                ctx.lineTo(width * 0.86, height * 0.86);
+                ctx.stroke();
+            }
+
+            // Pointer splash tracking
+            function triggerTileSplash(clientX, clientY) {
                 const rect = canvas.getBoundingClientRect();
                 const x = clientX - rect.left;
                 const y = clientY - rect.top;
@@ -1851,94 +1936,64 @@
                 const centerCol = Math.floor(x / GRID_SIZE);
                 const centerRow = Math.floor(y / GRID_SIZE);
 
-                // Activate a blocky cluster around cursor
-                const splashRadius = 2; 
-                for (let r = -splashRadius; r <= splashRadius; r++) {
-                    for (let c = -splashRadius; c <= splashRadius; c++) {
-                        // Create blocky pattern
-                        if (Math.abs(r) + Math.abs(c) <= splashRadius + 1) {
-                            const col = centerCol + c;
-                            const row = centerRow + r;
-                            const key = `${col}_${row}`;
-                            activeTiles.set(key, 1.0); // Full opacity initially
-                        }
-                    }
-                }
+                // Blocky pixelated splash mask pattern matching screenshot
+                const splashPattern = [
+                    [0, 0], [-1, 0], [1, 0], [0, -1], [0, 1],
+                    [-1, -1], [1, -1], [-1, 1], [1, 1],
+                    [-2, 0], [2, 0], [0, -2], [0, 2],
+                    [-2, -1], [2, 1], [-1, 2], [1, -2]
+                ];
+
+                splashPattern.forEach(([dc, dr]) => {
+                    const col = centerCol + dc;
+                    const row = centerRow + dr;
+                    const key = `${col}_${row}`;
+                    activeTiles.set(key, 1.0); // Full opacity
+                });
             }
 
-            wrapper.addEventListener('mousemove', (e) => triggerSplash(e.clientX, e.clientY));
+            wrapper.addEventListener('mousemove', (e) => triggerTileSplash(e.clientX, e.clientY));
             wrapper.addEventListener('touchmove', (e) => {
                 if (e.touches.length > 0) {
-                    triggerSplash(e.touches[0].clientX, e.touches[0].clientY);
+                    triggerTileSplash(e.touches[0].clientX, e.touches[0].clientY);
                 }
             }, { passive: true });
 
-            // Render Frame Loop
-            function renderBlueprint() {
-                requestAnimationFrame(renderBlueprint);
+            // Main Animation Render Loop
+            function renderFrame() {
+                requestAnimationFrame(renderFrame);
 
-                if (!imgLoaded) return;
-
+                // 1. Clear & redraw full blueprint drawing
+                ctx.globalCompositeOperation = 'source-over';
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBlueprintVectorArt(canvas.width, canvas.height);
 
-                // 1. Draw Base Blueprint Canvas
-                ctx.drawImage(blueprintImg, 0, 0, canvas.width, canvas.height);
+                // 2. Punch holes through blueprint to reveal real image behind
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-out';
 
-                // Tint layer for deep blueprint blue tone
-                ctx.fillStyle = 'rgba(0, 75, 179, 0.45)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Overlay Blueprint Architectural CAD Grid Lines
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-                ctx.lineWidth = 1;
-
-                for (let x = 0; x < canvas.width; x += GRID_SIZE) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, canvas.height);
-                    ctx.stroke();
-                }
-                for (let y = 0; y < canvas.height; y += GRID_SIZE) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(canvas.width, y);
-                    ctx.stroke();
-                }
-
-                // 2. Render Active Grid Tiles revealing Real Color Image
                 activeTiles.forEach((opacity, key) => {
                     const [col, row] = key.split('_').map(Number);
                     const tileX = col * GRID_SIZE;
                     const tileY = row * GRID_SIZE;
 
-                    ctx.save();
-                    ctx.globalAlpha = opacity;
+                    // Erase canvas tile proportionally to opacity
+                    ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
+                    ctx.fillRect(tileX, tileY, GRID_SIZE, GRID_SIZE);
 
-                    // Draw image slice corresponding to tile
-                    const sx = (tileX / canvas.width) * realImg.width;
-                    const sy = (tileY / canvas.height) * realImg.height;
-                    const sWidth = (GRID_SIZE / canvas.width) * realImg.width;
-                    const sHeight = (GRID_SIZE / canvas.height) * realImg.height;
-
-                    ctx.drawImage(realImg, sx, sy, sWidth, sHeight, tileX, tileY, GRID_SIZE, GRID_SIZE);
-
-                    // Optional thin border around active blocky splash
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.4})`;
-                    ctx.strokeRect(tileX, tileY, GRID_SIZE, GRID_SIZE);
-
-                    ctx.restore();
-
-                    // Fade out each splash block over ~1 second
-                    const newOpacity = opacity - 0.02;
-                    if (newOpacity <= 0) {
+                    // Fade opacity out gradually (~1 second lifecycle)
+                    const nextOpacity = opacity - 0.022;
+                    if (nextOpacity <= 0) {
                         activeTiles.delete(key);
                     } else {
-                        activeTiles.set(key, newOpacity);
+                        activeTiles.set(key, nextOpacity);
                     }
                 });
+
+                ctx.restore();
             }
 
-            renderBlueprint();
+            renderFrame();
         });
     </script>
 </body>
