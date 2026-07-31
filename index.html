@@ -860,3 +860,1086 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Interactive UI Showcase</title>
+    <style>
+        /* ==========================================
+           1. GLOBAL RESETS & DESIGN SYSTEM
+           ========================================== */
+        :root {
+            --bg-light: #f7f7f7;
+            --bg-white: #ffffff;
+            --bg-dark: #0a0a0a;
+            --bg-pure-black: #000000;
+            --blueprint-blue: #004bb3;
+            
+            --text-dark: #111111;
+            --text-muted: #888888;
+            --text-inactive: #333333;
+            --text-light: #ffffff;
+
+            /* Carousel */
+            --card-width: 300px;
+            --card-height: 360px;
+            --card-radius: 18px;
+
+            /* Transitions */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-pure-black);
+            color: var(--text-light);
+        }
+
+        /* ==========================================
+           SECTION 1: HERO EYE BUTTON
+           ========================================== */
+        .hero-section {
+            width: 100%;
+            padding: 90px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-light);
+        }
+
+        .dynamic-button {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+        }
+
+        .dynamic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .button-text {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .eyes-container {
+            display: flex;
+            gap: 4px;
+        }
+
+        .eye {
+            width: 26px;
+            height: 26px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            position: relative;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 9px;
+            height: 9px;
+            background-color: #000000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out;
+            will-change: transform;
+        }
+
+        .eyelid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            border-radius: 50%;
+            transform: scaleY(0);
+            transform-origin: top;
+            z-index: 1;
+        }
+
+        @keyframes blink {
+            0%, 80%, 100% { transform: scaleY(0); }
+            85% { transform: scaleY(1); }
+            90% { transform: scaleY(0); }
+        }
+
+        .eye.blinking .eyelid {
+            animation: blink 3s infinite;
+        }
+
+        /* ==========================================
+           SECTION 2: CAROUSEL SECTION
+           ========================================== */
+        .carousel-section {
+            width: 100%;
+            padding: 70px 0;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        .carousel-viewport {
+            width: 100%;
+            overflow-x: auto;
+            display: flex;
+            align-items: center;
+            padding: 20px 0 60px 0;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            padding-left: calc(50vw - (var(--card-width) / 2));
+            padding-right: calc(50vw - (var(--card-width) / 2));
+        }
+
+        .carousel-item {
+            flex: 0 0 var(--card-width);
+            width: var(--card-width);
+            height: var(--card-height);
+            border-radius: var(--card-radius);
+            position: relative;
+            cursor: pointer;
+            scroll-snap-align: center;
+            transform: translateZ(0) scale(0.92);
+            filter: grayscale(80%) opacity(0.5);
+            transition: transform 0.4s var(--ease-out), filter 0.4s ease;
+        }
+
+        .card-image-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tag {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.85);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            z-index: 2;
+        }
+
+        .carousel-item.active {
+            transform: translateZ(0) scale(1.05);
+            filter: grayscale(0%) opacity(1);
+        }
+
+        .meta-text-block {
+            position: absolute;
+            bottom: -55px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+        }
+
+        .carousel-item.active .meta-text-block {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .title { color: #111; font-size: 16px; font-weight: 600; }
+        .subtitle { color: var(--text-muted); font-size: 13px; }
+
+        .arrow-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #111;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ==========================================
+           SECTION 3: TEXT REVEAL SECTION
+           ========================================== */
+        .text-reveal-section {
+            background-color: var(--bg-dark);
+            position: relative;
+        }
+
+        .reveal-scroll-container {
+            height: 130vh;
+            position: relative;
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .reveal-header {
+            font-size: clamp(2rem, 3.8vw, 3.2rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .reveal-paragraph {
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            font-weight: 400;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+            margin-bottom: 2rem;
+        }
+
+        .reveal-cta {
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            font-weight: 600;
+        }
+
+        .reveal-word {
+            display: inline-block;
+            color: var(--text-inactive);
+            transition: color 0.12s ease-out;
+            margin-right: 0.25em;
+        }
+
+        .reveal-word.is-revealed {
+            color: var(--text-light);
+        }
+
+        /* ==========================================
+           SECTION 4: ANIMATED CHAT CONVERSATION
+           ========================================== */
+        .chat-section {
+            background-color: #050505;
+            padding: 90px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 520px;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 82%;
+            padding: 13px 18px;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            border-radius: 20px;
+            letter-spacing: -0.2px;
+            animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        @keyframes bubblePop {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .chat-bubble.customer {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #fce0c8 0%, #b3e7e2 100%);
+            color: #000000;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.company {
+            align-self: flex-start;
+            background-color: #1f1f23;
+            color: #f2f2f7;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 14px 18px;
+            background-color: #1f1f23;
+            border-radius: 20px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            animation: bubblePop 0.25s ease forwards;
+        }
+
+        .typing-indicator.customer-side {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #fce0c8 0%, #b3e7e2 100%);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #a0a0a5;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator.customer-side .dot {
+            background-color: #333333;
+        }
+
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* ==========================================
+           SECTION 5: IMAGE FLOW ACCORDION CAROUSEL
+           ========================================== */
+        .flow-section {
+            background-color: var(--bg-pure-black);
+            padding: 80px 20px 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .flow-section-title {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #666666;
+            margin-bottom: 25px;
+        }
+
+        .flow-carousel {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            max-width: 1000px;
+            height: 480px;
+        }
+
+        .flow-card {
+            position: relative;
+            flex: 1;
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #111111;
+            background-size: cover;
+            background-position: center;
+            transition: flex 0.6s var(--ease-out), filter 0.4s ease;
+            filter: brightness(0.45) contrast(0.95);
+        }
+
+        .flow-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+            z-index: 1;
+        }
+
+        .flow-carousel:hover .flow-card { flex: 0.75; filter: brightness(0.3); }
+        .flow-carousel .flow-card:hover { flex: 3.5; filter: brightness(1); }
+        .flow-carousel:not(:hover) .flow-card.default-open { flex: 3.5; filter: brightness(1); }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 22px 18px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .flow-card:hover .card-header,
+        .flow-carousel:not(:hover) .flow-card.default-open .card-header {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+        .card-center { display: flex; justify-content: center; align-items: center; flex: 1; }
+
+        .center-illustration {
+            width: 160px;
+            height: 160px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .flow-card:hover .center-illustration,
+        .flow-carousel:not(:hover) .flow-card.default-open .center-illustration {
+            opacity: 0.9;
+            transform: scale(1);
+        }
+
+        .card-footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
+        
+        .collapsed-info { text-align: center; width: 100%; }
+        .collapsed-info .day { font-size: 10px; color: rgba(255,255,255,0.5); display: block; }
+        .collapsed-info .date { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+        .expanded-info { display: none; width: 100%; justify-content: space-between; font-size: 12px; }
+
+        .flow-card:hover .collapsed-info,
+        .flow-carousel:not(:hover) .flow-card.default-open .collapsed-info { display: none; }
+        
+        .flow-card:hover .expanded-info,
+        .flow-carousel:not(:hover) .flow-card.default-open .expanded-info { display: flex; }
+
+        .meta-title { font-weight: 700; font-size: 13px; color: #fff; }
+        .meta-sub { font-size: 11px; opacity: 0.65; }
+
+        .card-1 { background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'); }
+        .card-2 { background: #1e4524; color: #102d14; }
+        .card-2::before { display: none; }
+        .card-2 .card-header, .card-2 .expanded-info, .card-2 .meta-title { color: #102d14; }
+        .card-2 .collapsed-info .day, .card-2 .collapsed-info .date, .card-2 .meta-sub { color: rgba(16, 45, 20, 0.8); }
+        .card-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80'); background-color: #3b0303; background-blend-mode: multiply; }
+        .card-4 { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'); background-color: #081d2c; background-blend-mode: multiply; }
+
+        /* ==========================================
+           SECTION 6: BLUEPRINT SPLASH REVEAL
+           ========================================== */
+        .blueprint-section {
+            background-color: #030814;
+            padding: 90px 20px 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .blueprint-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .blueprint-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .blueprint-title {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .blueprint-canvas-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 960px;
+            height: 540px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2);
+            cursor: crosshair;
+            background-color: var(--blueprint-blue);
+        }
+
+        .blueprint-canvas-wrapper canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .blueprint-hint {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 15, 45, 0.75);
+            color: #93c5fd;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(147, 197, 253, 0.2);
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .blueprint-canvas-wrapper:hover .blueprint-hint {
+            opacity: 0.3;
+        }
+
+        .footer-spacer {
+            padding: 40px 0;
+            text-align: center;
+            color: #444444;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HERO EYE BUTTON -->
+    <section class="hero-section">
+        <button class="dynamic-button" aria-label="Interactive Button">
+            <span class="button-text">Click to Copy</span>
+            <div class="eyes-container">
+                <div class="eye blinking">
+                    <div class="eyelid"></div>
+                    <div class="pupil"></div>
+                </div>
+                <div class="eye blinking">
+                    <div class="eyelid"></div>
+                    <div class="pupil"></div>
+                </div>
+            </div>
+        </button>
+    </section>
+
+    <!-- 2. HORIZONTAL CARD CAROUSEL -->
+    <section class="carousel-section">
+        <div class="carousel-viewport" id="js-carousel">
+            <div class="carousel-track">
+                
+                <article class="carousel-item">
+                    <span class="tag">Strategy</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Strategy">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Strategy</h3>
+                            <p class="subtitle">Defined direction</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item">
+                    <span class="tag">Product</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Product">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Product</h3>
+                            <p class="subtitle">Design execution</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item active">
+                    <span class="tag">Branding</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Identity">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Identity</h3>
+                            <p class="subtitle">Consistent brand presence</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+                <article class="carousel-item">
+                    <span class="tag">Interaction</span>
+                    <div class="card-image-wrapper">
+                        <img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Usability">
+                    </div>
+                    <div class="meta-text-block">
+                        <div class="text-group">
+                            <h3 class="title">Usability</h3>
+                            <p class="subtitle">Seamless flow</p>
+                        </div>
+                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SCROLL TEXT REVEAL -->
+    <section class="text-reveal-section">
+        <div class="reveal-scroll-container" id="revealTrack">
+            <div class="sticky-wrapper">
+                <h1 class="reveal-header js-reveal-text">
+                    Commercial Awnings for Shops, Restaurants, Hotels & Bars
+                </h1>
+                <p class="reveal-paragraph js-reveal-text">
+                    For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism.
+                </p>
+                <p class="reveal-cta js-reveal-text">
+                    Call our team on 020 8858 2083 today to discuss your project
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ANIMATED CHAT CONVERSATION -->
+    <section class="chat-section">
+        <div class="chat-container" id="chatContainer">
+            <!-- Dynamic Bubbles Loop -->
+        </div>
+    </section>
+
+    <!-- 5. IMAGE FLOW ACCORDION CAROUSEL -->
+    <section class="flow-section">
+        <div class="flow-section-title">Image Flow · Showcase</div>
+        
+        <div class="flow-carousel">
+            
+            <div class="flow-card card-1">
+                <div class="card-content">
+                    <div class="card-header"><span>Paramount</span><span>Film</span></div>
+                    <div class="card-center"></div>
+                    <div class="card-footer">
+                        <div class="collapsed-info"><span class="day">Monday</span><span class="date">Nov 10, 2025</span></div>
+                        <div class="expanded-info">
+                            <div class="meta-col"><span class="meta-title">The Godfather</span><span class="meta-sub">Exclusive Screening</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">8:00 PM EST</span><span class="meta-sub">Live Cinema</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-card card-2 default-open">
+                <div class="card-content">
+                    <div class="card-header">
+                        <span>Quartr</span><span>Robinhood</span>
+                    </div>
+                    <div class="card-center">
+                        <svg class="center-illustration" viewBox="0 0 200 200" fill="none" stroke="#102d14" stroke-width="1.5">
+                            <ellipse cx="100" cy="100" rx="70" ry="90"/>
+                            <path d="M100 40 Q100 160 100 160 M70 100 Q100 70 130 100" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="card-footer">
+                        <div class="collapsed-info"><span class="day">Wednesday</span><span class="date">Nov 05, 2025</span></div>
+                        <div class="expanded-info">
+                            <div class="meta-col"><span class="meta-title">Robinhood Q3 | 25</span><span class="meta-sub">earnings call</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">5:00 PM ET</span><span class="meta-sub">live on Quartr</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-card card-3">
+                <div class="card-content">
+                    <div class="card-header"><span>Ferrari</span><span>Stallion</span></div>
+                    <div class="card-center"></div>
+                    <div class="card-footer">
+                        <div class="collapsed-info"><span class="day">Tuesday</span><span class="date">Nov 04, 2025</span></div>
+                        <div class="expanded-info">
+                            <div class="meta-col"><span class="meta-title">Scuderia Reveal</span><span class="meta-sub">Design Keynote</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">2:00 PM CET</span><span class="meta-sub">Maranello</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-card card-4">
+                <div class="card-content">
+                    <div class="card-header"><span>Horizon</span><span>Nature</span></div>
+                    <div class="card-center"></div>
+                    <div class="card-footer">
+                        <div class="collapsed-info"><span class="day">Tuesday</span><span class="date">Oct 21, 2025</span></div>
+                        <div class="expanded-info">
+                            <div class="meta-col"><span class="meta-title">Blue Hour Summit</span><span class="meta-sub">Global Environment</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">10:00 AM PST</span><span class="meta-sub">Stream</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. BLUEPRINT SPLASH REVEAL SECTION -->
+    <section class="blueprint-section">
+        <div class="blueprint-header">
+            <div class="blueprint-subtitle">Architectural Craftsmanship</div>
+            <h2 class="blueprint-title">From Blueprint Drawing to Reality</h2>
+        </div>
+
+        <div class="blueprint-canvas-wrapper" id="blueprintWrapper">
+            <canvas id="blueprintCanvas"></canvas>
+            <div class="blueprint-hint">Hover or move cursor over drawing to reveal</div>
+        </div>
+    </section>
+
+    <footer class="footer-spacer">
+        <p>© Modern Minimal Showcase</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* 1. EYE TRACKING */
+            const pupils = document.querySelectorAll('.pupil');
+            const eyes = document.querySelectorAll('.eye');
+            
+            document.addEventListener('mousemove', (e) => {
+                eyes.forEach((eye, index) => {
+                    const pupil = pupils[index];
+                    const rect = eye.getBoundingClientRect();
+                    const eyeCenterX = rect.left + rect.width / 2;
+                    const eyeCenterY = rect.top + rect.height / 2;
+
+                    const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                    const cursorDistance = Math.hypot(e.clientX - eyeCenterX, e.clientY - eyeCenterY);
+
+                    const travelDist = Math.min(6, cursorDistance * 0.025); 
+                    const pupilDisplacementX = Math.cos(angle) * travelDist;
+                    const pupilDisplacementY = Math.sin(angle) * travelDist;
+
+                    pupil.style.transform = `translate(calc(-50% + ${pupilDisplacementX}px), calc(-50% + ${pupilDisplacementY}px))`;
+                });
+            });
+
+            /* 2. CAROUSEL OBSERVER */
+            const viewport = document.getElementById('js-carousel');
+            const cards = document.querySelectorAll('.carousel-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        cards.forEach(card => card.classList.remove('active'));
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { root: viewport, rootMargin: '0px -40% 0px -40%', threshold: 0.1 });
+
+            cards.forEach(card => observer.observe(card));
+
+            /* 3. TEXT REVEAL ENGINE */
+            const textContainers = document.querySelectorAll('.js-reveal-text');
+            let allWords = [];
+
+            textContainers.forEach(container => {
+                const words = container.innerText.split(/\s+/);
+                container.innerHTML = ''; 
+                words.forEach(word => {
+                    if (!word) return;
+                    const span = document.createElement('span');
+                    span.className = 'reveal-word';
+                    span.textContent = word;
+                    container.appendChild(span);
+                    allWords.push(span);
+                });
+            });
+
+            const track = document.getElementById('revealTrack');
+            let ticking = false;
+
+            function updateWordReveal() {
+                const rect = track.getBoundingClientRect();
+                const totalScrollDistance = rect.height - window.innerHeight;
+                let progress = Math.max(0, Math.min(1, -rect.top / totalScrollDistance));
+                const wordsToReveal = Math.floor(progress * allWords.length);
+
+                allWords.forEach((wordSpan, index) => {
+                    if (index <= wordsToReveal && progress > 0) {
+                        wordSpan.classList.add('is-revealed');
+                    } else {
+                        wordSpan.classList.remove('is-revealed');
+                    }
+                });
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateWordReveal);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            /* 4. ANIMATED CHAT ENGINE */
+            const chatContainer = document.getElementById('chatContainer');
+
+            const conversation = [
+                { sender: 'customer', text: "Do you guys do awnings?" },
+                { sender: 'company', text: "Yes we do almost all type of awnings" },
+                { sender: 'customer', text: "Great, Do you do electric or manual awnings" },
+                { sender: 'company', text: "we do both as per your need" },
+                { sender: 'customer', text: "Wonderful, how much does it cost?" },
+                { sender: 'company', text: "Honestly it depends on requirements" },
+                { sender: 'customer', text: "I see, let's get in touch please" },
+                { sender: 'company', text: "Sure, please call on 1111 111 1111" }
+            ];
+
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+            function createTypingIndicator(sender) {
+                const indicator = document.createElement('div');
+                indicator.className = `typing-indicator ${sender === 'customer' ? 'customer-side' : ''}`;
+                indicator.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+                return indicator;
+            }
+
+            function createBubble(sender, text) {
+                const bubble = document.createElement('div');
+                bubble.className = `chat-bubble ${sender}`;
+                bubble.textContent = text;
+                return bubble;
+            }
+
+            async function runChatLoop() {
+                while (true) {
+                    chatContainer.innerHTML = '';
+
+                    for (let i = 0; i < conversation.length; i++) {
+                        const item = conversation[i];
+                        
+                        const typingDots = createTypingIndicator(item.sender);
+                        chatContainer.appendChild(typingDots);
+
+                        await sleep(1100);
+
+                        chatContainer.removeChild(typingDots);
+                        const bubble = createBubble(item.sender, item.text);
+                        chatContainer.appendChild(bubble);
+
+                        await sleep(900);
+                    }
+
+                    const finalTypingDots = createTypingIndicator('customer');
+                    chatContainer.appendChild(finalTypingDots);
+
+                    await sleep(3000);
+                }
+            }
+
+            runChatLoop();
+
+            /* 5. BLUEPRINT SPLASH REVEAL ENGINE */
+            const wrapper = document.getElementById('blueprintWrapper');
+            const canvas = document.getElementById('blueprintCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const sourceImageUrl = "https://morcoblinds.co.uk/wp-content/uploads/news_images/Architectural-Premium-Canopy-London.jpg";
+            
+            const realImg = new Image();
+            realImg.crossOrigin = "anonymous";
+            realImg.src = sourceImageUrl;
+
+            const blueprintImg = new Image();
+            blueprintImg.crossOrigin = "anonymous";
+
+            // Prepare Blueprint Image Buffer
+            let imgLoaded = false;
+            realImg.onload = () => {
+                const offCanvas = document.createElement('canvas');
+                offCanvas.width = realImg.width;
+                offCanvas.height = realImg.height;
+                const offCtx = offCanvas.getContext('2d');
+
+                // Render Inverted/Cyan Blueprint Version of Photo
+                offCtx.filter = 'brightness(1.2) contrast(180%) invert(100%) sepia(100%) hue-rotate(180deg) saturate(400%)';
+                offCtx.drawImage(realImg, 0, 0);
+
+                blueprintImg.onload = () => {
+                    imgLoaded = true;
+                    resizeCanvas();
+                };
+                blueprintImg.src = offCanvas.toDataURL();
+            };
+
+            const GRID_SIZE = 36; // Size of each blocky splash pixel tile
+            const activeTiles = new Map(); // Stores tile opacities: key `${col}_${row}` => opacity
+
+            function resizeCanvas() {
+                const rect = wrapper.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+
+            // Handle Pointer Movement to Trigger Grid Splash
+            function triggerSplash(clientX, clientY) {
+                if (!imgLoaded) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+
+                const centerCol = Math.floor(x / GRID_SIZE);
+                const centerRow = Math.floor(y / GRID_SIZE);
+
+                // Activate a blocky cluster around cursor
+                const splashRadius = 2; 
+                for (let r = -splashRadius; r <= splashRadius; r++) {
+                    for (let c = -splashRadius; c <= splashRadius; c++) {
+                        // Create blocky pattern
+                        if (Math.abs(r) + Math.abs(c) <= splashRadius + 1) {
+                            const col = centerCol + c;
+                            const row = centerRow + r;
+                            const key = `${col}_${row}`;
+                            activeTiles.set(key, 1.0); // Full opacity initially
+                        }
+                    }
+                }
+            }
+
+            wrapper.addEventListener('mousemove', (e) => triggerSplash(e.clientX, e.clientY));
+            wrapper.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    triggerSplash(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: true });
+
+            // Render Frame Loop
+            function renderBlueprint() {
+                requestAnimationFrame(renderBlueprint);
+
+                if (!imgLoaded) return;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 1. Draw Base Blueprint Canvas
+                ctx.drawImage(blueprintImg, 0, 0, canvas.width, canvas.height);
+
+                // Tint layer for deep blueprint blue tone
+                ctx.fillStyle = 'rgba(0, 75, 179, 0.45)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Overlay Blueprint Architectural CAD Grid Lines
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+                ctx.lineWidth = 1;
+
+                for (let x = 0; x < canvas.width; x += GRID_SIZE) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, canvas.height);
+                    ctx.stroke();
+                }
+                for (let y = 0; y < canvas.height; y += GRID_SIZE) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+
+                // 2. Render Active Grid Tiles revealing Real Color Image
+                activeTiles.forEach((opacity, key) => {
+                    const [col, row] = key.split('_').map(Number);
+                    const tileX = col * GRID_SIZE;
+                    const tileY = row * GRID_SIZE;
+
+                    ctx.save();
+                    ctx.globalAlpha = opacity;
+
+                    // Draw image slice corresponding to tile
+                    const sx = (tileX / canvas.width) * realImg.width;
+                    const sy = (tileY / canvas.height) * realImg.height;
+                    const sWidth = (GRID_SIZE / canvas.width) * realImg.width;
+                    const sHeight = (GRID_SIZE / canvas.height) * realImg.height;
+
+                    ctx.drawImage(realImg, sx, sy, sWidth, sHeight, tileX, tileY, GRID_SIZE, GRID_SIZE);
+
+                    // Optional thin border around active blocky splash
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.4})`;
+                    ctx.strokeRect(tileX, tileY, GRID_SIZE, GRID_SIZE);
+
+                    ctx.restore();
+
+                    // Fade out each splash block over ~1 second
+                    const newOpacity = opacity - 0.02;
+                    if (newOpacity <= 0) {
+                        activeTiles.delete(key);
+                    } else {
+                        activeTiles.set(key, newOpacity);
+                    }
+                });
+            }
+
+            renderBlueprint();
+        });
+    </script>
+</body>
+</html>
