@@ -3,127 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Components Integrated Showcase</title>
+    <title>Minimalist Interactive UI Showcase</title>
     <style>
         /* ==========================================
-           1. SHARED ROOT & GLOBAL RESETS
+           1. GLOBAL RESETS & DESIGN SYSTEM
            ========================================== */
         :root {
-            /* Eye Button */
-            --eye-bg-color: #f7f7f7;
-            --button-bg: #000000;
-            --button-text: #ffffff;
-            --eye-bg: #ffffff;
-            --pupil-bg: #000000;
-            --eyelid-bg: #000000;
-            --transition-speed: 0.1s;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            --bg-light: #f7f7f7;
+            --bg-white: #ffffff;
+            --bg-dark: #0a0a0a;
+            --bg-pure-black: #000000;
+            
+            --text-dark: #111111;
+            --text-muted: #888888;
+            --text-inactive: #333333;
+            --text-light: #ffffff;
 
-            /* Horizontal Card Carousel */
-            --card-width: 320px;
-            --card-height: 380px;
-            --card-radius: 20px;
-            --tag-bg: rgba(255, 255, 255, 0.7);
-            --tag-text: #000000;
-            --text-primary: #000000;
-            --text-secondary: #aaaaaa;
+            /* Carousel */
+            --card-width: 300px;
+            --card-height: 360px;
+            --card-radius: 18px;
 
-            /* Text Reveal */
-            --text-inactive: #444444;
-            --text-active: #ffffff;
+            /* Transitions */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Prevent horizontal overflow blowout across the entire page */
         html, body {
             width: 100%;
             overflow-x: hidden;
-            background-color: #000000;
-            color: #ffffff;
+            background-color: var(--bg-pure-black);
+            color: var(--text-light);
+        }
+
+        /* Section Separator Line */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         /* ==========================================
-           SECTION 1: EYE BUTTON HERO
+           SECTION 1: HERO EYE BUTTON
            ========================================== */
-        .hero-eye-section {
+        .hero-section {
             width: 100%;
-            min-height: 50vh;
+            padding: 90px 20px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: var(--eye-bg-color);
-            padding: 60px 20px;
-            border-bottom: 1px solid #eaeaea;
+            background-color: var(--bg-light);
         }
 
         .dynamic-button {
             display: flex;
             align-items: center;
-            gap: 16px;
-            background-color: var(--button-bg);
-            color: var(--button-text);
+            gap: 14px;
+            background-color: #000000;
+            color: #ffffff;
             border: none;
-            padding: 14px 32px;
+            padding: 14px 28px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
         }
 
         .dynamic-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .dynamic-button:active {
-            transform: translateY(0);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
         }
 
         .button-text {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            letter-spacing: -0.5px;
-            pointer-events: none;
+            letter-spacing: -0.3px;
         }
 
         .eyes-container {
             display: flex;
-            gap: 5px;
-            pointer-events: none;
+            gap: 4px;
         }
 
         .eye {
-            width: 32px;
-            height: 32px;
-            background-color: var(--eye-bg);
+            width: 26px;
+            height: 26px;
+            background-color: #ffffff;
             border-radius: 50%;
             position: relative;
             display: grid;
             place-items: center;
             overflow: hidden;
-            transform: translateZ(0);
         }
 
         .pupil {
-            width: 11px;
-            height: 11px;
-            background-color: var(--pupil-bg);
+            width: 9px;
+            height: 9px;
+            background-color: #000000;
             border-radius: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            transition: transform var(--transition-speed) ease-out;
+            transition: transform 0.08s ease-out;
             will-change: transform;
         }
 
@@ -133,11 +122,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--eyelid-bg);
+            background-color: #000000;
             border-radius: 50%;
             transform: scaleY(0);
             transform-origin: top;
-            will-change: transform;
             z-index: 1;
         }
 
@@ -148,27 +136,25 @@
         }
 
         .eye.blinking .eyelid {
-            animation: blink 2.5s infinite;
+            animation: blink 3s infinite;
         }
 
         /* ==========================================
-           SECTION 2: CARD CAROUSEL
+           SECTION 2: CAROUSEL SECTION
            ========================================== */
         .carousel-section {
             width: 100%;
-            padding: 60px 0 100px 0;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
+            padding: 70px 0;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
         }
 
         .carousel-viewport {
-            width: 100%; /* Fixed: Changed 100vw -> 100% to stop layout blowout */
+            width: 100%;
             overflow-x: auto;
             display: flex;
             align-items: center;
-            padding-top: 30px;
-            padding-bottom: 120px;
+            padding: 20px 0 60px 0;
             scroll-snap-type: x mandatory;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
@@ -181,8 +167,8 @@
         .carousel-track {
             display: flex;
             gap: 20px;
-            padding-left: calc(50% - (var(--card-width) / 2));
-            padding-right: calc(50% - (var(--card-width) / 2));
+            padding-left: calc(50vw - (var(--card-width) / 2));
+            padding-right: calc(50vw - (var(--card-width) / 2));
         }
 
         .carousel-item {
@@ -193,24 +179,16 @@
             position: relative;
             cursor: pointer;
             scroll-snap-align: center;
-            transform: translateZ(0) scale(0.9);
-            filter: grayscale(80%) opacity(0.7);
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            overflow: visible;
+            transform: translateZ(0) scale(0.92);
+            filter: grayscale(80%) opacity(0.5);
+            transition: transform 0.4s var(--ease-out), filter 0.4s ease;
         }
 
         .card-image-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             border-radius: var(--card-radius);
             overflow: hidden;
-            z-index: 1;
         }
 
         .carousel-item img {
@@ -221,86 +199,49 @@
 
         .tag {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--tag-bg);
-            color: var(--tag-text);
-            padding: 6px 14px;
+            top: 14px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.85);
+            color: #000;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 600;
-            text-transform: capitalize;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
             z-index: 2;
-            pointer-events: none;
         }
 
         .carousel-item.active {
-            transform: translateZ(0) scale(1.1);
+            transform: translateZ(0) scale(1.05);
             filter: grayscale(0%) opacity(1);
-            cursor: default;
-        }
-
-        .carousel-item.active .tag {
-            background: rgba(0,0,0,0.5);
-            color: white;
         }
 
         .meta-text-block {
             position: absolute;
-            bottom: -80px;
+            bottom: -55px;
             left: 0;
             width: 100%;
-            padding: 10px 0;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            z-index: 3;
+            align-items: center;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(6px);
             transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-            pointer-events: none;
         }
 
         .carousel-item.active .meta-text-block {
             opacity: 1;
             transform: translateY(0);
-            pointer-events: auto;
         }
 
-        .text-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .title {
-            color: var(--text-primary);
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: -0.2px;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        .arrow-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            margin-top: 1px;
-        }
+        .title { color: #111; font-size: 16px; font-weight: 600; }
+        .subtitle { color: var(--text-muted); font-size: 13px; }
 
         .arrow-icon svg {
             width: 16px;
             height: 16px;
             fill: none;
-            stroke: var(--text-primary);
+            stroke: #111;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -310,23 +251,12 @@
            SECTION 3: TEXT REVEAL SECTION
            ========================================== */
         .text-reveal-section {
-            background-color: #0a0a0a;
+            background-color: var(--bg-dark);
             position: relative;
         }
 
-        .scroll-spacer {
-            height: 15vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666666;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
         .reveal-scroll-container {
-            height: 200vh;
+            height: 130vh;
             position: relative;
         }
 
@@ -337,111 +267,189 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
         .reveal-header {
-            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-size: clamp(2rem, 3.8vw, 3.2rem);
             font-weight: 700;
-            line-height: 1.15;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
         }
 
         .reveal-paragraph {
-            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
-            font-weight: 500;
-            line-height: 1.4;
-            letter-spacing: -0.02em;
-            margin-bottom: 2.5rem;
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            font-weight: 400;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+            margin-bottom: 2rem;
         }
 
         .reveal-cta {
-            font-size: clamp(1rem, 1.8vw, 1.4rem);
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
             font-weight: 600;
-            line-height: 1.4;
         }
 
         .reveal-word {
             display: inline-block;
             color: var(--text-inactive);
-            will-change: color, opacity;
-            transition: color 0.15s ease-out, opacity 0.15s ease-out;
+            transition: color 0.12s ease-out;
             margin-right: 0.25em;
-            transform: translateZ(0);
         }
 
         .reveal-word.is-revealed {
-            color: var(--text-active);
+            color: var(--text-light);
         }
 
         /* ==========================================
-           SECTION 4: IMAGE FLOW ACCORDION CAROUSEL
+           SECTION 4: ANIMATED CHAT CONVERSATION
            ========================================== */
-        .flow-section {
-            background-color: #000000;
-            padding: 100px 20px 120px 20px;
+        .chat-section {
+            background-color: #050505;
+            padding: 90px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-top: 1px solid #1a1a1a;
+            justify-content: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 520px;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 82%;
+            padding: 13px 18px;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            border-radius: 20px;
+            letter-spacing: -0.2px;
+            animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        @keyframes bubblePop {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .chat-bubble.customer {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #fce0c8 0%, #b3e7e2 100%);
+            color: #000000;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.company {
+            align-self: flex-start;
+            background-color: #1f1f23;
+            color: #f2f2f7;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 14px 18px;
+            background-color: #1f1f23;
+            border-radius: 20px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            animation: bubblePop 0.25s ease forwards;
+        }
+
+        .typing-indicator.customer-side {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #fce0c8 0%, #b3e7e2 100%);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #a0a0a5;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator.customer-side .dot {
+            background-color: #333333;
+        }
+
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* ==========================================
+           SECTION 5: IMAGE FLOW ACCORDION CAROUSEL
+           ========================================== */
+        .flow-section {
+            background-color: var(--bg-pure-black);
+            padding: 80px 20px 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .flow-section-title {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #666666;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .flow-carousel {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
-            max-width: 1100px;
-            height: 520px;
+            max-width: 1000px;
+            height: 480px;
         }
 
         .flow-card {
             position: relative;
             flex: 1;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             cursor: pointer;
             background-color: #111111;
             background-size: cover;
             background-position: center;
-            transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-                        filter 0.4s ease;
-            filter: brightness(0.5) contrast(0.95);
+            transition: flex 0.6s var(--ease-out), filter 0.4s ease;
+            filter: brightness(0.45) contrast(0.95);
         }
 
         .flow-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
             z-index: 1;
-            pointer-events: none;
         }
 
-        .flow-carousel:hover .flow-card {
-            flex: 0.75;
-            filter: brightness(0.35);
-        }
-
-        .flow-carousel .flow-card:hover {
-            flex: 3.8;
-            filter: brightness(1);
-        }
-
-        .flow-carousel:not(:hover) .flow-card.default-open {
-            flex: 3.8;
-            filter: brightness(1);
-        }
+        .flow-carousel:hover .flow-card { flex: 0.75; filter: brightness(0.3); }
+        .flow-carousel .flow-card:hover { flex: 3.5; filter: brightness(1); }
+        .flow-carousel:not(:hover) .flow-card.default-open { flex: 3.5; filter: brightness(1); }
 
         .card-content {
             position: relative;
@@ -450,7 +458,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 24px 20px;
+            padding: 22px 18px;
         }
 
         .card-header {
@@ -458,154 +466,70 @@
             justify-content: space-between;
             align-items: center;
             opacity: 0;
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             transition: opacity 0.3s ease, transform 0.3s ease;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            letter-spacing: 0.3px;
         }
 
         .flow-card:hover .card-header,
         .flow-carousel:not(:hover) .flow-card.default-open .card-header {
             opacity: 1;
             transform: translateY(0);
-            transition-delay: 0.15s;
+            transition-delay: 0.1s;
         }
 
-        .card-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex: 1;
-        }
+        .card-center { display: flex; justify-content: center; align-items: center; flex: 1; }
 
         .center-illustration {
-            width: 200px;
-            height: 200px;
+            width: 160px;
+            height: 160px;
             opacity: 0;
             transform: scale(0.9);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .flow-card:hover .center-illustration,
         .flow-carousel:not(:hover) .flow-card.default-open .center-illustration {
             opacity: 0.9;
             transform: scale(1);
-            transition-delay: 0.1s;
         }
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            width: 100%;
-        }
+        .card-footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
+        
+        .collapsed-info { text-align: center; width: 100%; }
+        .collapsed-info .day { font-size: 10px; color: rgba(255,255,255,0.5); display: block; }
+        .collapsed-info .date { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); }
 
-        .collapsed-info {
-            text-align: center;
-            width: 100%;
-            transition: opacity 0.2s ease;
-        }
-
-        .collapsed-info .day {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.6);
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .collapsed-info .date {
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            white-space: nowrap;
-        }
-
-        .expanded-info {
-            display: none;
-            width: 100%;
-            justify-content: space-between;
-            align-items: flex-end;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
-        }
+        .expanded-info { display: none; width: 100%; justify-content: space-between; font-size: 12px; }
 
         .flow-card:hover .collapsed-info,
-        .flow-carousel:not(:hover) .flow-card.default-open .collapsed-info {
-            display: none;
-        }
-
+        .flow-carousel:not(:hover) .flow-card.default-open .collapsed-info { display: none; }
+        
         .flow-card:hover .expanded-info,
-        .flow-carousel:not(:hover) .flow-card.default-open .expanded-info {
-            display: flex;
-        }
+        .flow-carousel:not(:hover) .flow-card.default-open .expanded-info { display: flex; }
 
-        .meta-col {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
+        .meta-title { font-weight: 700; font-size: 13px; color: #fff; }
+        .meta-sub { font-size: 11px; opacity: 0.65; }
 
-        .meta-title {
-            font-weight: 700;
-            font-size: 13px;
-            color: #ffffff;
-        }
-
-        .meta-sub {
-            font-size: 11px;
-            opacity: 0.7;
-        }
-
-        /* Card backgrounds for Image Flow */
-        .card-1 {
-            background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80');
-        }
-
-        .card-2 {
-            background: #23522b;
-            color: #123317;
-        }
+        /* Card Visual Themes */
+        .card-1 { background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'); }
+        .card-2 { background: #1e4524; color: #102d14; }
         .card-2::before { display: none; }
-        .card-2 .card-header, 
-        .card-2 .expanded-info,
-        .card-2 .meta-title { color: #123317; }
-        .card-2 .collapsed-info .day,
-        .card-2 .collapsed-info .date,
-        .card-2 .meta-sub { color: rgba(18, 51, 23, 0.75); }
+        .card-2 .card-header, .card-2 .expanded-info, .card-2 .meta-title { color: #102d14; }
+        .card-2 .collapsed-info .day, .card-2 .collapsed-info .date, .card-2 .meta-sub { color: rgba(16, 45, 20, 0.8); }
+        .card-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80'); background-color: #3b0303; background-blend-mode: multiply; }
+        .card-4 { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'); background-color: #081d2c; background-blend-mode: multiply; }
+        .card-5 { background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'); background-color: #062217; background-blend-mode: multiply; }
 
-        .card-3 {
-            background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80');
-            background-color: #3b0303;
-            background-blend-mode: multiply;
-        }
-
-        .card-4 {
-            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80');
-            background-color: #081d2c;
-            background-blend-mode: multiply;
-        }
-
-        .card-5 {
-            background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80');
-            background-color: #062217;
-            background-blend-mode: multiply;
-        }
-
-        .footer-spacer {
-            padding: 40px 0;
-            text-align: center;
-            color: #555555;
-            font-size: 0.85rem;
-            border-top: 1px solid #111111;
-        }
+        .footer-spacer { padding: 40px 0; text-align: center; color: #444444; font-size: 0.8rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
 <body>
 
-    <!-- 1. EYE BUTTON SECTION -->
-    <section class="hero-eye-section">
-        <button class="copy-button dynamic-button" aria-label="Click to copy information">
+    <!-- 1. HERO EYE BUTTON -->
+    <section class="hero-section">
+        <button class="dynamic-button" aria-label="Interactive Button">
             <span class="button-text">Click to Copy</span>
             <div class="eyes-container">
                 <div class="eye blinking">
@@ -620,15 +544,15 @@
         </button>
     </section>
 
-    <!-- 2. SCROLL CAROUSEL SECTION -->
+    <!-- 2. HORIZONTAL CARD CAROUSEL -->
     <section class="carousel-section">
         <div class="carousel-viewport" id="js-carousel">
             <div class="carousel-track">
-
+                
                 <article class="carousel-item">
                     <span class="tag">Strategy</span>
                     <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Architecture">
+                        <img src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Strategy">
                     </div>
                     <div class="meta-text-block">
                         <div class="text-group">
@@ -642,7 +566,7 @@
                 <article class="carousel-item">
                     <span class="tag">Product</span>
                     <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Man portrait">
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Product">
                     </div>
                     <div class="meta-text-block">
                         <div class="text-group">
@@ -656,7 +580,7 @@
                 <article class="carousel-item active">
                     <span class="tag">Branding</span>
                     <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Person portrait">
+                        <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Identity">
                     </div>
                     <div class="meta-text-block">
                         <div class="text-group">
@@ -670,7 +594,7 @@
                 <article class="carousel-item">
                     <span class="tag">Interaction</span>
                     <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Woman portrait">
+                        <img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Usability">
                     </div>
                     <div class="meta-text-block">
                         <div class="text-group">
@@ -681,30 +605,12 @@
                     </div>
                 </article>
 
-                <article class="carousel-item">
-                    <span class="tag">Detail</span>
-                    <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/34221/violoncello-music-instrument-close-up.jpg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Cello close up">
-                    </div>
-                    <div class="meta-text-block">
-                        <div class="text-group">
-                            <h3 class="title">Details</h3>
-                            <p class="subtitle">Refining elements</p>
-                        </div>
-                        <div class="arrow-icon"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                    </div>
-                </article>
-
             </div>
         </div>
     </section>
 
-    <!-- 3. TEXT REVEAL SECTION -->
+    <!-- 3. SCROLL TEXT REVEAL -->
     <section class="text-reveal-section">
-        <div class="scroll-spacer">
-            <span>↓ Scroll down to view effect</span>
-        </div>
-
         <div class="reveal-scroll-container" id="revealTrack">
             <div class="sticky-wrapper">
                 <h1 class="reveal-header js-reveal-text">
@@ -720,977 +626,19 @@
         </div>
     </section>
 
-    <!-- 4. IMAGE FLOW / ACCORDION CAROUSEL SECTION -->
+    <!-- 4. ANIMATED CHAT CONVERSATION -->
+    <section class="chat-section">
+        <div class="chat-container" id="chatContainer">
+            <!-- Dynamic Bubbles & Typing Dots Loop -->
+        </div>
+    </section>
+
+    <!-- 5. IMAGE FLOW ACCORDION CAROUSEL -->
     <section class="flow-section">
-        <div class="flow-section-title">Image Flow · Accordion Carousel</div>
+        <div class="flow-section-title">Image Flow · Showcase</div>
         
         <div class="flow-carousel">
             
-            <!-- Card 1 -->
-            <div class="flow-card card-1">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span>Paramount</span>
-                        <span>Film</span>
-                    </div>
-                    <div class="card-center"></div>
-                    <div class="card-footer">
-                        <div class="collapsed-info">
-                            <span class="day">Monday</span>
-                            <span class="date">Nov 10, 2025</span>
-                        </div>
-                        <div class="expanded-info">
-                            <div class="meta-col">
-                                <span class="meta-title">The Godfather</span>
-                                <span class="meta-sub">Exclusive Screening</span>
-                            </div>
-                            <div class="meta-col" style="text-align: center;">
-                                <span class="meta-sub">Monday</span>
-                                <span class="meta-title">Nov 10, 2025</span>
-                            </div>
-                            <div class="meta-col" style="text-align: right;">
-                                <span class="meta-title">8:00 PM EST</span>
-                                <span class="meta-sub">Live Cinema</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (Active Default) -->
-            <div class="flow-card card-2 default-open">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span style="display:flex; align-items:center; gap:4px; font-weight:700;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect width="20" height="20" x="2" y="2" rx="4"/></svg> 
-                            Quartr
-                        </span>
-                        <span style="display:flex; align-items:center; gap:4px;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h20L12 2z"/></svg> 
-                            Robinhood
-                        </span>
-                    </div>
-
-                    <div class="card-center">
-                        <svg class="center-illustration" viewBox="0 0 200 200" fill="none" stroke="#123317" stroke-width="1.5">
-                            <ellipse cx="100" cy="100" rx="70" ry="90" stroke-width="1.5"/>
-                            <ellipse cx="100" cy="100" rx="65" ry="85" stroke-dasharray="2 4"/>
-                            <path d="M100 40 Q100 160 100 160 M70 100 Q100 70 130 100 M80 130 C80 130 100 90 120 130" stroke-width="2"/>
-                            <circle cx="100" cy="80" r="12"/>
-                            <path d="M90 70 L110 70 L100 50 Z" fill="#123317"/>
-                        </svg>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="collapsed-info">
-                            <span class="day">Wednesday</span>
-                            <span class="date">Nov 05, 2025</span>
-                        </div>
-                        <div class="expanded-info">
-                            <div class="meta-col">
-                                <span class="meta-title">Robinhood Q3 | 25</span>
-                                <span class="meta-sub">earnings call</span>
-                            </div>
-                            <div class="meta-col" style="text-align: center;">
-                                <span class="meta-sub">Wednesday</span>
-                                <span class="meta-title">Nov 05, 2025</span>
-                            </div>
-                            <div class="meta-col" style="text-align: right;">
-                                <span class="meta-title">5:00 PM ET</span>
-                                <span class="meta-sub">live on Quartr</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="flow-card card-3">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span>Ferrari</span>
-                        <span>Stallion</span>
-                    </div>
-                    <div class="card-center"></div>
-                    <div class="card-footer">
-                        <div class="collapsed-info">
-                            <span class="day">Tuesday</span>
-                            <span class="date">Nov 04, 2025</span>
-                        </div>
-                        <div class="expanded-info">
-                            <div class="meta-col">
-                                <span class="meta-title">Scuderia Reveal</span>
-                                <span class="meta-sub">Design Keynote</span>
-                            </div>
-                            <div class="meta-col" style="text-align: center;">
-                                <span class="meta-sub">Tuesday</span>
-                                <span class="meta-title">Nov 04, 2025</span>
-                            </div>
-                            <div class="meta-col" style="text-align: right;">
-                                <span class="meta-title">2:00 PM CET</span>
-                                <span class="meta-sub">Maranello</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="flow-card card-4">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span>Horizon</span>
-                        <span>Nature</span>
-                    </div>
-                    <div class="card-center"></div>
-                    <div class="card-footer">
-                        <div class="collapsed-info">
-                            <span class="day">Tuesday</span>
-                            <span class="date">Oct 21, 2025</span>
-                        </div>
-                        <div class="expanded-info">
-                            <div class="meta-col">
-                                <span class="meta-title">Blue Hour Summit</span>
-                                <span class="meta-sub">Global Environment</span>
-                            </div>
-                            <div class="meta-col" style="text-align: center;">
-                                <span class="meta-sub">Tuesday</span>
-                                <span class="meta-title">Oct 21, 2025</span>
-                            </div>
-                            <div class="meta-col" style="text-align: right;">
-                                <span class="meta-title">10:00 AM PST</span>
-                                <span class="meta-sub">Stream</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="flow-card card-5">
-                <div class="card-content">
-                    <div class="card-header">
-                        <span>Matrix</span>
-                        <span>Vision</span>
-                    </div>
-                    <div class="card-center"></div>
-                    <div class="card-footer">
-                        <div class="collapsed-info">
-                            <span class="day">Wednesday</span>
-                            <span class="date">Aug 27, 2025</span>
-                        </div>
-                        <div class="expanded-info">
-                            <div class="meta-col">
-                                <span class="meta-title">Cyber Keynote</span>
-                                <span class="meta-sub">Next-Gen Interface</span>
-                            </div>
-                            <div class="meta-col" style="text-align: center;">
-                                <span class="meta-sub">Wednesday</span>
-                                <span class="meta-title">Aug 27, 2025</span>
-                            </div>
-                            <div class="meta-col" style="text-align: right;">
-                                <span class="meta-title">6:00 PM UTC</span>
-                                <span class="meta-sub">Live Broadcast</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <footer class="footer-spacer">
-        <p>© Integrated Interactive Components</p>
-    </footer>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            /* --- 1. EYE TRACKING --- */
-            const pupils = document.querySelectorAll('.pupil');
-            const eyes = document.querySelectorAll('.eye');
-            const copyButton = document.querySelector('.dynamic-button');
-            const maxPupilTravel = 8; 
-
-            document.addEventListener('mousemove', (e) => {
-                eyes.forEach((eye, index) => {
-                    const pupil = pupils[index];
-                    const rect = eye.getBoundingClientRect();
-                    const eyeCenterX = rect.left + rect.width / 2;
-                    const eyeCenterY = rect.top + rect.height / 2;
-
-                    const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
-                    const dx = e.clientX - eyeCenterX;
-                    const dy = e.clientY - eyeCenterY;
-                    const cursorDistance = Math.hypot(dx, dy);
-
-                    const travelDist = Math.min(maxPupilTravel, cursorDistance * 0.03); 
-                    const pupilDisplacementX = Math.cos(angle) * travelDist;
-                    const pupilDisplacementY = Math.sin(angle) * travelDist;
-
-                    pupil.style.transform = `translate(calc(-50% + ${pupilDisplacementX}px), calc(-50% + ${pupilDisplacementY}px))`;
-                });
-            });
-
-            if (copyButton) {
-                copyButton.addEventListener('click', () => {
-                    navigator.clipboard.writeText("Information Copied!").then(() => {
-                        const textSpan = copyButton.querySelector('.button-text');
-                        const originalText = textSpan.innerText;
-                        textSpan.innerText = "Copied!";
-                        copyButton.style.backgroundColor = "#4caf50";
-                        
-                        setTimeout(() => {
-                            textSpan.innerText = originalText;
-                            copyButton.style.backgroundColor = ""; 
-                        }, 1500);
-                    });
-                });
-            }
-
-            /* --- 2. CARD CAROUSEL --- */
-            const viewport = document.getElementById('js-carousel');
-            const cards = document.querySelectorAll('.carousel-item');
-
-            const observerOptions = {
-                root: viewport,
-                rootMargin: '0px -40% 0px -40%',
-                threshold: 0.1
-            };
-
-            const observerCallback = (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        cards.forEach(card => card.classList.remove('active'));
-                        entry.target.classList.add('active');
-                    }
-                });
-            };
-
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-            cards.forEach(card => observer.observe(card));
-
-            viewport.addEventListener('click', (e) => {
-                const cardClicked = e.target.closest('.carousel-item');
-                if (cardClicked && !cardClicked.classList.contains('active')) {
-                    cardClicked.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                }
-            });
-
-            /* --- 3. TEXT REVEAL ENGINE --- */
-            const textContainers = document.querySelectorAll('.js-reveal-text');
-            let allWords = [];
-
-            textContainers.forEach(container => {
-                const text = container.innerText;
-                container.innerHTML = ''; 
-
-                const words = text.split(/\s+/);
-                words.forEach(word => {
-                    if (word.length === 0) return;
-                    const span = document.createElement('span');
-                    span.className = 'reveal-word';
-                    span.textContent = word;
-                    container.appendChild(span);
-                    allWords.push(span);
-                });
-            });
-
-            const track = document.getElementById('revealTrack');
-            const totalWords = allWords.length;
-            let ticking = false;
-
-            function updateWordReveal() {
-                const rect = track.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-
-                const totalScrollDistance = rect.height - windowHeight;
-                const scrolledDistance = -rect.top;
-                let progress = scrolledDistance / totalScrollDistance;
-
-                progress = Math.max(0, Math.min(1, progress));
-                const wordsToReveal = Math.floor(progress * totalWords);
-
-                allWords.forEach((wordSpan, index) => {
-                    if (index <= wordsToReveal && progress > 0) {
-                        wordSpan.classList.add('is-revealed');
-                    } else {
-                        wordSpan.classList.remove('is-revealed');
-                    }
-                });
-
-                ticking = false;
-            }
-
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(updateWordReveal);
-                    ticking = true;
-                }
-            }, { passive: true });
-
-            updateWordReveal();
-        });
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integrated UI Showcase</title>
-    <style>
-        /* ==========================================
-           1. SHARED ROOT & GLOBAL RESETS
-           ========================================== */
-        :root {
-            /* Eye Button */
-            --eye-bg-color: #f7f7f7;
-            --button-bg: #000000;
-            --button-text: #ffffff;
-            --eye-bg: #ffffff;
-            --pupil-bg: #000000;
-            --eyelid-bg: #000000;
-            --transition-speed: 0.1s;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-
-            /* Horizontal Card Carousel */
-            --card-width: 320px;
-            --card-height: 380px;
-            --card-radius: 20px;
-            --tag-bg: rgba(255, 255, 255, 0.7);
-            --tag-text: #000000;
-            --text-primary: #000000;
-            --text-secondary: #aaaaaa;
-
-            /* Text Reveal */
-            --text-inactive: #444444;
-            --text-active: #ffffff;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        html, body {
-            width: 100%;
-            overflow-x: hidden;
-            background-color: #000000;
-            color: #ffffff;
-        }
-
-        /* ==========================================
-           SECTION 1: EYE BUTTON HERO
-           ========================================== */
-        .hero-eye-section {
-            width: 100%;
-            min-height: 45vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--eye-bg-color);
-            padding: 60px 20px;
-            border-bottom: 1px solid #eaeaea;
-        }
-
-        .dynamic-button {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            border: none;
-            padding: 14px 32px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dynamic-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .button-text {
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            pointer-events: none;
-        }
-
-        .eyes-container {
-            display: flex;
-            gap: 5px;
-            pointer-events: none;
-        }
-
-        .eye {
-            width: 32px;
-            height: 32px;
-            background-color: var(--eye-bg);
-            border-radius: 50%;
-            position: relative;
-            display: grid;
-            place-items: center;
-            overflow: hidden;
-            transform: translateZ(0);
-        }
-
-        .pupil {
-            width: 11px;
-            height: 11px;
-            background-color: var(--pupil-bg);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform var(--transition-speed) ease-out;
-            will-change: transform;
-        }
-
-        .eyelid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--eyelid-bg);
-            border-radius: 50%;
-            transform: scaleY(0);
-            transform-origin: top;
-            will-change: transform;
-            z-index: 1;
-        }
-
-        @keyframes blink {
-            0%, 80%, 100% { transform: scaleY(0); }
-            85% { transform: scaleY(1); }
-            90% { transform: scaleY(0); }
-        }
-
-        .eye.blinking .eyelid {
-            animation: blink 2.5s infinite;
-        }
-
-        /* ==========================================
-           SECTION 2: CARD CAROUSEL
-           ========================================== */
-        .carousel-section {
-            width: 100%;
-            padding: 60px 0 100px 0;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .carousel-viewport {
-            width: 100%;
-            overflow-x: auto;
-            display: flex;
-            align-items: center;
-            padding-top: 30px;
-            padding-bottom: 120px;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .carousel-viewport::-webkit-scrollbar {
-            display: none;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 20px;
-            padding-left: calc(50% - (var(--card-width) / 2));
-            padding-right: calc(50% - (var(--card-width) / 2));
-        }
-
-        .carousel-item {
-            flex: 0 0 var(--card-width);
-            width: var(--card-width);
-            height: var(--card-height);
-            border-radius: var(--card-radius);
-            position: relative;
-            cursor: pointer;
-            scroll-snap-align: center;
-            transform: translateZ(0) scale(0.9);
-            filter: grayscale(80%) opacity(0.7);
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .card-image-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: var(--card-radius);
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .tag {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--tag-bg);
-            color: var(--tag-text);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: capitalize;
-            backdrop-filter: blur(4px);
-            z-index: 2;
-        }
-
-        .carousel-item.active {
-            transform: translateZ(0) scale(1.1);
-            filter: grayscale(0%) opacity(1);
-        }
-
-        .meta-text-block {
-            position: absolute;
-            bottom: -80px;
-            left: 0;
-            width: 100%;
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            z-index: 3;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-        }
-
-        .carousel-item.active .meta-text-block {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .text-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .title { color: var(--text-primary); font-size: 18px; font-weight: 600; }
-        .subtitle { color: var(--text-secondary); font-size: 14px; }
-
-        /* ==========================================
-           SECTION 3: TEXT REVEAL SECTION
-           ========================================== */
-        .text-reveal-section {
-            background-color: #0a0a0a;
-            position: relative;
-        }
-
-        .scroll-spacer {
-            height: 15vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666666;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .reveal-scroll-container {
-            height: 180vh;
-            position: relative;
-        }
-
-        .sticky-wrapper {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .reveal-header {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 2rem;
-        }
-
-        .reveal-paragraph {
-            font-size: clamp(1.1rem, 2.2vw, 1.8rem);
-            font-weight: 500;
-            line-height: 1.4;
-            margin-bottom: 2.5rem;
-        }
-
-        .reveal-word {
-            display: inline-block;
-            color: var(--text-inactive);
-            transition: color 0.15s ease-out;
-            margin-right: 0.25em;
-        }
-
-        .reveal-word.is-revealed { color: var(--text-active); }
-
-        /* ==========================================
-           SECTION 4: ANIMATED CHAT CONVERSATION
-           ========================================== */
-        .chat-section {
-            background-color: #000000;
-            padding: 100px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-top: 1px solid #111111;
-        }
-
-        .chat-container {
-            width: 100%;
-            max-width: 580px;
-            min-height: 520px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            justify-content: flex-start;
-        }
-
-        /* Chat Bubbles */
-        .chat-bubble {
-            max-width: 82%;
-            padding: 14px 22px;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.45;
-            border-radius: 22px;
-            letter-spacing: -0.2px;
-            animation: bubblePop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            opacity: 0;
-            transform-origin: center bottom;
-        }
-
-        @keyframes bubblePop {
-            0% { opacity: 0; transform: scale(0.85) translateY(12px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* Customer Style (Right Aligned, Gradient) */
-        .chat-bubble.customer {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #fce0c8 0%, #b3e7e2 100%);
-            color: #121212;
-            border-bottom-right-radius: 6px;
-        }
-
-        /* Company Style (Left Aligned, Dark Gray) */
-        .chat-bubble.company {
-            align-self: flex-start;
-            background-color: #1f1f23;
-            color: #f2f2f7;
-            border-bottom-left-radius: 6px;
-        }
-
-        /* Typing Dots Indicator */
-        .typing-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 16px 20px;
-            background-color: #1f1f23;
-            border-radius: 22px;
-            border-bottom-left-radius: 6px;
-            align-self: flex-start;
-            animation: bubblePop 0.3s ease forwards;
-        }
-
-        .typing-indicator.customer-side {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #fce0c8 0%, #b3e7e2 100%);
-            border-bottom-left-radius: 22px;
-            border-bottom-right-radius: 6px;
-        }
-
-        .dot {
-            width: 7px;
-            height: 7px;
-            background-color: #a0a0a5;
-            border-radius: 50%;
-            animation: typingBounce 1.4s infinite ease-in-out both;
-        }
-
-        .typing-indicator.customer-side .dot {
-            background-color: #4a4a4a;
-        }
-
-        .dot:nth-child(1) { animation-delay: 0s; }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typingBounce {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-            40% { transform: scale(1.15); opacity: 1; }
-        }
-
-        /* ==========================================
-           SECTION 5: IMAGE FLOW ACCORDION CAROUSEL
-           ========================================== */
-        .flow-section {
-            background-color: #000000;
-            padding: 100px 20px 120px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-top: 1px solid #1a1a1a;
-        }
-
-        .flow-section-title {
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #666666;
-            margin-bottom: 30px;
-        }
-
-        .flow-carousel {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            max-width: 1100px;
-            height: 520px;
-        }
-
-        .flow-card {
-            position: relative;
-            flex: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            background-color: #111111;
-            background-size: cover;
-            background-position: center;
-            transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
-            filter: brightness(0.5) contrast(0.95);
-        }
-
-        .flow-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
-            z-index: 1;
-        }
-
-        .flow-carousel:hover .flow-card { flex: 0.75; filter: brightness(0.35); }
-        .flow-carousel .flow-card:hover { flex: 3.8; filter: brightness(1); }
-        .flow-carousel:not(:hover) .flow-card.default-open { flex: 3.8; filter: brightness(1); }
-
-        .card-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 24px 20px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(-8px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .flow-card:hover .card-header,
-        .flow-carousel:not(:hover) .flow-card.default-open .card-header {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.15s;
-        }
-
-        .card-center { display: flex; justify-content: center; align-items: center; flex: 1; }
-
-        .center-illustration {
-            width: 200px;
-            height: 200px;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .flow-card:hover .center-illustration,
-        .flow-carousel:not(:hover) .flow-card.default-open .center-illustration {
-            opacity: 0.9;
-            transform: scale(1);
-            transition-delay: 0.1s;
-        }
-
-        .card-footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
-        .collapsed-info { text-align: center; width: 100%; }
-        .collapsed-info .day { font-size: 11px; color: rgba(255,255,255,0.6); display: block; }
-        .collapsed-info .date { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); }
-
-        .expanded-info { display: none; width: 100%; justify-content: space-between; font-size: 12px; }
-
-        .flow-card:hover .collapsed-info,
-        .flow-carousel:not(:hover) .flow-card.default-open .collapsed-info { display: none; }
-        .flow-card:hover .expanded-info,
-        .flow-carousel:not(:hover) .flow-card.default-open .expanded-info { display: flex; }
-
-        .meta-title { font-weight: 700; font-size: 13px; color: #fff; }
-        .meta-sub { font-size: 11px; opacity: 0.7; }
-
-        /* Background Cards */
-        .card-1 { background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'); }
-        .card-2 { background: #23522b; color: #123317; }
-        .card-2::before { display: none; }
-        .card-2 .card-header, .card-2 .expanded-info, .card-2 .meta-title { color: #123317; }
-        .card-2 .collapsed-info .day, .card-2 .collapsed-info .date, .card-2 .meta-sub { color: rgba(18, 51, 23, 0.75); }
-        .card-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=800&q=80'); background-color: #3b0303; background-blend-mode: multiply; }
-        .card-4 { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'); background-color: #081d2c; background-blend-mode: multiply; }
-        .card-5 { background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'); background-color: #062217; background-blend-mode: multiply; }
-
-        .footer-spacer { padding: 40px 0; text-align: center; color: #555555; font-size: 0.85rem; border-top: 1px solid #111111; }
-    </style>
-</head>
-<body>
-
-    <!-- 1. EYE BUTTON SECTION -->
-    <section class="hero-eye-section">
-        <button class="copy-button dynamic-button" aria-label="Click to copy information">
-            <span class="button-text">Click to Copy</span>
-            <div class="eyes-container">
-                <div class="eye blinking">
-                    <div class="eyelid"></div>
-                    <div class="pupil"></div>
-                </div>
-                <div class="eye blinking">
-                    <div class="eyelid"></div>
-                    <div class="pupil"></div>
-                </div>
-            </div>
-        </button>
-    </section>
-
-    <!-- 2. SCROLL CAROUSEL SECTION -->
-    <section class="carousel-section">
-        <div class="carousel-viewport" id="js-carousel">
-            <div class="carousel-track">
-                <article class="carousel-item">
-                    <span class="tag">Strategy</span>
-                    <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/1586298/pexels-photo-1586298.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Architecture">
-                    </div>
-                    <div class="meta-text-block">
-                        <div class="text-group">
-                            <h3 class="title">Strategy</h3>
-                            <p class="subtitle">Defined direction</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="carousel-item">
-                    <span class="tag">Product</span>
-                    <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Man portrait">
-                    </div>
-                    <div class="meta-text-block">
-                        <div class="text-group">
-                            <h3 class="title">Product</h3>
-                            <p class="subtitle">Design execution</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="carousel-item active">
-                    <span class="tag">Branding</span>
-                    <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Person portrait">
-                    </div>
-                    <div class="meta-text-block">
-                        <div class="text-group">
-                            <h3 class="title">Identity</h3>
-                            <p class="subtitle">Consistent brand presence</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="carousel-item">
-                    <span class="tag">Interaction</span>
-                    <div class="card-image-wrapper">
-                        <img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600&h=800" alt="Woman portrait">
-                    </div>
-                    <div class="meta-text-block">
-                        <div class="text-group">
-                            <h3 class="title">Usability</h3>
-                            <p class="subtitle">Seamless flow</p>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. TEXT REVEAL SECTION -->
-    <section class="text-reveal-section">
-        <div class="scroll-spacer">
-            <span>↓ Scroll down to view effect</span>
-        </div>
-        <div class="reveal-scroll-container" id="revealTrack">
-            <div class="sticky-wrapper">
-                <h1 class="reveal-header js-reveal-text">
-                    Commercial Awnings for Shops, Restaurants, Hotels & Bars
-                </h1>
-                <p class="reveal-paragraph js-reveal-text">
-                    For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. ANIMATED CHAT SECTION (NEW) -->
-    <section class="chat-section">
-        <div class="chat-container" id="chatContainer">
-            <!-- Messages and Typing Dots inject here dynamically via JS -->
-        </div>
-    </section>
-
-    <!-- 5. IMAGE FLOW ACCORDION CAROUSEL SECTION -->
-    <section class="flow-section">
-        <div class="flow-section-title">Image Flow · Accordion Carousel</div>
-        
-        <div class="flow-carousel">
             <div class="flow-card card-1">
                 <div class="card-content">
                     <div class="card-header"><span>Paramount</span><span>Film</span></div>
@@ -1699,7 +647,7 @@
                         <div class="collapsed-info"><span class="day">Monday</span><span class="date">Nov 10, 2025</span></div>
                         <div class="expanded-info">
                             <div class="meta-col"><span class="meta-title">The Godfather</span><span class="meta-sub">Exclusive Screening</span></div>
-                            <div class="meta-col" style="text-align: right;"><span class="meta-title">8:00 PM EST</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">8:00 PM EST</span><span class="meta-sub">Live Cinema</span></div>
                         </div>
                     </div>
                 </div>
@@ -1711,7 +659,7 @@
                         <span>Quartr</span><span>Robinhood</span>
                     </div>
                     <div class="card-center">
-                        <svg class="center-illustration" viewBox="0 0 200 200" fill="none" stroke="#123317" stroke-width="1.5">
+                        <svg class="center-illustration" viewBox="0 0 200 200" fill="none" stroke="#102d14" stroke-width="1.5">
                             <ellipse cx="100" cy="100" rx="70" ry="90"/>
                             <path d="M100 40 Q100 160 100 160 M70 100 Q100 70 130 100" stroke-width="2"/>
                         </svg>
@@ -1720,7 +668,7 @@
                         <div class="collapsed-info"><span class="day">Wednesday</span><span class="date">Nov 05, 2025</span></div>
                         <div class="expanded-info">
                             <div class="meta-col"><span class="meta-title">Robinhood Q3 | 25</span><span class="meta-sub">earnings call</span></div>
-                            <div class="meta-col" style="text-align: right;"><span class="meta-title">5:00 PM ET</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">5:00 PM ET</span><span class="meta-sub">live on Quartr</span></div>
                         </div>
                     </div>
                 </div>
@@ -1733,28 +681,42 @@
                     <div class="card-footer">
                         <div class="collapsed-info"><span class="day">Tuesday</span><span class="date">Nov 04, 2025</span></div>
                         <div class="expanded-info">
-                            <div class="meta-col"><span class="meta-title">Scuderia Reveal</span></div>
-                            <div class="meta-col" style="text-align: right;"><span class="meta-title">2:00 PM CET</span></div>
+                            <div class="meta-col"><span class="meta-title">Scuderia Reveal</span><span class="meta-sub">Design Keynote</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">2:00 PM CET</span><span class="meta-sub">Maranello</span></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="flow-card card-4">
+                <div class="card-content">
+                    <div class="card-header"><span>Horizon</span><span>Nature</span></div>
+                    <div class="card-center"></div>
+                    <div class="card-footer">
+                        <div class="collapsed-info"><span class="day">Tuesday</span><span class="date">Oct 21, 2025</span></div>
+                        <div class="expanded-info">
+                            <div class="meta-col"><span class="meta-title">Blue Hour Summit</span><span class="meta-sub">Global Environment</span></div>
+                            <div class="meta-col" style="text-align: right;"><span class="meta-title">10:00 AM PST</span><span class="meta-sub">Stream</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <footer class="footer-spacer">
-        <p>© Integrated Interactive Components</p>
+        <p>© Modern Minimal Showcase</p>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            /* --- 1. EYE TRACKING LOGIC --- */
+            /* 1. EYE TRACKING */
             const pupils = document.querySelectorAll('.pupil');
             const eyes = document.querySelectorAll('.eye');
-            const maxPupilTravel = 8; 
-
+            
             document.addEventListener('mousemove', (e) => {
                 eyes.forEach((eye, index) => {
                     const pupil = pupils[index];
@@ -1765,7 +727,7 @@
                     const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
                     const cursorDistance = Math.hypot(e.clientX - eyeCenterX, e.clientY - eyeCenterY);
 
-                    const travelDist = Math.min(maxPupilTravel, cursorDistance * 0.03); 
+                    const travelDist = Math.min(6, cursorDistance * 0.025); 
                     const pupilDisplacementX = Math.cos(angle) * travelDist;
                     const pupilDisplacementY = Math.sin(angle) * travelDist;
 
@@ -1773,7 +735,7 @@
                 });
             });
 
-            /* --- 2. CAROUSEL OBSERVER --- */
+            /* 2. CAROUSEL OBSERVER */
             const viewport = document.getElementById('js-carousel');
             const cards = document.querySelectorAll('.carousel-item');
             const observer = new IntersectionObserver((entries) => {
@@ -1787,7 +749,7 @@
 
             cards.forEach(card => observer.observe(card));
 
-            /* --- 3. TEXT REVEAL ENGINE --- */
+            /* 3. TEXT REVEAL ENGINE */
             const textContainers = document.querySelectorAll('.js-reveal-text');
             let allWords = [];
 
@@ -1830,7 +792,7 @@
                 }
             }, { passive: true });
 
-            /* --- 4. ANIMATED CHAT ENGINE --- */
+            /* 4. ANIMATED CHAT ENGINE */
             const chatContainer = document.getElementById('chatContainer');
 
             const conversation = [
@@ -1862,37 +824,37 @@
 
             async function runChatLoop() {
                 while (true) {
-                    chatContainer.innerHTML = ''; // Reset chat for fresh loop
+                    chatContainer.innerHTML = ''; // Reset container for next loop
 
                     for (let i = 0; i < conversation.length; i++) {
                         const item = conversation[i];
                         
-                        // Show Typing Dots for current sender
+                        // Show animated typing dots
                         const typingDots = createTypingIndicator(item.sender);
                         chatContainer.appendChild(typingDots);
 
-                        // Wait for typing delay (1.2 seconds)
-                        await sleep(1200);
+                        // Wait while typing
+                        await sleep(1100);
 
-                        // Remove Typing Dots and insert Message Bubble
+                        // Swap typing dots with text bubble
                         chatContainer.removeChild(typingDots);
                         const bubble = createBubble(item.sender, item.text);
                         chatContainer.appendChild(bubble);
 
-                        // Reading Pause before next response
-                        await sleep(1000);
+                        // Pause to read message
+                        await sleep(900);
                     }
 
-                    // Cycle finishes -> Show typing dots on customer side during 3 seconds pause
+                    // Cycle end -> customer typing dots active during 3 second pause
                     const finalTypingDots = createTypingIndicator('customer');
                     chatContainer.appendChild(finalTypingDots);
 
-                    // 3-second pause requested by user
+                    // 3-second pause requested
                     await sleep(3000);
                 }
             }
 
-            // Start chat animation sequence
+            // Launch conversation engine
             runChatLoop();
         });
     </script>
