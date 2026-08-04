@@ -3,253 +3,332 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA — Continuous Global Object Morphing</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>AURA — Precision Engineering</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
     :root {
-      --bg: #dcd8cf;
-      --text: #1f1e1c;
-      --muted: #65625a;
-      --accent: #e04836;
-      --mono: 'JetBrains Mono', monospace;
+      --bg: #121212;
+      --card-bg: #1c1c1c;
+      --text: #f0f0f0;
+      --muted: #888888;
+      --line: #333333;
+      --accent: #ff473a;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg);
+      font-family: var(--font-sans);
+      background-color: var(--bg);
       color: var(--text);
       overflow-x: hidden;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Fixed Navigation */
+    /* Top Nav */
     .nav {
-      position: fixed; top: 0; left: 0; width: 100%;
-      padding: 2rem 4rem; display: flex; justify-content: space-between;
-      z-index: 100; mix-blend-mode: difference;
-    }
-    .brand { font-weight: 800; color: #fff; text-decoration: none; font-size: 1.2rem; }
-
-    /* Central Fixed Viewport for the Continuous Object */
-    .global-stage-wrapper {
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
+      top: 0; left: 0; width: 100%;
+      padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 100;
+      background: rgba(18, 18, 18, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.04em; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-family: var(--font-mono); font-size: 0.85rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Pinned Stage Viewport */
+    .stage-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       display: flex; justify-content: center; align-items: center;
       pointer-events: none;
-      z-index: 5;
+      z-index: 1;
     }
-    .main-svg { width: 100%; max-width: 700px; height: 700px; overflow: visible; }
-    
-    .layer-group { transition: transform 0.1s ease-out; transform-origin: center; }
-    .blueprint-line { stroke: var(--text); stroke-width: 1.5; fill: none; transition: all 0.2s ease-out; }
-    .callout-line { stroke: var(--text); stroke-width: 1; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; opacity: 0; }
-    .callout-text { font-family: var(--mono); font-size: 11px; fill: var(--text); opacity: 0; }
 
-    /* Scrollable Text Content Sections Overlay */
-    .content-container { position: relative; z-index: 10; }
-    .scroll-section {
+    .mechanical-svg {
+      width: 100%;
+      max-width: 900px;
+      height: 900px;
+      overflow: visible;
+    }
+
+    /* Vector Styling */
+    .mech-path {
+      fill: none;
+      stroke: #e6e6e6;
+      stroke-width: 1.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.3s, opacity 0.3s;
+    }
+    .mech-fill { fill: #1a1a1a; stroke: #e6e6e6; stroke-width: 1.25; }
+    .mech-accent { stroke: var(--accent); stroke-width: 1.5; }
+    .callout-line { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 4; fill: none; opacity: 0; }
+    .callout-label { font-family: var(--font-mono); font-size: 10px; fill: var(--text); opacity: 0; letter-spacing: 0.1em; }
+
+    /* Scroll Track & Overlay Sections */
+    .scroll-track {
+      position: relative;
+      z-index: 2;
+    }
+
+    .section {
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
       padding: 0 6rem;
-      max-width: 500px;
     }
-    .scroll-section.right-aligned { margin-left: auto; text-align: left; }
-    .section-tag { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; display: block; }
-    .section-title { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
-    .section-desc { font-size: 1.1rem; color: var(--muted); line-height: 1.6; }
 
-    /* Timeline Scrubber UI */
-    .scrubber {
-      position: fixed; bottom: 2rem; right: 4rem;
-      background: #191816; color: #fff; padding: 0.75rem 1.25rem;
-      border-radius: 6px; display: flex; align-items: center; gap: 1rem;
-      z-index: 100; font-family: var(--mono); font-size: 0.8rem;
+    .section-content {
+      max-width: 440px;
+      background: rgba(28, 28, 28, 0.65);
+      backdrop-filter: blur(16px);
+      padding: 3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-    .scrubber-bar { width: 120px; height: 4px; background: rgba(255,255,255,0.2); position: relative; }
-    .scrubber-fill { height: 100%; width: 0%; background: var(--accent); }
+
+    .section.right { justify-content: flex-end; }
+    
+    .tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; display: block; }
+    .title { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; }
+    .desc { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
+
+    /* Bottom HUD / Scrubber */
+    .hud {
+      position: fixed;
+      bottom: 2.5rem; right: 4rem;
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      padding: 0.75rem 1.5rem;
+      border-radius: 99px;
+      display: flex; align-items: center; gap: 1.5rem;
+      z-index: 100;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .progress-bar { width: 140px; height: 3px; background: var(--line); position: relative; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: var(--accent); }
   </style>
 </head>
 <body>
 
-  <nav class="nav"><a href="#" class="brand">AURA.</a></nav>
+  <nav class="nav">
+    <a href="#" class="brand">AURA.ENGINE</a>
+    <ul class="nav-links">
+      <li><a href="#01">01. OPTICS</a></li>
+      <li><a href="#02">02. DISASSEMBLY</a></li>
+      <li><a href="#03">03. SCHEMATIC</a></li>
+      <li><a href="#04">04. MATRIX</a></li>
+    </ul>
+  </nav>
 
-  <!-- PINNED GLOBAL OBJECT CONTAINER -->
-  <div class="global-stage-wrapper">
-    <svg class="main-svg" viewBox="-300 -350 600 700" id="mainSvg">
+  <!-- PINNED MECHANICAL ASSEMBLY VIEWPORT -->
+  <div class="stage-container">
+    <svg class="mechanical-svg" viewBox="-400 -400 800 800">
       
-      <!-- CALLOUT POINTERS -->
-      <path id="calloutLine1" class="callout-line" d="M 120 -150 L 220 -190 L 280 -190" />
-      <text id="calloutText1" class="callout-text" x="290" y="-186">DESIGN_CORE</text>
+      <!-- CALLOUT SCHEMATIC LINES -->
+      <g id="callouts">
+        <path class="callout-line" id="cLine1" d="M 120 -220 L 280 -260 L 340 -260" />
+        <text class="callout-label" id="cText1" x="350" y="-256">01 // OPTICAL_ELEMENT_GROUP</text>
 
-      <path id="calloutLine2" class="callout-line" d="M -120 150 L -220 190 L -280 190" />
-      <text id="calloutText2" class="callout-text" x="-360" y="194">ANIMATION_ENGINE</text>
+        <path class="callout-line" id="cLine2" d="M -140 -60 L -280 -100 L -340 -100" />
+        <text class="callout-label" id="cText2" x="-480" y="-96">02 // APERTURE_CONTROL_RING</text>
 
-      <!-- OBJECT LAYER 1 (TOP RING) -->
-      <g id="layer1" class="layer-group">
-        <ellipse cx="0" cy="-60" rx="140" ry="42" class="blueprint-line" fill="#dcd8cf" />
-        <ellipse cx="0" cy="-60" rx="100" ry="30" class="blueprint-line" stroke-dasharray="4 4" />
+        <path class="callout-line" id="cLine3" d="M 160 100 L 280 140 L 340 140" />
+        <text class="callout-label" id="cText3" x="350" y="144">03 // HELICOID_FOCUS_ENGINE</text>
       </g>
 
-      <!-- OBJECT LAYER 2 (MID CHAMBER) -->
-      <g id="layer2" class="layer-group">
-        <ellipse cx="0" cy="0" rx="120" ry="36" class="blueprint-line" fill="#dcd8cf" />
-        <path d="M -120 0 L -120 40 A 120 36 0 0 0 120 40 L 120 0" class="blueprint-line" fill="#dcd8cf" />
-        <circle id="coreNode" cx="0" cy="20" r="10" fill="var(--text)" />
-      </g>
+      <!-- MAIN LENS ASSEMBLY GROUP -->
+      <g id="lensAssembly" transform="rotate(-30)">
+        
+        <!-- LAYER 1: FRONT LENS BEZEL & GLASS -->
+        <g id="l1Group">
+          <ellipse cx="0" cy="-180" rx="160" ry="50" class="mech-fill" />
+          <ellipse cx="0" cy="-180" rx="130" ry="40" class="mech-path mech-accent" />
+          <ellipse cx="0" cy="-180" rx="90" ry="28" class="mech-path" stroke-dasharray="3 3" />
+          <!-- Thread notches -->
+          <path d="M -160 -180 L -160 -160 A 160 50 0 0 0 160 -160 L 160 -180" class="mech-path" />
+        </g>
 
-      <!-- OBJECT LAYER 3 (BOTTOM BASE) -->
-      <g id="layer3" class="layer-group">
-        <ellipse cx="0" cy="60" rx="150" ry="45" class="blueprint-line" fill="#dcd8cf" />
-        <path d="M -150 60 L -150 80 A 150 45 0 0 0 150 80 L 150 60" class="blueprint-line" fill="#dcd8cf" />
-      </g>
+        <!-- LAYER 2: APERTURE RING & GEAR TEETH -->
+        <g id="l2Group">
+          <ellipse cx="0" cy="-80" rx="140" ry="44" class="mech-fill" />
+          <path d="M -140 -80 L -140 -40 A 140 44 0 0 0 140 -40 L 140 -80" class="mech-path" />
+          <!-- Gear Ridges -->
+          <path d="M -120 -50 L -120 -30 M -80 -40 L -80 -20 M -40 -35 L -40 -15 M 0 -33 L 0 -13 M 40 -35 L 40 -15 M 80 -40 L 80 -20 M 120 -50 L 120 -30" class="mech-path" />
+        </g>
 
+        <!-- LAYER 3: CORE OPTICAL CHAMBER (STAYS CENTRAL) -->
+        <g id="l3Group">
+          <ellipse cx="0" cy="20" rx="120" ry="38" class="mech-fill" />
+          <path d="M -120 20 L -120 70 A 120 38 0 0 0 120 70 L 120 20" class="mech-path" />
+          <!-- Internal Aperture Blades -->
+          <polygon points="0,30 -30,50 10,60" class="mech-path mech-accent" />
+          <polygon points="0,30 30,50 -10,60" class="mech-path mech-accent" />
+          <circle cx="0" cy="45" r="18" class="mech-path" />
+        </g>
+
+        <!-- LAYER 4: FOCUS HELICOID BARREL -->
+        <g id="l4Group">
+          <ellipse cx="0" cy="120" rx="135" ry="42" class="mech-fill" />
+          <path d="M -135 120 L -135 170 A 135 42 0 0 0 135 170 L 135 120" class="mech-path" />
+          <!-- Spiral Threading -->
+          <path d="M -130 130 Q 0 180 130 140" class="mech-path" stroke-dasharray="6 4" />
+          <path d="M -130 145 Q 0 195 130 155" class="mech-path" stroke-dasharray="6 4" />
+        </g>
+
+        <!-- LAYER 5: MOUNT FLANGE & CONTACT PINS -->
+        <g id="l5Group">
+          <ellipse cx="0" cy="220" rx="170" ry="54" class="mech-fill" />
+          <path d="M -170 220 L -170 240 A 170 54 0 0 0 170 240 L 170 220" class="mech-path" />
+          <!-- Electronic Gold Pins -->
+          <circle cx="-50" cy="240" r="3" class="mech-path mech-accent" />
+          <circle cx="-25" cy="245" r="3" class="mech-path mech-accent" />
+          <circle cx="0" cy="247" r="3" class="mech-path mech-accent" />
+          <circle cx="25" cy="245" r="3" class="mech-path mech-accent" />
+          <circle cx="50" cy="240" r="3" class="mech-path mech-accent" />
+        </g>
+
+      </g>
     </svg>
   </div>
 
-  <!-- SCROLLABLE SECTIONS OVERLAY -->
-  <div class="content-container" id="pageWrapper">
+  <!-- SCROLLABLE NARRATIVE OVERLAY -->
+  <main class="scroll-track">
     
-    <!-- Section 1: Hero -->
-    <section class="scroll-section">
-      <span class="section-tag">01 // PRODUCT</span>
-      <h1 class="section-title">The Complete Design Engine</h1>
-      <p class="section-desc">A unified digital framework built to shape elite brand experiences.</p>
+    <section class="section" id="01">
+      <div class="section-content">
+        <span class="tag">01 // INTEGRATED SYSTEM</span>
+        <h1 class="title">Precision Digital Architecture</h1>
+        <p class="desc">Engineered from the ground up for high-frequency performance and interactive visual depth.</p>
+      </div>
     </section>
 
-    <!-- Section 2: Know Us (Disassembly) -->
-    <section class="scroll-section right-aligned">
-      <span class="section-tag">02 // DISASSEMBLY</span>
-      <h2 class="section-title">Exploded Layer Architecture</h2>
-      <p class="section-desc">Every layer breaks down into modular component systems engineered for speed and precision.</p>
+    <section class="section right" id="02">
+      <div class="section-content">
+        <span class="tag">02 // KINETIC DISASSEMBLY</span>
+        <h2 class="title">Modular Component Separation</h2>
+        <p class="desc">As you scroll, mechanical sub-assemblies translate along calculated isometric vectors to reveal internal mechanics.</p>
+      </div>
     </section>
 
-    <!-- Section 3: Features (Blueprint Drawing) -->
-    <section class="scroll-section">
-      <span class="section-tag">03 // BLUEPRINT</span>
-      <h2 class="section-title">Technical Wireframes</h2>
-      <p class="section-desc">Stripped-back mechanical drawings revealing the raw structural codebase underneath.</p>
+    <section class="section" id="03">
+      <div class="section-content">
+        <span class="tag">03 // TECHNICAL BLUEPRINT</span>
+        <h2 class="title">Schematic Wireframing</h2>
+        <p class="desc">Solid geometries dissolve into technical stroke profiles and dynamic HUD callouts.</p>
+      </div>
     </section>
 
-    <!-- Section 4: Services (Matrix Morph) -->
-    <section class="scroll-section right-aligned">
-      <span class="section-tag">04 // MATRIX</span>
-      <h2 class="section-title">Dynamic Capabilities</h2>
-      <p class="section-desc">Web development, motion physics, and digital marketing strategies operating in sync.</p>
+    <section class="section right" id="04">
+      <div class="section-content">
+        <span class="tag">04 // RE-ASSEMBLY</span>
+        <h2 class="title">Production Deployment</h2>
+        <p class="desc">Components snap back into place with precise inertia springs, delivering a cohesive digital product.</p>
+      </div>
     </section>
 
-    <!-- Section 5: Contact (Re-assembly) -->
-    <section class="scroll-section">
-      <span class="section-tag">05 // RE-ASSEMBLY</span>
-      <h2 class="section-title">Construct Your Vision</h2>
-      <p class="section-desc">Ready to assemble your next project? Let's build something extraordinary.</p>
-    </section>
+  </main>
 
-  </div>
-
-  <!-- Scrubber -->
-  <div class="scrubber">
-    <div class="scrubber-bar"><div class="scrubber-fill" id="scrubberFill"></div></div>
-    <span id="scrubberPercent">000%</span>
+  <!-- HUD STATUS BAR -->
+  <div class="hud">
+    <span>SYSTEM_STATE: <strong id="sysState" style="color:var(--accent)">ASSEMBLED</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+    <span id="pNum">000%</span>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const pageWrapper = document.getElementById('pageWrapper');
-      const scrubberFill = document.getElementById('scrubberFill');
-      const scrubberPercent = document.getElementById('scrubberPercent');
+      // DOM Elements
+      const pFill = document.getElementById('pFill');
+      const pNum = document.getElementById('pNum');
+      const sysState = document.getElementById('sysState');
 
-      const layer1 = document.getElementById('layer1');
-      const layer2 = document.getElementById('layer2');
-      const layer3 = document.getElementById('layer3');
-      const coreNode = document.getElementById('coreNode');
-      const mainSvg = document.getElementById('mainSvg');
+      const lensAssembly = document.getElementById('lensAssembly');
+      const l1 = document.getElementById('l1Group');
+      const l2 = document.getElementById('l2Group');
+      const l3 = document.getElementById('l3Group');
+      const l4 = document.getElementById('l4Group');
+      const l5 = document.getElementById('l5Group');
 
-      const calloutLine1 = document.getElementById('calloutLine1');
-      const calloutText1 = document.getElementById('calloutText1');
-      const calloutLine2 = document.getElementById('calloutLine2');
-      const calloutText2 = document.getElementById('calloutText2');
+      const cLines = document.querySelectorAll('.callout-line');
+      const cLabels = document.querySelectorAll('.callout-label');
 
-      function syncGlobalObjectWithScroll() {
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = Math.max(0, Math.min(1, window.scrollY / totalHeight));
+      // Scroll Lerp Variables (Inertia Physics)
+      let currentScroll = 0;
+      let targetScroll = 0;
+      const ease = 0.075; // Smoothing factor (lower = heavier physics)
 
-        // Update UI Scrubber
-        scrubberFill.style.width = `${progress * 100}%`;
-        scrubberPercent.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
+      window.addEventListener('scroll', () => {
+        targetScroll = window.scrollY;
+      }, { passive: true });
+
+      function render() {
+        // Smoothly interpolate currentScroll towards targetScroll
+        currentScroll += (targetScroll - currentScroll) * ease;
+        
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = Math.max(0, Math.min(1, currentScroll / maxScroll));
+
+        // Update HUD
+        pFill.style.width = `${progress * 100}%`;
+        pNum.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
+
+        // Update System State Label
+        if (progress < 0.2) sysState.innerText = "ASSEMBLED";
+        else if (progress < 0.5) sysState.innerText = "DISASSEMBLED";
+        else if (progress < 0.8) sysState.innerText = "SCHEMATIC_DRAWING";
+        else sysState.innerText = "DEPLOYED";
 
         // =========================================================================
-        // CONTINUOUS MORPHING STATE MACHINE (0.0 -> 1.0)
+        // CONTINUOUS LAYER TRANSFORM ENGINE
         // =========================================================================
 
-        // STAGE 1 -> STAGE 2 (0.0 to 0.25): Exploded Disassembly
-        if (progress <= 0.25) {
-          const p1 = progress / 0.25; // Normalised 0-1 for Stage 1
-          
-          layer1.style.transform = `translateY(${-p1 * 180}px) rotate(${-p1 * 15}deg)`;
-          layer2.style.transform = `translateY(0px)`;
-          layer3.style.transform = `translateY(${p1 * 180}px) rotate(${p1 * 15}deg)`;
+        // 1. Overall Assembly Rotation & Scale Shift
+        const globalRotate = -30 + (progress * 45);
+        const globalScale = 1 - (Math.sin(progress * Math.PI) * 0.15);
+        lensAssembly.setAttribute('transform', `rotate(${globalRotate}) scale(${globalScale})`);
 
-          // Draw Callout Lines
-          const lineOffset = 400 - (p1 * 400);
-          calloutLine1.style.strokeDashoffset = lineOffset;
-          calloutLine2.style.strokeDashoffset = lineOffset;
-          calloutLine1.style.opacity = p1;
-          calloutLine2.style.opacity = p1;
-          calloutText1.style.opacity = p1 > 0.5 ? (p1 - 0.5) * 2 : 0;
-          calloutText2.style.opacity = p1 > 0.5 ? (p1 - 0.5) * 2 : 0;
-          
-          mainSvg.style.transform = `scale(1) rotate(0deg)`;
-        } 
-        // STAGE 2 -> STAGE 3 (0.25 to 0.50): Blueprint Wireframe Flattening
-        else if (progress > 0.25 && progress <= 0.50) {
-          const p2 = (progress - 0.25) / 0.25; // Normalised 0-1 for Stage 2
+        // 2. Layer Explosive Separation
+        const explodeFactor = Math.sin(progress * Math.PI) * 220;
 
-          // Contract layers slightly into a flat 2D blueprint grid
-          layer1.style.transform = `translateY(${-180 + (p2 * 100)}px) rotate(0deg)`;
-          layer2.style.transform = `translateY(0px)`;
-          layer3.style.transform = `translateY(${180 - (p2 * 100)}px) rotate(0deg)`;
+        l1.style.transform = `translateY(${-explodeFactor * 1.2}px)`;
+        l2.style.transform = `translateY(${-explodeFactor * 0.6}px)`;
+        l3.style.transform = `translateY(0px)`; // Core remains grounded
+        l4.style.transform = `translateY(${explodeFactor * 0.6}px)`;
+        l5.style.transform = `translateY(${explodeFactor * 1.2}px)`;
 
-          // Hide shading fills for technical drawing wireframe look
-          document.querySelectorAll('.blueprint-line').forEach(el => {
-            el.style.fill = p2 > 0.3 ? 'transparent' : '#dcd8cf';
-          });
+        // 3. Dynamic Callout Line Reveal
+        cLines.forEach(line => {
+          const dashOffset = 400 - (progress * 800);
+          line.style.strokeDashoffset = Math.max(0, dashOffset);
+          line.style.opacity = progress > 0.15 && progress < 0.85 ? 1 : 0;
+        });
 
-          mainSvg.style.transform = `scale(${1 - (p2 * 0.15)}) rotate(${p2 * 45}deg)`;
-        } 
-        // STAGE 3 -> STAGE 4 (0.50 to 0.75): Matrix Expansion
-        else if (progress > 0.50 && progress <= 0.75) {
-          const p3 = (progress - 0.50) / 0.25;
+        cLabels.forEach(label => {
+          label.style.opacity = progress > 0.3 && progress < 0.8 ? (progress - 0.3) * 2.5 : 0;
+        });
 
-          layer1.style.transform = `translateY(${-80 - (p3 * 120)}px) scale(${1 + p3 * 0.3})`;
-          layer2.style.transform = `scale(${1 + p3 * 0.5})`;
-          layer3.style.transform = `translateY(${80 + (p3 * 120)}px) scale(${1 + p3 * 0.3})`;
-
-          coreNode.setAttribute('r', 10 + (p3 * 25));
-
-          mainSvg.style.transform = `scale(0.85) rotate(${45 + (p3 * 90)}deg)`;
-        } 
-        // STAGE 4 -> STAGE 5 (0.75 to 1.00): Re-assembly into Core Engine
-        else {
-          const p4 = (progress - 0.75) / 0.25;
-
-          layer1.style.transform = `translateY(${-200 * (1 - p4)}px) scale(1)`;
-          layer2.style.transform = `translateY(0px) scale(1)`;
-          layer3.style.transform = `translateY(${200 * (1 - p4)}px) scale(1)`;
-
-          // Restore original shading fills
-          document.querySelectorAll('.blueprint-line').forEach(el => {
-            el.style.fill = '#dcd8cf';
-          });
-
-          coreNode.setAttribute('r', 35 - (p4 * 25));
-          mainSvg.style.transform = `scale(${0.85 + (p4 * 0.15)}) rotate(${135 + (p4 * 225)}deg)`;
-        }
+        requestAnimationFrame(render);
       }
 
-      window.addEventListener('scroll', syncGlobalObjectWithScroll, { passive: true });
-      syncGlobalObjectWithScroll();
+      // Start Physics Loop
+      requestAnimationFrame(render);
     });
   </script>
 </body>
