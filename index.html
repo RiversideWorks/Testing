@@ -1,524 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creative Platform - Hero Section</title>
-  
-  <!-- Fonts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Platform & Interiors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    /* CSS Reset */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #0b0507;
-      color: #ffffff;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    /* Hero Main Container */
-    .hero-container {
-      position: relative;
-      min-height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: linear-gradient(180deg, rgba(11, 5, 7, 0.6) 0%, rgba(11, 5, 7, 0.85) 100%),
-                  url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
-      padding: 2rem 4rem 3rem;
-    }
-
-    /* Header & Navigation */
-    .navbar {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      z-index: 10;
-    }
-
-    .brand-logo {
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: #ffffff;
-      text-decoration: none;
-      letter-spacing: -0.02em;
-      z-index: 101;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    /* Desktop Navigation Smooth Roll-Up Hover Animation */
-    .nav-item {
-      overflow: hidden;
-      height: 1.5rem;
-    }
-
-    .nav-link {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: rgba(255, 255, 255, 0.8);
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .nav-link span {
-      display: block;
-      height: 1.5rem;
-      line-height: 1.5rem;
-    }
-
-    .nav-link span:last-child {
-      color: #ff3385;
-    }
-
-    .nav-item:hover .nav-link {
-      transform: translateY(-1.5rem);
-    }
-
-    .nav-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 1rem;
-      z-index: 101;
-    }
-
-    .btn-chat {
-      background-color: #ffffff;
-      color: #0b0507;
-      padding: 0.65rem 1.4rem;
-      border-radius: 9999px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .btn-chat:hover {
-      background-color: #f0f0f0;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
-    }
-
-    /* Hamburger Menu Button Styling */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 26px;
-      height: 18px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .hamburger span {
-      width: 100%;
-      height: 2px;
-      background-color: #ffffff;
-      border-radius: 2px;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* Hamburger 'X' Transformation State */
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-
-    /* Main Hero Body Grid */
-    .hero-main {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 4rem;
-      align-items: center;
-      width: 100%;
-      max-width: 1400px;
-      margin: 3rem auto;
-      z-index: 5;
-    }
-
-    /* Left Hero Content */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      margin-bottom: 1.75rem;
-    }
-
-    .badge-arrow {
-      color: #ff3385;
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 5vw, 4.25rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-description {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.75);
-      max-width: 520px;
-      margin-bottom: 2.25rem;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .btn-primary {
-      background: #ffffff;
-      color: #000000;
-      padding: 0.85rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background 0.25s ease;
-    }
-
-    .btn-primary:hover {
-      background: #e6e6e6;
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #ffffff;
-      padding: 0.85rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: background 0.25s ease;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.16);
-    }
-
-    /* Right Interactive Feature List */
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      padding-left: 3rem;
-    }
-
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: clamp(1.25rem, 2.5vw, 1.85rem);
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.25);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .feature-item .arrow {
-      opacity: 0;
-      transform: translateX(-10px);
-      color: #ff3385;
-      font-size: 1.2rem;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .feature-item.active {
-      color: #ffffff;
-      transform: translateX(12px);
-    }
-
-    .feature-item.active .arrow {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* Bottom Brand Carousel Section */
-    .logos-wrapper {
-      width: 100%;
-      max-width: 1100px;
-      margin: 2rem auto 0;
-      overflow: hidden;
-      position: relative;
-      padding: 1rem 0;
-      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-    }
-
-    .logos-label {
-      text-align: center;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }
-
-    .logos-track {
-      display: flex;
-      gap: 4rem;
-      width: max-content;
-      animation: marqueeScroll 20s linear infinite;
-    }
-
-    .logo-item {
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: rgba(255, 255, 255, 0.5);
-      white-space: nowrap;
-      text-transform: uppercase;
-    }
-
-    @keyframes marqueeScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* Tablet & Mobile Media Queries */
-    @media (max-width: 1024px) {
-      .hero-main {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-      .hero-container {
-        padding: 1.5rem 2rem;
-      }
-      .feature-list {
-        padding-left: 0;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      /* Responsive Mobile Drawer */
-      .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 100%;
-        height: 100vh;
-        background: rgba(11, 5, 7, 0.96);
-        backdrop-filter: blur(20px);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2.5rem;
-        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 90;
-      }
-
-      .nav-links.active {
-        right: 0;
-      }
-
-      .nav-item {
-        height: auto;
-      }
-
-      .nav-link {
-        font-size: 1.75rem;
-        font-weight: 700;
-      }
-
-      .nav-link span:last-child {
-        display: none;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .btn-primary, .btn-secondary {
-        text-align: center;
-        justify-content: center;
-      }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background-color:#0b0507;color:#fff;overflow-x:hidden;}
+    .hero-container{position:relative;min-height:100vh;width:100%;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,rgba(11,5,7,0.6) 0%,rgba(11,5,7,0.85) 100%),url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;padding:2rem 4rem 3rem;}
+    .navbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;max-width:1400px;margin:0 auto;z-index:10;}
+    .brand-logo{font-weight:800;font-size:1.25rem;color:#fff;text-decoration:none;letter-spacing:-0.02em;z-index:101;}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-item{overflow:hidden;height:1.5rem;}
+    .nav-link{display:flex;flex-direction:column;text-decoration:none;color:rgba(255,255,255,0.8);font-weight:500;font-size:0.95rem;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);}
+    .nav-link span{display:block;height:1.5rem;line-height:1.5rem;}
+    .nav-link span:last-child{color:#ff3385;}
+    .nav-item:hover .nav-link{transform:translateY(-1.5rem);}
+    .nav-actions{display:flex;justify-content:flex-end;align-items:center;gap:1rem;z-index:101;}
+    .btn-chat{background-color:#fff;color:#0b0507;padding:0.65rem 1.4rem;border-radius:9999px;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.3s ease;}
+    .btn-chat:hover{background-color:#f0f0f0;transform:translateY(-2px);box-shadow:0 4px 20px rgba(255,255,255,0.25);}
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:26px;height:18px;background:transparent;border:none;cursor:pointer;padding:0;}
+    .hamburger span{width:100%;height:2px;background-color:#fff;border-radius:2px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);}
+    .hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+    .hero-main{display:grid;grid-template-columns:1.1fr 0.9fr;gap:4rem;align-items:center;width:100%;max-width:1400px;margin:3rem auto;z-index:5;}
+    .badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);padding:0.4rem 1rem;border-radius:9999px;font-size:0.85rem;font-weight:500;margin-bottom:1.75rem;}
+    .badge-arrow{color:#ff3385;}
+    .hero-title{font-size:clamp(2.5rem,5vw,4.25rem);font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:1.5rem;}
+    .hero-description{font-size:1.05rem;line-height:1.6;color:rgba(255,255,255,0.75);max-width:520px;margin-bottom:2.25rem;}
+    .hero-buttons{display:flex;gap:1rem;align-items:center;}
+    .btn-primary{background:#fff;color:#000;padding:0.85rem 1.75rem;border-radius:8px;font-weight:700;text-decoration:none;transition:background 0.25s ease;}
+    .btn-primary:hover{background:#e6e6e6;}
+    .btn-secondary{background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:0.85rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:background 0.25s ease;}
+    .btn-secondary:hover{background:rgba(255,255,255,0.16);}
+    .feature-roller-wrapper{position:relative;display:flex;align-items:center;height:240px;overflow:hidden;margin-left:2rem;mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);}
+    .fixed-arrow{position:absolute;left:0;top:50%;transform:translateY(-50%);color:#ff3385;font-size:1.25rem;z-index:10;pointer-events:none;}
+    .feature-track{display:flex;flex-direction:column;padding-left:2.25rem;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);will-change:transform;}
+    .feature-item{height:48px;display:flex;align-items:center;font-size:clamp(1.2rem,2.2vw,1.75rem);font-weight:700;color:rgba(255,255,255,0.25);transition:color 0.4s ease,transform 0.4s ease;white-space:nowrap;}
+    .feature-item.active{color:#fff;transform:scale(1.04);}
+    .logos-wrapper{width:100%;max-width:1100px;margin:2rem auto 0;overflow:hidden;position:relative;padding:1rem 0;mask-image:linear-gradient(to right,transparent,black 15%,black 85%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 15%,black 85%,transparent);}
+    .logos-label{text-align:center;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.5rem;font-weight:500;}
+    .logos-track{display:flex;gap:4rem;width:max-content;animation:marqueeScroll 20s linear infinite;}
+    .logo-item{font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;color:rgba(255,255,255,0.5);white-space:nowrap;text-transform:uppercase;}
+    @keyframes marqueeScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+    .interiors-section{background-color:#fff;color:#111;padding:6rem 4rem 8rem;}
+    .interiors-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 420px 280px;gap:3.5rem;align-items:start;}
+    .sticky-left-content,.sticky-right-content{position:sticky;top:5rem;}
+    .section-headline{font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:#111;}
+    .cards-stack-wrapper{display:flex;flex-direction:column;gap:6rem;padding-bottom:4rem;}
+    .card-item{position:sticky;top:5rem;background:#faf6f0;border-radius:4px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.05);transition:transform 0.3s ease;}
+    .card-image{width:100%;height:480px;object-fit:cover;display:block;}
+    .card-info{padding:1.5rem;background:#faf6f0;}
+    .card-title{font-size:1.15rem;font-weight:700;color:#111;margin-bottom:0.4rem;}
+    .card-description{font-size:0.88rem;line-height:1.5;color:#666;}
+    .sticky-right-content{display:flex;flex-direction:column;gap:1.75rem;}
+    .right-description{font-size:0.95rem;line-height:1.6;color:#444;}
+    .btn-more-about{display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;color:#111;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;border:1px solid #111;padding:0.65rem 1.25rem;width:fit-content;transition:all 0.25s ease;}
+    .btn-more-about:hover{background-color:#111;color:#fff;}
+    .btn-more-about .icon-box{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#111;color:#fff;font-size:0.75rem;margin-left:0.5rem;transition:background 0.25s ease;}
+    .btn-more-about:hover .icon-box{background:#fff;color:#111;}
+    @media(max-width:1024px){.hero-main{grid-template-columns:1fr;gap:3rem;}.hero-container{padding:1.5rem 2rem;}.feature-roller-wrapper{margin-left:0;}.interiors-section{padding:4rem 2rem;}.interiors-container{grid-template-columns:1fr;gap:3rem;}.sticky-left-content,.sticky-right-content{position:static;}.cards-stack-wrapper{gap:2rem;}.card-item{position:static;}}
+    @media(max-width:768px){.navbar{display:flex;justify-content:space-between;}.hamburger{display:flex;}.nav-links{position:fixed;top:0;right:-100%;width:100%;height:100vh;background:rgba(11,5,7,0.96);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right 0.4s cubic-bezier(0.16,1,0.3,1);z-index:90;}.nav-links.active{right:0;}.nav-item{height:auto;}.nav-link{font-size:1.75rem;font-weight:700;}.nav-link span:last-child{display:none;}.hero-buttons{flex-direction:column;align-items:stretch;}.btn-primary,.btn-secondary{text-align:center;justify-content:center;}.card-image{height:350px;}}
   </style>
 </head>
 <body>
-
   <div class="hero-container">
-    
-    <!-- Navbar -->
     <nav class="navbar">
       <a href="#" class="brand-logo">Magnific</a>
-
-      <!-- Navigation Drawer -->
       <ul class="nav-links" id="navLinks">
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span>About us</span>
-            <span>About us</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span>Services</span>
-            <span>Services</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span>Contact</span>
-            <span>Contact</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span>Why us</span>
-            <span>Why us</span>
-          </a>
-        </li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>About us</span><span>About us</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>Services</span><span>Services</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>Contact</span><span>Contact</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>Why us</span><span>Why us</span></a></li>
       </ul>
-
       <div class="nav-actions">
         <a href="#" class="btn-chat">Let's Chat</a>
-        <!-- Responsive Hamburger Button -->
-        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation"><span></span><span></span><span></span></button>
       </div>
     </nav>
 
-    <!-- Hero Main -->
     <main class="hero-main">
       <div class="hero-content">
         <div class="badge">
           <span>Ranked #1 AI creative platform</span>
           <span class="badge-arrow">Read a16z report →</span>
         </div>
-        
         <h1 class="hero-title">The creative platform to direct your best work</h1>
-        
-        <p class="hero-description">
-          Every AI model for video, image, and audio. Intelligent workflows for professional control and collaboration. On-brand production at any scale.
-        </p>
-
+        <p class="hero-description">Every AI model for video, image, and audio. Intelligent workflows for professional control and collaboration. On-brand production at any scale.</p>
         <div class="hero-buttons">
           <a href="#" class="btn-primary">Start creating</a>
-          <a href="#" class="btn-secondary">
-            <span>►</span> Why Magnific?
-          </a>
+          <a href="#" class="btn-secondary"><span>►</span> Why Magnific?</a>
         </div>
       </div>
 
-      <!-- Auto-Rotating Feature List -->
-      <div class="feature-list" id="featureList">
-        <div class="feature-item active"><span class="arrow">▶</span> Upscale to 4K</div>
-        <div class="feature-item"><span class="arrow">▶</span> Draft storyboards</div>
-        <div class="feature-item"><span class="arrow">▶</span> Scale campaigns</div>
-        <div class="feature-item"><span class="arrow">▶</span> Generate images</div>
-        <div class="feature-item"><span class="arrow">▶</span> Shoot cinematic videos</div>
-        <div class="feature-item"><span class="arrow">▶</span> Build workflows</div>
-        <div class="feature-item"><span class="arrow">▶</span> Video upscaling</div>
+      <div class="feature-roller-wrapper">
+        <div class="fixed-arrow">▶</div>
+        <div class="feature-track" id="featureTrack">
+          <div class="feature-item">Upscale to 4K</div>
+          <div class="feature-item">Draft storyboards</div>
+          <div class="feature-item">Scale campaigns</div>
+          <div class="feature-item">Generate images</div>
+          <div class="feature-item">Shoot cinematic videos</div>
+          <div class="feature-item">Build workflows</div>
+          <div class="feature-item">Video upscaling</div>
+        </div>
       </div>
     </main>
 
-    <!-- Continuous Brand Logo Marquee -->
     <div>
       <p class="logos-label">Trusted by 1M+ subscribers—creatives, enterprises, agencies and studios</p>
       <div class="logos-wrapper">
         <div class="logos-track">
-          <span class="logo-item">Coca-Cola</span>
-          <span class="logo-item">Ogilvy</span>
-          <span class="logo-item">R/GA</span>
-          <span class="logo-item">Wonder</span>
-          <span class="logo-item">GUESS</span>
-          <span class="logo-item">Delivery Hero</span>
-          
-          <span class="logo-item">Coca-Cola</span>
-          <span class="logo-item">Ogilvy</span>
-          <span class="logo-item">R/GA</span>
-          <span class="logo-item">Wonder</span>
-          <span class="logo-item">GUESS</span>
-          <span class="logo-item">Delivery Hero</span>
+          <span class="logo-item">Coca-Cola</span><span class="logo-item">Ogilvy</span><span class="logo-item">R/GA</span><span class="logo-item">Wonder</span><span class="logo-item">GUESS</span><span class="logo-item">Delivery Hero</span>
+          <span class="logo-item">Coca-Cola</span><span class="logo-item">Ogilvy</span><span class="logo-item">R/GA</span><span class="logo-item">Wonder</span><span class="logo-item">GUESS</span><span class="logo-item">Delivery Hero</span>
         </div>
       </div>
     </div>
-
   </div>
 
+  <section class="interiors-section">
+    <div class="interiors-container">
+      <div class="sticky-left-content">
+        <h2 class="section-headline">We craft interiors that reflect your personality, bring comfort & enhance the way you live every day.</h2>
+      </div>
+
+      <div class="cards-stack-wrapper">
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop" alt="Personalized Approach Interior" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">Personalized Approach</h3>
+            <p class="card-description">Personalized designs built for beauty, balance, and everyday flow.</p>
+          </div>
+        </article>
+
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="Space Optimization" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">Space Optimization</h3>
+            <p class="card-description">Maximizing functionality without sacrificing aesthetic elegance.</p>
+          </div>
+        </article>
+
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1000&auto=format&fit=crop" alt="Material Selection" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">Material Selection</h3>
+            <p class="card-description">Handpicked textures and sustainable materials that elevate comfort.</p>
+          </div>
+        </article>
+
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" alt="End-to-End Execution" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">End-to-End Execution</h3>
+            <p class="card-description">Seamless transition from concept rendering to final staging.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="sticky-right-content">
+        <p class="right-description">We believe your space should be a true reflection of you—how you live, what you love, and who you are.</p>
+        <a href="#" class="btn-more-about">MORE ABOUT <span class="icon-box">↗</span></a>
+      </div>
+    </div>
+  </section>
+
   <script>
-    // 1. Mobile Hamburger Menu Toggle
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const navLinks = document.getElementById('navLinks');
-    const navItems = document.querySelectorAll('.nav-link');
-
-    hamburgerBtn.addEventListener('click', () => {
-      hamburgerBtn.classList.toggle('open');
-      navLinks.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking any link
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        hamburgerBtn.classList.remove('open');
-        navLinks.classList.remove('active');
-      });
-    });
-
-    // 2. Cycle feature highlight every 2 seconds
-    const items = document.querySelectorAll('.feature-item');
-    let currentIndex = 0;
-
-    setInterval(() => {
-      items[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % items.length;
-      items[currentIndex].classList.add('active');
-    }, 2000);
+    const hamburgerBtn=document.getElementById('hamburgerBtn'),navLinks=document.getElementById('navLinks'),navItems=document.querySelectorAll('.nav-link'),track=document.getElementById('featureTrack'),featureItems=document.querySelectorAll('.feature-item'),itemHeight=48,viewportHeight=240,centerOffset=(viewportHeight/2)-(itemHeight/2);let currentFeatureIndex=0;hamburgerBtn.addEventListener('click',()=>{hamburgerBtn.classList.toggle('open');navLinks.classList.toggle('active');});navItems.forEach(e=>{e.addEventListener('click',()=>{hamburgerBtn.classList.remove('open');navLinks.classList.remove('active');});});function updateFeatureRoll(){featureItems.forEach((e,t)=>{e.classList.toggle('active',t===currentFeatureIndex);});const e=centerOffset-currentFeatureIndex*itemHeight;track.style.transform=`translateY(${e}px)`;}updateFeatureRoll();setInterval(()=>{currentFeatureIndex=(currentFeatureIndex+1)%featureItems.length;updateFeatureRoll();},2000);
   </script>
-
 </body>
 </html>
