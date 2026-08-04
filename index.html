@@ -34,21 +34,20 @@
     }
 
     /* ==========================================================================
-       INTRO CHAT LOADER (NO SCROLLBAR + TOP DISAPPEARING FADE EFFECT)
+       INTRO LOADER: DIRECTIONAL EYES & POPUP ANIMATION
        ========================================================================== */
     #intro-loader {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #0b0507;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-      background-size: 28px 28px;
+      background-color: #0d0a0b;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
       z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
       transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
@@ -58,181 +57,128 @@
       pointer-events: none;
     }
 
-    .chat-loader-window {
-      width: 100%;
-      max-width: 520px;
-      height: 520px;
-      background: rgba(20, 14, 16, 0.85);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .chat-loader-header {
-      padding: 1.1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.03);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      z-index: 2;
-    }
-
-    .chat-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff3385, #7928ca);
+    .eye-stage {
+      position: relative;
+      width: 420px;
+      height: 320px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: #fff;
     }
 
-    .chat-header-info { display: flex; flex-direction: column; }
-    .chat-header-name { font-size: 0.95rem; font-weight: 700; color: #fff; }
-    .chat-header-status { font-size: 0.75rem; color: #ff3385; font-weight: 600; }
-
-    .chat-loader-body {
-      flex: 1;
-      padding: 1.5rem;
+    /* Central Capsule Badge */
+    .eye-pill {
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      padding: 10px 14px;
       display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-      
-      /* Hide native scrollbars */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-
-      /* Smooth top fade mask for disappearing older messages */
-      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 100%);
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.05);
+      z-index: 2;
+      transition: all 0.4s ease;
     }
 
-    .chat-loader-body::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Custom Chat Bubble Tails */
-    .chat-bubble {
-      position: relative;
-      max-width: 82%;
-      padding: 0.85rem 1.25rem;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      border-radius: 18px;
-      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      word-break: break-word;
-    }
-
-    .chat-bubble.customer {
-      background: #251f22;
-      color: rgba(255, 255, 255, 0.9);
-      align-self: flex-start;
-      border-top-left-radius: 2px;
-    }
-
-    .chat-bubble.customer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -8px;
-      width: 0;
-      height: 0;
-      border-top: 10px solid #251f22;
-      border-left: 10px solid transparent;
-    }
-
-    .chat-bubble.us {
-      background: linear-gradient(135deg, #ff3385 0%, #e0245e 100%);
-      color: #ffffff;
-      align-self: flex-end;
-      border-top-right-radius: 2px;
-      box-shadow: 0 4px 20px rgba(255, 51, 133, 0.3);
-    }
-
-    .chat-bubble.us::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: -8px;
-      width: 0;
-      height: 0;
-      border-top: 10px solid #e0245e;
-      border-right: 10px solid transparent;
-    }
-
-    .typing-indicator {
-      position: relative;
-      padding: 0.75rem 1.1rem;
-      border-radius: 18px;
+    .eyes-wrapper {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       align-items: center;
     }
 
-    .typing-indicator.customer {
-      align-self: flex-start;
-      background: #251f22;
-      border-top-left-radius: 2px;
-    }
-
-    .typing-indicator.customer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -8px;
-      width: 0;
-      height: 0;
-      border-top: 10px solid #251f22;
-      border-left: 10px solid transparent;
-    }
-
-    .typing-indicator.us {
-      align-self: flex-end;
-      background: #e0245e;
-      border-top-right-radius: 2px;
-    }
-
-    .typing-indicator.us::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: -8px;
-      width: 0;
-      height: 0;
-      border-top: 10px solid #e0245e;
-      border-right: 10px solid transparent;
-    }
-
-    .typing-indicator span {
-      width: 6px;
-      height: 6px;
-      background-color: rgba(255, 255, 255, 0.7);
+    .eye {
+      width: 38px;
+      height: 38px;
+      background: #ffffff;
       border-radius: 50%;
-      animation: pulse 1.2s infinite ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: blink 4s infinite ease-in-out;
     }
 
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes popIn {
-      0% { opacity: 0; transform: translateY(8px) scale(0.95); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+    .pupil {
+      width: 12px;
+      height: 12px;
+      background: #000000;
+      border-radius: 50%;
+      position: absolute;
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      transform: translate(0, 0);
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.4; }
-      50% { transform: scale(1.3); opacity: 1; }
+    /* Natural Blinking Animation */
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.1); }
     }
+
+    /* Directional Pupil Movements */
+    .pupil.look-right { transform: translate(11px, 0); }
+    .pupil.look-left { transform: translate(-11px, 0); }
+    .pupil.look-down { transform: translate(0, 11px); }
+    .pupil.look-up { transform: translate(0, -11px); }
+
+    /* Pop-up Text Tags */
+    .popup-tag {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.9);
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    /* Positioning Popups Around Capsule */
+    .popup-tag.right {
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%) translateX(20px) scale(0.85);
+    }
+
+    .popup-tag.left {
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-20px) scale(0.85);
+    }
+
+    .popup-tag.down {
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px) scale(0.85);
+    }
+
+    .popup-tag.up {
+      top: 45px;
+      left: 50%;
+      background: #ff3385;
+      color: #ffffff;
+      border-color: #ff3385;
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(255, 51, 133, 0.4);
+      transform: translateX(-50%) translateY(-20px) scale(0.85);
+    }
+
+    /* Active Popup State */
+    .popup-tag.active {
+      opacity: 1;
+    }
+
+    .popup-tag.right.active { transform: translateY(-50%) translateX(0) scale(1); }
+    .popup-tag.left.active { transform: translateY(-50%) translateX(0) scale(1); }
+    .popup-tag.down.active { transform: translateX(-50%) translateY(0) scale(1); }
+    .popup-tag.up.active { transform: translateX(-50%) translateY(0) scale(1); }
 
     /* ==========================================================================
        SECTION 1: HERO SECTION
@@ -926,25 +872,28 @@
       .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
       .card-image { height: 350px; }
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
-      .chat-loader-window { height: 85vh; }
+      .eye-stage { transform: scale(0.85); }
     }
   </style>
 </head>
 <body class="loading">
 
-  <!-- INTRO CHAT LOADER -->
+  <!-- INTRO LOADER: DIRECTIONAL EYES -->
   <div id="intro-loader">
-    <div class="chat-loader-window">
-      <div class="chat-loader-header">
-        <div class="chat-avatar">M</div>
-        <div class="chat-header-info">
-          <div class="chat-header-name">Magnific Studio</div>
-          <div class="chat-header-status">Online</div>
+    <div class="eye-stage">
+      <!-- Central Badge Capsule -->
+      <div class="eye-pill">
+        <div class="eyes-wrapper">
+          <div class="eye"><div class="pupil" id="pupilLeft"></div></div>
+          <div class="eye"><div class="pupil" id="pupilRight"></div></div>
         </div>
       </div>
-      <div class="chat-loader-body" id="chatLoaderBody">
-        <!-- Dynamic chat messages pop in here -->
-      </div>
+
+      <!-- Popup Text Tags -->
+      <div class="popup-tag right" id="tagRight">Stressing</div>
+      <div class="popup-tag left" id="tagLeft">Expensive</div>
+      <div class="popup-tag down" id="tagDown">Protracted</div>
+      <div class="popup-tag up" id="tagUp">NOT WITH US</div>
     </div>
   </div>
 
@@ -1166,54 +1115,51 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Intro Chat Animation Script
-      const chatScript = [
-        { delay: 300, type: 'typing', sender: 'customer' },
-        { delay: 900, type: 'msg', sender: 'customer', text: 'Hi there' },
-        { delay: 1500, type: 'typing', sender: 'us' },
-        { delay: 2400, type: 'msg', sender: 'us', text: 'Hola, What can we explore today?' },
-        { delay: 3100, type: 'typing', sender: 'customer' },
-        { delay: 3900, type: 'msg', sender: 'customer', text: 'I want to buy an awning.' },
-        { delay: 4600, type: 'typing', sender: 'us' },
-        { delay: 5800, type: 'msg', sender: 'us', text: "Let's make the best awning which your neighbours shops looks at all the time." },
-        { delay: 6600, type: 'typing', sender: 'customer' },
-        { delay: 7400, type: 'msg', sender: 'customer', text: 'Haha, that will empty my pocket' },
-        { delay: 8100, type: 'typing', sender: 'us' },
-        { delay: 9000, type: 'msg', sender: 'us', text: 'Not at all, We do your style and your budget' },
-        { delay: 9700, type: 'typing', sender: 'customer' },
-        { delay: 10600, type: 'msg', sender: 'customer', text: 'Sounds interesting, How much will a awning cost me?' },
-        { delay: 11300, type: 'typing', sender: 'us' },
-        { delay: 12500, type: 'msg', sender: 'us', text: "Why don't we connect over call, will be better experience for your to explore what all options we have." }
-      ];
+      // 1. Eye Direction Animation Sequence Logic
+      const pupilL = document.getElementById('pupilLeft');
+      const pupilR = document.getElementById('pupilRight');
 
-      const chatBody = document.getElementById('chatLoaderBody');
+      const tagRight = document.getElementById('tagRight');
+      const tagLeft = document.getElementById('tagLeft');
+      const tagDown = document.getElementById('tagDown');
+      const tagUp = document.getElementById('tagUp');
+
       const introLoader = document.getElementById('intro-loader');
 
-      chatScript.forEach(step => {
-        setTimeout(() => {
-          const activeTyping = chatBody.querySelector('.typing-indicator');
-          if (activeTyping) activeTyping.remove();
+      function setEyeDirection(dir) {
+        pupilL.className = `pupil ${dir}`;
+        pupilR.className = `pupil ${dir}`;
+      }
 
-          if (step.type === 'typing') {
-            const typingEl = document.createElement('div');
-            typingEl.className = `typing-indicator ${step.sender}`;
-            typingEl.innerHTML = '<span></span><span></span><span></span>';
-            chatBody.appendChild(typingEl);
-          } else if (step.type === 'msg') {
-            const msgEl = document.createElement('div');
-            msgEl.className = `chat-bubble ${step.sender}`;
-            msgEl.innerText = step.text;
-            chatBody.appendChild(msgEl);
-          }
-          chatBody.scrollTop = chatBody.scrollHeight;
-        }, step.delay);
-      });
+      // Step 1 (1.5s): Look Right -> Popup "Stressing"
+      setTimeout(() => {
+        setEyeDirection('look-right');
+        tagRight.classList.add('active');
+      }, 1500);
 
-      // Smooth Fade-out Loader after chat completion (~13.8s)
+      // Step 2 (3.0s): Look Left -> Popup "Expensive"
+      setTimeout(() => {
+        setEyeDirection('look-left');
+        tagLeft.classList.add('active');
+      }, 3000);
+
+      // Step 3 (4.5s): Look Down -> Popup "Protracted"
+      setTimeout(() => {
+        setEyeDirection('look-down');
+        tagDown.classList.add('active');
+      }, 4500);
+
+      // Step 4 (6.0s): Look Up -> Popup "NOT WITH US"
+      setTimeout(() => {
+        setEyeDirection('look-up');
+        tagUp.classList.add('active');
+      }, 6000);
+
+      // Fade out Loader screen after complete sequence (~8.0s)
       setTimeout(() => {
         introLoader.classList.add('fade-out');
         document.body.classList.remove('loading');
-      }, 13800);
+      }, 8000);
 
       // 2. Feature Roller & Navigation Script
       const hamburgerBtn = document.getElementById('hamburgerBtn');
