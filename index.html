@@ -13,12 +13,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
-      --bg: #121212;
-      --card-bg: #1c1c1c;
-      --text: #f0f0f0;
-      --muted: #888888;
-      --line: #333333;
-      --accent: #ff473a;
+      --bg: #121316;
+      --bg-blueprint: #0b2238;
+      --card-bg: rgba(22, 24, 29, 0.75);
+      --text: #f0f3f8;
+      --muted: #8a94a6;
+      --line: #2d333f;
+      --accent-blue: #0088ff;
+      --accent-red: #ff3b30;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
@@ -29,26 +31,25 @@
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.5;
+      transition: background-color 0.8s ease;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Nav */
+    /* Top Navigation */
     .nav {
       position: fixed;
       top: 0; left: 0; width: 100%;
-      padding: 2rem 4rem;
+      padding: 1.75rem 4rem;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 100;
-      background: rgba(18, 18, 18, 0.8);
+      background: rgba(18, 19, 22, 0.85);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.04em; color: var(--text); text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; font-family: var(--font-mono); font-size: 0.85rem; }
-    .nav-links a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
-    .nav-links a:hover { color: var(--text); }
+    .brand { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+    .nav-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-blue); }
 
-    /* Pinned Stage Viewport */
+    /* Fixed Viewport for Graphic Stage */
     .stage-container {
       position: fixed;
       top: 0; left: 0;
@@ -58,277 +59,265 @@
       z-index: 1;
     }
 
-    .mechanical-svg {
+    .mouse-svg {
       width: 100%;
       max-width: 900px;
       height: 900px;
       overflow: visible;
     }
 
-    /* Vector Styling */
-    .mech-path {
-      fill: none;
-      stroke: #e6e6e6;
-      stroke-width: 1.25;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: stroke 0.3s, opacity 0.3s;
-    }
-    .mech-fill { fill: #1a1a1a; stroke: #e6e6e6; stroke-width: 1.25; }
-    .mech-accent { stroke: var(--accent); stroke-width: 1.5; }
-    .callout-line { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 4; fill: none; opacity: 0; }
-    .callout-label { font-family: var(--font-mono); font-size: 10px; fill: var(--text); opacity: 0; letter-spacing: 0.1em; }
+    /* Vector Component Styles */
+    .stroke-main { stroke: #e6edf8; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
+    .fill-body { fill: #1a1c23; stroke: #e6edf8; stroke-width: 1.5; }
+    .accent-switch { fill: #0066cc; stroke: #0088ff; stroke-width: 1; }
+    .accent-lens { fill: rgba(0, 136, 255, 0.15); stroke: #0088ff; stroke-width: 1.25; }
+    .callout-line { stroke: var(--accent-blue); stroke-width: 1; stroke-dasharray: 400; stroke-dashoffset: 400; fill: none; opacity: 0; }
+    .callout-text { font-family: var(--font-mono); font-size: 10px; fill: var(--text); opacity: 0; letter-spacing: 0.1em; }
 
     /* Scroll Track & Overlay Sections */
-    .scroll-track {
-      position: relative;
-      z-index: 2;
-    }
-
+    .scroll-track { position: relative; z-index: 2; }
     .section {
       min-height: 100vh;
       display: flex;
       align-items: center;
       padding: 0 6rem;
     }
+    .section.right { justify-content: flex-end; }
 
-    .section-content {
-      max-width: 440px;
-      background: rgba(28, 28, 28, 0.65);
+    .section-card {
+      max-width: 420px;
+      background: var(--card-bg);
       backdrop-filter: blur(16px);
-      padding: 3rem;
+      padding: 2.5rem;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-
-    .section.right { justify-content: flex-end; }
     
-    .tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; display: block; }
-    .title { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; }
-    .desc { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
+    .tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
+    .title { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
+    .desc { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
 
-    /* Bottom HUD / Scrubber */
+    /* Bottom HUD Scrubber */
     .hud {
       position: fixed;
-      bottom: 2.5rem; right: 4rem;
-      background: var(--card-bg);
-      border: 1px solid var(--line);
+      bottom: 2rem; right: 4rem;
+      background: rgba(22, 24, 29, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 0.75rem 1.5rem;
       border-radius: 99px;
-      display: flex; align-items: center; gap: 1.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
       z-index: 100;
       font-family: var(--font-mono);
       font-size: 0.8rem;
     }
-    .progress-bar { width: 140px; height: 3px; background: var(--line); position: relative; border-radius: 2px; overflow: hidden; }
-    .progress-fill { height: 100%; width: 0%; background: var(--accent); }
+    .progress-bar { width: 120px; height: 3px; background: rgba(255, 255, 255, 0.15); position: relative; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: var(--accent-blue); }
   </style>
 </head>
 <body>
 
   <nav class="nav">
-    <a href="#" class="brand">AURA.ENGINE</a>
-    <ul class="nav-links">
-      <li><a href="#01">01. OPTICS</a></li>
-      <li><a href="#02">02. DISASSEMBLY</a></li>
-      <li><a href="#03">03. SCHEMATIC</a></li>
-      <li><a href="#04">04. MATRIX</a></li>
-    </ul>
+    <a href="#" class="brand">AURA // MOUSE_ENGINE</a>
+    <span class="nav-tag">[ SYSTEM_DISASSEMBLY_VIEW ]</span>
   </nav>
 
-  <!-- PINNED MECHANICAL ASSEMBLY VIEWPORT -->
+  <!-- PINNED GRAPHIC STAGE -->
   <div class="stage-container">
-    <svg class="mechanical-svg" viewBox="-400 -400 800 800">
+    <svg class="mouse-svg" viewBox="-400 -400 800 800">
       
-      <!-- CALLOUT SCHEMATIC LINES -->
+      <!-- CALLOUT POINTER LINES -->
       <g id="callouts">
-        <path class="callout-line" id="cLine1" d="M 120 -220 L 280 -260 L 340 -260" />
-        <text class="callout-label" id="cText1" x="350" y="-256">01 // OPTICAL_ELEMENT_GROUP</text>
+        <path class="callout-line" id="cLine1" d="M 110 -210 L 260 -250 L 330 -250" />
+        <text class="callout-text" id="cText1" x="340" y="-246">01 // ERGONOMICS_TOP_SHELL</text>
 
-        <path class="callout-line" id="cLine2" d="M -140 -60 L -280 -100 L -340 -100" />
-        <text class="callout-label" id="cText2" x="-480" y="-96">02 // APERTURE_CONTROL_RING</text>
+        <path class="callout-line" id="cLine2" d="M -120 -80 L -250 -120 L -320 -120" />
+        <text class="callout-text" id="cText2" x="-460" y="-116">02 // TACTILE_MICRO_SWITCHES</text>
 
-        <path class="callout-line" id="cLine3" d="M 160 100 L 280 140 L 340 140" />
-        <text class="callout-label" id="cText3" x="350" y="144">03 // HELICOID_FOCUS_ENGINE</text>
+        <path class="callout-line" id="cLine3" d="M 140 30 L 260 70 L 330 70" />
+        <text class="callout-text" id="cText3" x="340" y="74">03 // OPTICAL_SENSOR_&_DSP</text>
+
+        <path class="callout-line" id="cLine4" d="M -130 180 L -250 220 L -320 220" />
+        <text class="callout-text" id="cText4" x="-450" y="224">04 // BASE_CHASSIS_&_SKATES</text>
       </g>
 
-      <!-- MAIN LENS ASSEMBLY GROUP -->
-      <g id="lensAssembly" transform="rotate(-30)">
+      <!-- ISOMETRIC DISASSEMBLED MOUSE ASSEMBLY -->
+      <g id="mouseAssembly" transform="rotate(-25)">
         
-        <!-- LAYER 1: FRONT LENS BEZEL & GLASS -->
-        <g id="l1Group">
-          <ellipse cx="0" cy="-180" rx="160" ry="50" class="mech-fill" />
-          <ellipse cx="0" cy="-180" rx="130" ry="40" class="mech-path mech-accent" />
-          <ellipse cx="0" cy="-180" rx="90" ry="28" class="mech-path" stroke-dasharray="3 3" />
-          <!-- Thread notches -->
-          <path d="M -160 -180 L -160 -160 A 160 50 0 0 0 160 -160 L 160 -180" class="mech-path" />
+        <!-- LAYER 1: TOP ERGONOMIC SHELL & DPI BUTTON -->
+        <g id="layerTopShell">
+          <path d="M -110 -220 C -60 -270 60 -270 110 -220 C 140 -180 150 -120 120 -80 C 80 -40 -80 -40 -120 -80 C -150 -120 -140 -180 -110 -220 Z" class="fill-body" />
+          <!-- Clicker Split Line -->
+          <line x1="0" y1="-265" x2="0" y2="-170" class="stroke-main" />
+          <!-- Scroll Wheel Slot -->
+          <rect x="-12" y="-220" width="24" height="45" rx="12" class="fill-body" />
         </g>
 
-        <!-- LAYER 2: APERTURE RING & GEAR TEETH -->
-        <g id="l2Group">
-          <ellipse cx="0" cy="-80" rx="140" ry="44" class="mech-fill" />
-          <path d="M -140 -80 L -140 -40 A 140 44 0 0 0 140 -40 L 140 -80" class="mech-path" />
-          <!-- Gear Ridges -->
-          <path d="M -120 -50 L -120 -30 M -80 -40 L -80 -20 M -40 -35 L -40 -15 M 0 -33 L 0 -13 M 40 -35 L 40 -15 M 80 -40 L 80 -20 M 120 -50 L 120 -30" class="mech-path" />
+        <!-- LAYER 2: MID FRAME, SCROLL WHEEL & SWITCHES -->
+        <g id="layerMidFrame">
+          <path d="M -100 -120 C -50 -160 50 -160 100 -120 C 120 -90 120 -50 100 -20 C 60 20 -60 20 -100 -20 C -120 -50 -120 -90 -100 -120 Z" class="fill-body" />
+          <!-- Scroll Wheel Assembly -->
+          <ellipse cx="0" cy="-90" rx="14" ry="24" class="fill-body" />
+          <ellipse cx="0" cy="-90" rx="8" ry="16" class="stroke-main" />
+          <!-- Left & Right Omron Micro-Switches -->
+          <rect x="-65" y="-120" width="28" height="18" rx="3" class="accent-switch" />
+          <rect x="37" y="-120" width="28" height="18" rx="3" class="accent-switch" />
         </g>
 
-        <!-- LAYER 3: CORE OPTICAL CHAMBER (STAYS CENTRAL) -->
-        <g id="l3Group">
-          <ellipse cx="0" cy="20" rx="120" ry="38" class="mech-fill" />
-          <path d="M -120 20 L -120 70 A 120 38 0 0 0 120 70 L 120 20" class="mech-path" />
-          <!-- Internal Aperture Blades -->
-          <polygon points="0,30 -30,50 10,60" class="mech-path mech-accent" />
-          <polygon points="0,30 30,50 -10,60" class="mech-path mech-accent" />
-          <circle cx="0" cy="45" r="18" class="mech-path" />
+        <!-- LAYER 3: MAIN PCB & OPTICAL SENSOR ENGINE -->
+        <g id="layerPCB">
+          <!-- Printed Circuit Board Base -->
+          <path d="M -90 -30 L 90 -30 L 100 60 L -100 60 Z" fill="#112211" stroke="#00ff88" stroke-width="1.25" />
+          <!-- DSP Processing Chip -->
+          <rect x="-20" y="0" width="40" height="30" rx="2" fill="#050505" stroke="#ffffff" stroke-width="1" />
+          <circle cx="0" cy="15" r="4" fill="var(--accent-red)" />
+          
+          <!-- LENS ARRAY (Expands Horizontally on Scroll) -->
+          <g id="lensArray">
+            <ellipse cx="-120" cy="15" rx="8" ry="16" class="accent-lens" />
+            <ellipse cx="-90" cy="15" rx="10" ry="20" class="accent-lens" />
+            <ellipse cx="-60" cy="15" rx="12" ry="24" class="accent-lens" />
+          </g>
         </g>
 
-        <!-- LAYER 4: FOCUS HELICOID BARREL -->
-        <g id="l4Group">
-          <ellipse cx="0" cy="120" rx="135" ry="42" class="mech-fill" />
-          <path d="M -135 120 L -135 170 A 135 42 0 0 0 135 170 L 135 120" class="mech-path" />
-          <!-- Spiral Threading -->
-          <path d="M -130 130 Q 0 180 130 140" class="mech-path" stroke-dasharray="6 4" />
-          <path d="M -130 145 Q 0 195 130 155" class="mech-path" stroke-dasharray="6 4" />
-        </g>
-
-        <!-- LAYER 5: MOUNT FLANGE & CONTACT PINS -->
-        <g id="l5Group">
-          <ellipse cx="0" cy="220" rx="170" ry="54" class="mech-fill" />
-          <path d="M -170 220 L -170 240 A 170 54 0 0 0 170 240 L 170 220" class="mech-path" />
-          <!-- Electronic Gold Pins -->
-          <circle cx="-50" cy="240" r="3" class="mech-path mech-accent" />
-          <circle cx="-25" cy="245" r="3" class="mech-path mech-accent" />
-          <circle cx="0" cy="247" r="3" class="mech-path mech-accent" />
-          <circle cx="25" cy="245" r="3" class="mech-path mech-accent" />
-          <circle cx="50" cy="240" r="3" class="mech-path mech-accent" />
+        <!-- LAYER 4: BOTTOM CHASSIS & POWER BASE -->
+        <g id="layerBase">
+          <path d="M -120 80 C -70 40 70 40 120 80 C 150 130 140 200 110 240 C 60 280 -60 280 -110 240 C -140 200 -150 130 -120 80 Z" class="fill-body" />
+          <!-- Sensor Opening Window -->
+          <rect x="-18" y="140" width="36" height="24" rx="4" class="stroke-main" />
+          <!-- Glide Skates -->
+          <path d="M -80 95 C -40 80 40 80 80 95" class="stroke-main" stroke-width="3" />
+          <path d="M -70 250 C -30 260 30 260 70 250" class="stroke-main" stroke-width="3" />
         </g>
 
       </g>
     </svg>
   </div>
 
-  <!-- SCROLLABLE NARRATIVE OVERLAY -->
+  <!-- SCROLLABLE CONTENT SECTIONS -->
   <main class="scroll-track">
     
-    <section class="section" id="01">
-      <div class="section-content">
-        <span class="tag">01 // INTEGRATED SYSTEM</span>
-        <h1 class="title">Precision Digital Architecture</h1>
-        <p class="desc">Engineered from the ground up for high-frequency performance and interactive visual depth.</p>
+    <section class="section">
+      <div class="section-card">
+        <span class="tag">01 // DESIGN & ERGONOMICS</span>
+        <h1 class="title">Precision Shell Architecture</h1>
+        <p class="desc">Form meets tactile execution. Engineered for optimal grip physics, low latency click response, and seamless brand presence.</p>
       </div>
     </section>
 
-    <section class="section right" id="02">
-      <div class="section-content">
-        <span class="tag">02 // KINETIC DISASSEMBLY</span>
-        <h2 class="title">Modular Component Separation</h2>
-        <p class="desc">As you scroll, mechanical sub-assemblies translate along calculated isometric vectors to reveal internal mechanics.</p>
+    <section class="section right">
+      <div class="section-card">
+        <span class="tag">02 // TACTILE INTERACTION</span>
+        <h2 class="title">Mechanical Switches & Encoder</h2>
+        <p class="desc">Every click triggers micro-second responses. Dual tactile Omron switches paired with an optical scroll encoder for flawless feedback.</p>
       </div>
     </section>
 
-    <section class="section" id="03">
-      <div class="section-content">
-        <span class="tag">03 // TECHNICAL BLUEPRINT</span>
-        <h2 class="title">Schematic Wireframing</h2>
-        <p class="desc">Solid geometries dissolve into technical stroke profiles and dynamic HUD callouts.</p>
+    <section class="section">
+      <div class="section-card">
+        <span class="tag">03 // OPTICAL PROCESSING</span>
+        <h2 class="title">DSP Optical Engine</h2>
+        <p class="desc">Multi-lens glass array focusing high-frequency tracking signals directly into an onboard DSP microprocessor for 26,000 DPI accuracy.</p>
       </div>
     </section>
 
-    <section class="section right" id="04">
-      <div class="section-content">
-        <span class="tag">04 // RE-ASSEMBLY</span>
-        <h2 class="title">Production Deployment</h2>
-        <p class="desc">Components snap back into place with precise inertia springs, delivering a cohesive digital product.</p>
+    <section class="section right">
+      <div class="section-card">
+        <span class="tag">04 // SCHEMATIC BLUEPRINT</span>
+        <h2 class="title">System Architecture</h2>
+        <p class="desc">Stripped-back blueprint breakdown highlighting component layout, modularity, and rapid assembly standards.</p>
       </div>
     </section>
 
   </main>
 
-  <!-- HUD STATUS BAR -->
+  <!-- HUD STATUS -->
   <div class="hud">
-    <span>SYSTEM_STATE: <strong id="sysState" style="color:var(--accent)">ASSEMBLED</strong></span>
+    <span>PHASE: <strong id="hudPhase" style="color:var(--accent-blue)">ASSEMBLED</strong></span>
     <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
     <span id="pNum">000%</span>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // DOM Elements
       const pFill = document.getElementById('pFill');
       const pNum = document.getElementById('pNum');
-      const sysState = document.getElementById('sysState');
+      const hudPhase = document.getElementById('hudPhase');
 
-      const lensAssembly = document.getElementById('lensAssembly');
-      const l1 = document.getElementById('l1Group');
-      const l2 = document.getElementById('l2Group');
-      const l3 = document.getElementById('l3Group');
-      const l4 = document.getElementById('l4Group');
-      const l5 = document.getElementById('l5Group');
+      const mouseAssembly = document.getElementById('mouseAssembly');
+      const lTop = document.getElementById('layerTopShell');
+      const lMid = document.getElementById('layerMidFrame');
+      const lPCB = document.getElementById('layerPCB');
+      const lBase = document.getElementById('layerBase');
+      const lensArray = document.getElementById('lensArray');
 
       const cLines = document.querySelectorAll('.callout-line');
-      const cLabels = document.querySelectorAll('.callout-label');
+      const cTexts = document.querySelectorAll('.callout-text');
 
-      // Scroll Lerp Variables (Inertia Physics)
       let currentScroll = 0;
       let targetScroll = 0;
-      const ease = 0.075; // Smoothing factor (lower = heavier physics)
+      const ease = 0.08; // Inertia smoothing
 
       window.addEventListener('scroll', () => {
         targetScroll = window.scrollY;
       }, { passive: true });
 
-      function render() {
-        // Smoothly interpolate currentScroll towards targetScroll
+      function renderPhysics() {
         currentScroll += (targetScroll - currentScroll) * ease;
         
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         const progress = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
-        // Update HUD
+        // Update Progress UI
         pFill.style.width = `${progress * 100}%`;
         pNum.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
 
-        // Update System State Label
-        if (progress < 0.2) sysState.innerText = "ASSEMBLED";
-        else if (progress < 0.5) sysState.innerText = "DISASSEMBLED";
-        else if (progress < 0.8) sysState.innerText = "SCHEMATIC_DRAWING";
-        else sysState.innerText = "DEPLOYED";
+        // Blueprint Transition at Stage 4
+        if (progress > 0.72) {
+          document.body.style.backgroundColor = 'var(--bg-blueprint)';
+          hudPhase.innerText = "BLUEPRINT_VIEW";
+        } else {
+          document.body.style.backgroundColor = 'var(--bg)';
+          if (progress < 0.25) hudPhase.innerText = "ASSEMBLED";
+          else if (progress < 0.50) hudPhase.innerText = "DISASSEMBLED";
+          else hudPhase.innerText = "OPTICAL_EXPANSION";
+        }
 
         // =========================================================================
-        // CONTINUOUS LAYER TRANSFORM ENGINE
+        // CONTINUOUS LAYER TRANSFORM & EXPLOSION MATRIX
         // =========================================================================
 
-        // 1. Overall Assembly Rotation & Scale Shift
-        const globalRotate = -30 + (progress * 45);
-        const globalScale = 1 - (Math.sin(progress * Math.PI) * 0.15);
-        lensAssembly.setAttribute('transform', `rotate(${globalRotate}) scale(${globalScale})`);
+        // 1. Mouse Assembly Rotation & Pitch Shift
+        const rotation = -25 + (progress * 35);
+        mouseAssembly.setAttribute('transform', `rotate(${rotation}) scale(${1 - progress * 0.1})`);
 
-        // 2. Layer Explosive Separation
-        const explodeFactor = Math.sin(progress * Math.PI) * 220;
+        // 2. Vertical Explosive Separation
+        const explode = Math.sin(progress * Math.PI) * 230;
 
-        l1.style.transform = `translateY(${-explodeFactor * 1.2}px)`;
-        l2.style.transform = `translateY(${-explodeFactor * 0.6}px)`;
-        l3.style.transform = `translateY(0px)`; // Core remains grounded
-        l4.style.transform = `translateY(${explodeFactor * 0.6}px)`;
-        l5.style.transform = `translateY(${explodeFactor * 1.2}px)`;
+        lTop.style.transform = `translateY(${-explode * 1.3}px)`;
+        lMid.style.transform = `translateY(${-explode * 0.5}px)`;
+        lPCB.style.transform = `translateY(${explode * 0.3}px)`;
+        lBase.style.transform = `translateY(${explode * 1.1}px)`;
 
-        // 3. Dynamic Callout Line Reveal
+        // 3. Horizontal Optical Lens Array Expansion (Image 1 Effect)
+        const lensShift = progress > 0.4 ? Math.min(1, (progress - 0.4) / 0.3) * 60 : 0;
+        lensArray.style.transform = `translateX(${-lensShift}px)`;
+
+        // 4. Callout Line Pointers
         cLines.forEach(line => {
           const dashOffset = 400 - (progress * 800);
           line.style.strokeDashoffset = Math.max(0, dashOffset);
-          line.style.opacity = progress > 0.15 && progress < 0.85 ? 1 : 0;
+          line.style.opacity = progress > 0.18 && progress < 0.88 ? 1 : 0;
         });
 
-        cLabels.forEach(label => {
-          label.style.opacity = progress > 0.3 && progress < 0.8 ? (progress - 0.3) * 2.5 : 0;
+        cTexts.forEach(text => {
+          text.style.opacity = progress > 0.25 && progress < 0.82 ? (progress - 0.25) * 3 : 0;
         });
 
-        requestAnimationFrame(render);
+        requestAnimationFrame(renderPhysics);
       }
 
-      // Start Physics Loop
-      requestAnimationFrame(render);
+      requestAnimationFrame(renderPhysics);
     });
   </script>
 </body>
