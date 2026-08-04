@@ -316,12 +316,12 @@
     }
 
     /* ==========================================================================
-       SECTION 2: INTERIORS SECTION (STICKY STACK)
+       SECTION 2: INTERIORS SECTION (STICKY STACK) - AMENDED
        ========================================================================== */
     .interiors-section {
       background-color: #fff;
       color: #111;
-      padding: 6rem 4rem 60vh;
+      padding: 6rem 4rem; /* Adjusted padding to remove excessive gap before section 3 */
       position: relative;
     }
 
@@ -348,21 +348,27 @@
     }
 
     /* Card Stack Wrapper */
-    .cards-stack-wrapper { display: flex; flex-direction: column; }
+    .cards-stack-wrapper { 
+      display: flex; 
+      flex-direction: column; 
+    }
     
     .card-item {
       position: sticky;
       top: 6rem;
       background: #faf6f0;
-      border-radius: 6px;
+      border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.12);
       border: 1px solid rgba(0, 0, 0, 0.06);
-      margin-bottom: 60vh;
+      margin-bottom: 25vh; /* Standardized spacing for smooth overlay transition */
       will-change: transform;
     }
 
-    .card-item:last-child { margin-bottom: 0; }
+    .card-item:last-child { 
+      margin-bottom: 0; /* Ensures last card ends cleanly without trailing space */
+    }
+
     .card-item:nth-child(1) { z-index: 1; }
     .card-item:nth-child(2) { z-index: 2; }
     .card-item:nth-child(3) { z-index: 3; }
