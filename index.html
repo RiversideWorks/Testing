@@ -40,7 +40,7 @@
     .btn-secondary{background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:0.85rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:background 0.25s ease;}
     .btn-secondary:hover{background:rgba(255,255,255,0.16);}
     
-    /* Roller Text Feature */
+    /* Feature Roller */
     .feature-roller-wrapper{position:relative;display:flex;align-items:center;height:240px;overflow:hidden;margin-left:2rem;mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);}
     .fixed-arrow{position:absolute;left:0;top:50%;transform:translateY(-50%);color:#ff3385;font-size:1.25rem;z-index:10;pointer-events:none;}
     .feature-track{display:flex;flex-direction:column;padding-left:2.25rem;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);will-change:transform;}
@@ -61,8 +61,9 @@
     .section-headline{font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:#111;}
     
     /* Card Stack Wrapper */
-    .cards-stack-wrapper{display:flex;flex-direction:column;gap:5rem;padding-bottom:0;}
-    .card-item{position:sticky;top:6rem;background:#faf6f0;border-radius:6px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);will-change:transform;}
+    .cards-stack-wrapper{display:flex;flex-direction:column;}
+    .card-item{position:sticky;top:6rem;background:#faf6f0;border-radius:6px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);margin-bottom:45vh;will-change:transform;}
+    .card-item:last-child{margin-bottom:0;}
     .card-item:nth-child(1){z-index:1;}
     .card-item:nth-child(2){z-index:2;}
     .card-item:nth-child(3){z-index:3;}
@@ -80,10 +81,6 @@
     .btn-more-about .icon-box{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#111;color:#fff;font-size:0.75rem;margin-left:0.5rem;transition:background 0.25s ease;}
     .btn-more-about:hover .icon-box{background:#fff;color:#111;}
 
-    /* Subsequent Section (Follow-up content) */
-    .next-section{background-color:#0b0507;color:#fff;padding:8rem 4rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
-    .next-section-title{font-size:clamp(2.5rem,4vw,4rem);font-weight:800;letter-spacing:-0.02em;}
-
     @media(max-width:1024px){
       .hero-main{grid-template-columns:1fr;gap:3rem;}
       .hero-container{padding:1.5rem 2rem;}
@@ -91,8 +88,7 @@
       .interiors-section{padding:4rem 2rem;}
       .interiors-container{grid-template-columns:1fr;gap:3rem;}
       .sticky-left-content,.sticky-right-content{position:static;}
-      .cards-stack-wrapper{gap:2rem;padding-bottom:0;}
-      .card-item{position:static;}
+      .card-item{position:static;margin-bottom:2rem;}
     }
     @media(max-width:768px){
       .navbar{display:flex;justify-content:space-between;}
@@ -209,11 +205,6 @@
         <a href="#" class="btn-more-about">MORE ABOUT <span class="icon-box">↗</span></a>
       </div>
     </div>
-  </section>
-
-  <!-- Next Section -->
-  <section class="next-section">
-    <h2 class="next-section-title">Designed for modern spaces.</h2>
   </section>
 
   <script>
