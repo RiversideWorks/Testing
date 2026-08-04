@@ -40,8 +40,8 @@
     .feature-roller-wrapper{position:relative;display:flex;align-items:center;height:240px;overflow:hidden;margin-left:2rem;mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);}
     .fixed-arrow{position:absolute;left:0;top:50%;transform:translateY(-50%);color:#ff3385;font-size:1.25rem;z-index:10;pointer-events:none;}
     .feature-track{display:flex;flex-direction:column;padding-left:2.25rem;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);will-change:transform;}
-    .feature-item{height:48px;display:flex;align-items:center;font-size:clamp(1.2rem,2.2vw,1.75rem);font-weight:700;color:rgba(255,255,255,0.25);transition:color 0.4s ease,transform 0.4s ease;white-space:nowrap;}
-    .feature-item.active{color:#fff;transform:scale(1.04);}
+    .feature-item{height:48px;display:flex;align-items:center;font-size:clamp(1.2rem,2.2vw,1.75rem);font-weight:400;color:rgba(255,255,255,0.25);transition:color 0.4s ease,font-weight 0.4s ease,transform 0.4s ease;white-space:nowrap;}
+    .feature-item.active{color:#ffffff;font-weight:800;transform:scale(1.05);}
     .logos-wrapper{width:100%;max-width:1100px;margin:2rem auto 0;overflow:hidden;position:relative;padding:1rem 0;mask-image:linear-gradient(to right,transparent,black 15%,black 85%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 15%,black 85%,transparent);}
     .logos-label{text-align:center;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.5rem;font-weight:500;}
     .logos-track{display:flex;gap:4rem;width:max-content;animation:marqueeScroll 20s linear infinite;}
@@ -49,10 +49,14 @@
     @keyframes marqueeScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
     .interiors-section{background-color:#fff;color:#111;padding:6rem 4rem 8rem;}
     .interiors-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 420px 280px;gap:3.5rem;align-items:start;}
-    .sticky-left-content,.sticky-right-content{position:sticky;top:5rem;}
+    .sticky-left-content,.sticky-right-content{position:sticky;top:6rem;}
     .section-headline{font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:#111;}
-    .cards-stack-wrapper{display:flex;flex-direction:column;gap:6rem;padding-bottom:4rem;}
-    .card-item{position:sticky;top:5rem;background:#faf6f0;border-radius:4px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.05);transition:transform 0.3s ease;}
+    .cards-stack-wrapper{display:flex;flex-direction:column;gap:6rem;padding-bottom:20vh;}
+    .card-item{position:sticky;top:6rem;background:#faf6f0;border-radius:6px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);will-change:transform;}
+    .card-item:nth-child(1){z-index:1;}
+    .card-item:nth-child(2){z-index:2;}
+    .card-item:nth-child(3){z-index:3;}
+    .card-item:nth-child(4){z-index:4;}
     .card-image{width:100%;height:480px;object-fit:cover;display:block;}
     .card-info{padding:1.5rem;background:#faf6f0;}
     .card-title{font-size:1.15rem;font-weight:700;color:#111;margin-bottom:0.4rem;}
@@ -63,7 +67,7 @@
     .btn-more-about:hover{background-color:#111;color:#fff;}
     .btn-more-about .icon-box{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#111;color:#fff;font-size:0.75rem;margin-left:0.5rem;transition:background 0.25s ease;}
     .btn-more-about:hover .icon-box{background:#fff;color:#111;}
-    @media(max-width:1024px){.hero-main{grid-template-columns:1fr;gap:3rem;}.hero-container{padding:1.5rem 2rem;}.feature-roller-wrapper{margin-left:0;}.interiors-section{padding:4rem 2rem;}.interiors-container{grid-template-columns:1fr;gap:3rem;}.sticky-left-content,.sticky-right-content{position:static;}.cards-stack-wrapper{gap:2rem;}.card-item{position:static;}}
+    @media(max-width:1024px){.hero-main{grid-template-columns:1fr;gap:3rem;}.hero-container{padding:1.5rem 2rem;}.feature-roller-wrapper{margin-left:0;}.interiors-section{padding:4rem 2rem;}.interiors-container{grid-template-columns:1fr;gap:3rem;}.sticky-left-content,.sticky-right-content{position:static;}.cards-stack-wrapper{gap:2rem;padding-bottom:0;}.card-item{position:static;}}
     @media(max-width:768px){.navbar{display:flex;justify-content:space-between;}.hamburger{display:flex;}.nav-links{position:fixed;top:0;right:-100%;width:100%;height:100vh;background:rgba(11,5,7,0.96);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right 0.4s cubic-bezier(0.16,1,0.3,1);z-index:90;}.nav-links.active{right:0;}.nav-item{height:auto;}.nav-link{font-size:1.75rem;font-weight:700;}.nav-link span:last-child{display:none;}.hero-buttons{flex-direction:column;align-items:stretch;}.btn-primary,.btn-secondary{text-align:center;justify-content:center;}.card-image{height:350px;}}
   </style>
 </head>
@@ -100,13 +104,11 @@
       <div class="feature-roller-wrapper">
         <div class="fixed-arrow">▶</div>
         <div class="feature-track" id="featureTrack">
-          <div class="feature-item">Upscale to 4K</div>
-          <div class="feature-item">Draft storyboards</div>
-          <div class="feature-item">Scale campaigns</div>
-          <div class="feature-item">Generate images</div>
-          <div class="feature-item">Shoot cinematic videos</div>
-          <div class="feature-item">Build workflows</div>
-          <div class="feature-item">Video upscaling</div>
+          <div class="feature-item">Bespoke Design</div>
+          <div class="feature-item">Commercial Awnings</div>
+          <div class="feature-item">100 Years Experience</div>
+          <div class="feature-item">Expert Installation</div>
+          <div class="feature-item">Premium Quality</div>
         </div>
       </div>
     </main>
