@@ -30,6 +30,211 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    body.loading {
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       INTRO CHAT LOADER (DESIGN & COLOUR MATCHED TO WEBSITE)
+       ========================================================================== */
+    #intro-loader {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #0b0507;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #intro-loader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .chat-loader-window {
+      width: 100%;
+      max-width: 520px;
+      height: 580px;
+      background: rgba(20, 14, 16, 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-loader-header {
+      padding: 1.1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .chat-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff3385, #7928ca);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .chat-header-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .chat-header-status {
+      font-size: 0.75rem;
+      color: #ff3385;
+      font-weight: 600;
+    }
+
+    .chat-loader-body {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Bubble Tails (Matching Reference Image) */
+    .chat-bubble {
+      position: relative;
+      max-width: 82%;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      border-radius: 18px;
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      word-break: break-word;
+    }
+
+    .chat-bubble.customer {
+      background: #251f22;
+      color: rgba(255, 255, 255, 0.9);
+      align-self: flex-start;
+      border-top-left-radius: 2px;
+    }
+
+    .chat-bubble.customer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -8px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #251f22;
+      border-left: 10px solid transparent;
+    }
+
+    .chat-bubble.us {
+      background: linear-gradient(135deg, #ff3385 0%, #e0245e 100%);
+      color: #ffffff;
+      align-self: flex-end;
+      border-top-right-radius: 2px;
+      box-shadow: 0 4px 20px rgba(255, 51, 133, 0.3);
+    }
+
+    .chat-bubble.us::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -8px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #e0245e;
+      border-right: 10px solid transparent;
+    }
+
+    .typing-indicator {
+      position: relative;
+      padding: 0.75rem 1.1rem;
+      border-radius: 18px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .typing-indicator.customer {
+      align-self: flex-start;
+      background: #251f22;
+      border-top-left-radius: 2px;
+    }
+
+    .typing-indicator.customer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -8px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #251f22;
+      border-left: 10px solid transparent;
+    }
+
+    .typing-indicator.us {
+      align-self: flex-end;
+      background: #e0245e;
+      border-top-right-radius: 2px;
+    }
+
+    .typing-indicator.us::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -8px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #e0245e;
+      border-right: 10px solid transparent;
+    }
+
+    .typing-indicator span {
+      width: 6px;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(8px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
     /* ==========================================================================
        SECTION 1: HERO SECTION
        ========================================================================== */
@@ -91,13 +296,8 @@
       line-height: 1.5rem;
     }
 
-    .nav-link span:last-child {
-      color: #ff3385;
-    }
-
-    .nav-item:hover .nav-link {
-      transform: translateY(-1.5rem);
-    }
+    .nav-link span:last-child { color: #ff3385; }
+    .nav-item:hover .nav-link { transform: translateY(-1.5rem); }
 
     .nav-actions {
       display: flex;
@@ -316,7 +516,7 @@
     }
 
     /* ==========================================================================
-       SECTION 2: INTERIORS SECTION (STICKY STACK FIXED)
+       SECTION 2: INTERIORS SECTION (STICKY STACK)
        ========================================================================== */
     .interiors-section {
       background-color: #fff;
@@ -347,7 +547,6 @@
       color: #111;
     }
 
-    /* Card Stack Wrapper & Sticky Logic */
     .cards-stack-wrapper { 
       display: flex; 
       flex-direction: column; 
@@ -365,10 +564,7 @@
       will-change: transform;
     }
 
-    .card-item:last-child { 
-      margin-bottom: 18vh; 
-    }
-
+    .card-item:last-child { margin-bottom: 18vh; }
     .card-item:nth-child(1) { z-index: 1; }
     .card-item:nth-child(2) { z-index: 2; }
     .card-item:nth-child(3) { z-index: 3; }
@@ -385,7 +581,6 @@
     .card-title { font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 0.4rem; }
     .card-description { font-size: 0.88rem; line-height: 1.5; color: #666; }
 
-    /* Right Sticky Block */
     .sticky-right-content { display: flex; flex-direction: column; gap: 1.75rem; }
     .right-description { font-size: 0.95rem; line-height: 1.6; color: #444; }
 
@@ -443,11 +638,7 @@
       align-items: center;
     }
 
-    .header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
+    .header { text-align: center; margin-bottom: 2.5rem; }
     .header-title {
       font-size: 3rem;
       font-weight: 800;
@@ -455,12 +646,7 @@
       color: var(--text-heading);
       margin-bottom: 0.75rem;
     }
-
-    .header-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-sub);
-      font-weight: 500;
-    }
+    .header-subtitle { font-size: 1.1rem; color: var(--text-sub); font-weight: 500; }
 
     .filter-tabs {
       display: inline-flex;
@@ -489,10 +675,7 @@
       transition: all 0.25s ease;
     }
 
-    .filter-btn.active {
-      background: #1e1b1a;
-      color: #ffffff;
-    }
+    .filter-btn.active { background: #1e1b1a; color: #ffffff; }
 
     .badge-new {
       background: var(--accent-badge);
@@ -518,26 +701,9 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
     }
 
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .sidebar-intro .title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: 1rem;
-    }
-
-    .sidebar-intro .desc {
-      font-size: 0.88rem;
-      color: #a39c9a;
-      line-height: 1.55;
-      margin-bottom: 1.25rem;
-    }
+    .sidebar { display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; }
+    .sidebar-intro .title { font-size: 1.5rem; font-weight: 700; line-height: 1.25; margin-bottom: 1rem; }
+    .sidebar-intro .desc { font-size: 0.88rem; color: #a39c9a; line-height: 1.55; margin-bottom: 1.25rem; }
 
     .tour-link {
       color: #ffffff;
@@ -552,11 +718,7 @@
 
     .tour-link:hover { gap: 10px; }
 
-    .cat-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .cat-menu { display: flex; flex-direction: column; gap: 0.75rem; }
 
     .cat-item {
       background: transparent;
@@ -574,12 +736,7 @@
       transition: color 0.2s;
     }
 
-    .cat-item-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .cat-item-header { display: flex; align-items: center; gap: 12px; }
     .cat-item.active { color: #ffffff; }
 
     .cat-progress {
@@ -591,12 +748,7 @@
       display: none;
     }
 
-    .cat-progress-fill {
-      height: 100%;
-      width: 40%;
-      background: #ffffff;
-    }
-
+    .cat-progress-fill { height: 100%; width: 40%; background: #ffffff; }
     .cat-item.active .cat-progress { display: block; }
 
     .cat-subtext {
@@ -626,11 +778,7 @@
       position: relative;
     }
 
-    .media-viewport img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .media-viewport img { width: 100%; height: 100%; object-fit: cover; }
 
     .tool-panel {
       background: rgba(32, 28, 27, 0.92);
@@ -668,17 +816,8 @@
       flex-shrink: 0;
     }
 
-    .tool-info .name {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 2px;
-    }
-
-    .tool-info .sub {
-      font-size: 0.72rem;
-      color: #8c8380;
-    }
+    .tool-info .name { font-size: 0.82rem; font-weight: 600; color: #ffffff; margin-bottom: 2px; }
+    .tool-info .sub { font-size: 0.72rem; color: #8c8380; }
 
     .peek-card {
       width: 100%;
@@ -692,7 +831,7 @@
     .peek-card img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ==========================================================================
-       SECTION 4: MOTION SHOWCASE (UPDATED VIDEO SOURCE)
+       SECTION 4: MOTION SHOWCASE
        ========================================================================== */
     .motion-section {
       background-color: #0b0507;
@@ -712,11 +851,7 @@
       align-items: center;
     }
 
-    .motion-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-      max-width: 760px;
-    }
+    .motion-header { text-align: center; margin-bottom: 3.5rem; max-width: 760px; }
 
     .motion-badge {
       display: inline-block;
@@ -740,11 +875,7 @@
       margin-bottom: 1rem;
     }
 
-    .motion-subtitle {
-      font-size: 1.05rem;
-      color: rgba(255, 255, 255, 0.65);
-      line-height: 1.6;
-    }
+    .motion-subtitle { font-size: 1.05rem; color: rgba(255, 255, 255, 0.65); line-height: 1.6; }
 
     .motion-viewport-card {
       width: 100%;
@@ -776,27 +907,9 @@
       max-width: 380px;
     }
 
-    .motion-overlay-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #ff3385;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 0.35rem;
-    }
-
-    .motion-overlay-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.35rem;
-    }
-
-    .motion-overlay-desc {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.4;
-    }
+    .motion-overlay-tag { font-size: 0.75rem; font-weight: 700; color: #ff3385; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.35rem; }
+    .motion-overlay-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
+    .motion-overlay-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; }
 
     /* Responsive Breakpoints */
     @media (max-width: 1024px) {
@@ -840,10 +953,27 @@
       .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
       .card-image { height: 350px; }
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
+      .chat-loader-window { height: 90vh; }
     }
   </style>
 </head>
-<body>
+<body class="loading">
+
+  <!-- INTRO CHAT LOADER -->
+  <div id="intro-loader">
+    <div class="chat-loader-window">
+      <div class="chat-loader-header">
+        <div class="chat-avatar">M</div>
+        <div class="chat-header-info">
+          <div class="chat-header-name">Magnific Studio</div>
+          <div class="chat-header-status">Online</div>
+        </div>
+      </div>
+      <div class="chat-loader-body" id="chatLoaderBody">
+        <!-- Dynamic chat message sequence -->
+      </div>
+    </div>
+  </div>
 
   <!-- SECTION 1: HERO -->
   <div class="hero-container">
@@ -971,7 +1101,7 @@
           </div>
 
           <div class="cat-menu">
-            <button class="cat-item active" data-type="image">
+            <button class="cat-item active">
               <div class="cat-item-header">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 Image
@@ -980,7 +1110,7 @@
               <div class="cat-progress"><div class="cat-progress-fill"></div></div>
             </button>
 
-            <button class="cat-item" data-type="video">
+            <button class="cat-item">
               <div class="cat-item-header">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
                 Video
@@ -989,7 +1119,7 @@
               <div class="cat-progress"><div class="cat-progress-fill"></div></div>
             </button>
 
-            <button class="cat-item" data-type="audio">
+            <button class="cat-item">
               <div class="cat-item-header">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
                 Audio
@@ -997,33 +1127,15 @@
               <p class="cat-subtext">Synthesize voices, generate ambient soundtracks, and isolate sound stems.</p>
               <div class="cat-progress"><div class="cat-progress-fill"></div></div>
             </button>
-
-            <button class="cat-item" data-type="3d">
-              <div class="cat-item-header">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                3D
-              </div>
-              <p class="cat-subtext">Generate production-ready textured 3D meshes and spatial environments.</p>
-              <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-            </button>
-
-            <button class="cat-item" data-type="spaces">
-              <div class="cat-item-header">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Spaces
-              </div>
-              <p class="cat-subtext">Real-time collaborative multiplayer canvas for your entire team.</p>
-              <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-            </button>
           </div>
         </aside>
 
         <main class="showcase-area">
           <div class="media-viewport">
-            <img id="mainVisual" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" alt="Cinematic Visual Rendering">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" alt="Cinematic Visual Rendering">
           </div>
 
-          <div class="tool-panel" id="toolPanel">
+          <div class="tool-panel">
             <div class="tool-item">
               <div class="tool-icon">🖼️</div>
               <div class="tool-info">
@@ -1031,7 +1143,6 @@
                 <div class="sub">Create images from text prompts</div>
               </div>
             </div>
-
             <div class="tool-item">
               <div class="tool-icon">✏️</div>
               <div class="tool-info">
@@ -1039,44 +1150,11 @@
                 <div class="sub">Edit and modify existing images</div>
               </div>
             </div>
-
             <div class="tool-item">
               <div class="tool-icon">🔍</div>
               <div class="tool-info">
                 <div class="name">Image Upscaler</div>
                 <div class="sub">Enhance resolution and detail</div>
-              </div>
-            </div>
-
-            <div class="tool-item">
-              <div class="tool-icon">🔄</div>
-              <div class="tool-info">
-                <div class="name">Variations</div>
-                <div class="sub">Create variations of an image</div>
-              </div>
-            </div>
-
-            <div class="tool-item">
-              <div class="tool-icon">☀️</div>
-              <div class="tool-info">
-                <div class="name">Relight</div>
-                <div class="sub">Change lighting and atmosphere</div>
-              </div>
-            </div>
-
-            <div class="tool-item">
-              <div class="tool-icon">🎬</div>
-              <div class="tool-info">
-                <div class="name">Cinematic Shot</div>
-                <div class="sub">Generate cinematic compositions</div>
-              </div>
-            </div>
-
-            <div class="tool-item">
-              <div class="tool-icon">✨</div>
-              <div class="tool-info">
-                <div class="name">Skin Enhancer</div>
-                <div class="sub">Retouch and enhance skin details</div>
               </div>
             </div>
           </div>
@@ -1115,7 +1193,56 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Mobile Nav & Roller
+      // 1. Intro Chat Animation Script
+      const chatScript = [
+        { delay: 300, type: 'typing', sender: 'customer' },
+        { delay: 900, type: 'msg', sender: 'customer', text: 'Hi there' },
+        { delay: 1500, type: 'typing', sender: 'us' },
+        { delay: 2400, type: 'msg', sender: 'us', text: 'Hola, What can we explore today?' },
+        { delay: 3100, type: 'typing', sender: 'customer' },
+        { delay: 3900, type: 'msg', sender: 'customer', text: 'I want to buy an awning.' },
+        { delay: 4600, type: 'typing', sender: 'us' },
+        { delay: 5800, type: 'msg', sender: 'us', text: "Let's make the best awning which your neighbours shops looks at all the time." },
+        { delay: 6600, type: 'typing', sender: 'customer' },
+        { delay: 7400, type: 'msg', sender: 'customer', text: 'Haha, that will empty my pocket' },
+        { delay: 8100, type: 'typing', sender: 'us' },
+        { delay: 9000, type: 'msg', sender: 'us', text: 'Not at all, We do your style and your budget' },
+        { delay: 9700, type: 'typing', sender: 'customer' },
+        { delay: 10600, type: 'msg', sender: 'customer', text: 'Sounds interesting, How much will a awning cost me?' },
+        { delay: 11300, type: 'typing', sender: 'us' },
+        { delay: 12500, type: 'msg', sender: 'us', text: "Why don't we connect over call, will be better experience for your to explore what all options we have." }
+      ];
+
+      const chatBody = document.getElementById('chatLoaderBody');
+      const introLoader = document.getElementById('intro-loader');
+
+      chatScript.forEach(step => {
+        setTimeout(() => {
+          const activeTyping = chatBody.querySelector('.typing-indicator');
+          if (activeTyping) activeTyping.remove();
+
+          if (step.type === 'typing') {
+            const typingEl = document.createElement('div');
+            typingEl.className = `typing-indicator ${step.sender}`;
+            typingEl.innerHTML = '<span></span><span></span><span></span>';
+            chatBody.appendChild(typingEl);
+          } else if (step.type === 'msg') {
+            const msgEl = document.createElement('div');
+            msgEl.className = `chat-bubble ${step.sender}`;
+            msgEl.innerText = step.text;
+            chatBody.appendChild(msgEl);
+          }
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }, step.delay);
+      });
+
+      // Smooth Fade-out Loader at ~13.8 seconds
+      setTimeout(() => {
+        introLoader.classList.add('fade-out');
+        document.body.classList.remove('loading');
+      }, 13800);
+
+      // 2. Main Site Roller & Interaction Script
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
       const track = document.getElementById('featureTrack');
@@ -1146,15 +1273,6 @@
         currentFeatureIndex = (currentFeatureIndex + 1) % featureItems.length;
         updateFeatureRoll();
       }, 2000);
-
-      // Category Switcher Logic
-      const catItems = document.querySelectorAll('.cat-item');
-      catItems.forEach(item => {
-        item.addEventListener('click', () => {
-          catItems.forEach(c => c.classList.remove('active'));
-          item.classList.add('active');
-        });
-      });
     });
   </script>
 </body>
