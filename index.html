@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creative Platform & Interiors</title>
+  <title>Creative Platform &amp; Interiors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -316,12 +316,12 @@
     }
 
     /* ==========================================================================
-       SECTION 2: INTERIORS SECTION (STICKY STACK) - AMENDED
+       SECTION 2: INTERIORS SECTION (STICKY STACK FIXED)
        ========================================================================== */
     .interiors-section {
       background-color: #fff;
       color: #111;
-      padding: 6rem 4rem; /* Adjusted padding to remove excessive gap before section 3 */
+      padding: 6rem 4rem 2rem;
       position: relative;
     }
 
@@ -347,7 +347,7 @@
       color: #111;
     }
 
-    /* Card Stack Wrapper */
+    /* Card Stack Wrapper & Sticky Logic */
     .cards-stack-wrapper { 
       display: flex; 
       flex-direction: column; 
@@ -361,12 +361,12 @@
       overflow: hidden;
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.12);
       border: 1px solid rgba(0, 0, 0, 0.06);
-      margin-bottom: 25vh; /* Standardized spacing for smooth overlay transition */
+      margin-bottom: 40vh;
       will-change: transform;
     }
 
     .card-item:last-child { 
-      margin-bottom: 0; /* Ensures last card ends cleanly without trailing space */
+      margin-bottom: 18vh; 
     }
 
     .card-item:nth-child(1) { z-index: 1; }
@@ -376,7 +376,7 @@
 
     .card-image {
       width: 100%;
-      height: 460px;
+      height: 440px;
       object-fit: cover;
       display: block;
     }
@@ -431,6 +431,8 @@
       display: flex;
       justify-content: center;
       width: 100%;
+      position: relative;
+      z-index: 10;
     }
 
     .services-container {
@@ -460,7 +462,6 @@
       font-weight: 500;
     }
 
-    /* Filter Navigation */
     .filter-tabs {
       display: inline-flex;
       background: #ffffff;
@@ -503,7 +504,6 @@
       text-transform: uppercase;
     }
 
-    /* Card Stage */
     .stage-card {
       width: 100%;
       background: var(--card-bg);
@@ -691,18 +691,127 @@
 
     .peek-card img { width: 100%; height: 100%; object-fit: cover; }
 
+    /* ==========================================================================
+       SECTION 4: MOTION SHOWCASE (UPDATED VIDEO SOURCE)
+       ========================================================================== */
+    .motion-section {
+      background-color: #0b0507;
+      color: #ffffff;
+      padding: 6rem 4rem;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .motion-container {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .motion-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      max-width: 760px;
+    }
+
+    .motion-badge {
+      display: inline-block;
+      background: rgba(255, 51, 133, 0.15);
+      border: 1px solid rgba(255, 51, 133, 0.3);
+      color: #ff3385;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.4rem 1.1rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .motion-title {
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .motion-subtitle {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.6;
+    }
+
+    .motion-viewport-card {
+      width: 100%;
+      height: 560px;
+      background: #1d1918;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .media-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .motion-card-overlay {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(18, 14, 15, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 1.25rem 1.75rem;
+      border-radius: 16px;
+      max-width: 380px;
+    }
+
+    .motion-overlay-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ff3385;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .motion-overlay-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .motion-overlay-desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.4;
+    }
+
     /* Responsive Breakpoints */
     @media (max-width: 1024px) {
       .hero-main { grid-template-columns: 1fr; gap: 3rem; }
       .hero-container { padding: 1.5rem 2rem; }
       .feature-roller-wrapper { margin-left: 0; }
-      .interiors-section { padding: 4rem 2rem 4rem; }
+      .interiors-section { padding: 4rem 2rem 2rem; }
       .interiors-container { grid-template-columns: 1fr; gap: 3rem; }
       .sticky-left-content, .sticky-right-content { position: static; }
       .card-item { position: static; margin-bottom: 2rem; }
       .stage-card { grid-template-columns: 1fr; }
       .showcase-area { grid-template-columns: 1fr; }
       .peek-card { display: none; }
+      .motion-section { padding: 4rem 2rem; }
+      .motion-viewport-card { height: 400px; }
     }
 
     @media (max-width: 768px) {
@@ -730,14 +839,13 @@
       .hero-buttons { flex-direction: column; align-items: stretch; }
       .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
       .card-image { height: 350px; }
+      .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ==========================================================================
-     SECTION 1: HERO SECTION
-     ========================================================================== -->
+  <!-- SECTION 1: HERO -->
   <div class="hero-container">
     <nav class="navbar">
       <a href="#" class="brand-logo">Magnific</a>
@@ -790,9 +898,7 @@
     </div>
   </div>
 
-  <!-- ==========================================================================
-     SECTION 2: STICKY CARDS SECTION
-     ========================================================================== -->
+  <!-- SECTION 2: INTERIORS STICKY STACK -->
   <section class="interiors-section">
     <div class="interiors-container">
       <div class="sticky-left-content">
@@ -840,19 +946,14 @@
     </div>
   </section>
 
-  <!-- ==========================================================================
-     SECTION 3: SERVICES SHOWCASE SECTION
-     ========================================================================== -->
+  <!-- SECTION 3: SERVICES SHOWCASE -->
   <section class="services-wrapper">
     <div class="services-container">
-      
-      <!-- Header -->
       <header class="header">
         <h2 class="header-title">One place to create anything</h2>
         <p class="header-subtitle">Pick your starting point. Every tool, every model, every format.</p>
       </header>
 
-      <!-- Top Filter Pill Navigation -->
       <nav class="filter-tabs">
         <button class="filter-btn active">Creative Suite</button>
         <button class="filter-btn">MCP &amp; API <span class="badge-new">New</span></button>
@@ -861,10 +962,7 @@
         <button class="filter-btn">Stock</button>
       </nav>
 
-      <!-- Main Showcase Stage Card -->
       <div class="stage-card">
-        
-        <!-- Left Sidebar -->
         <aside class="sidebar">
           <div class="sidebar-intro">
             <h3 class="title">Pro-level production, end to end</h3>
@@ -872,7 +970,6 @@
             <a href="#" class="tour-link">Take a tour &rarr;</a>
           </div>
 
-          <!-- Vertical Category Switcher -->
           <div class="cat-menu">
             <button class="cat-item active" data-type="image">
               <div class="cat-item-header">
@@ -921,7 +1018,6 @@
           </div>
         </aside>
 
-        <!-- Center Showcase Area -->
         <main class="showcase-area">
           <div class="media-viewport">
             <img id="mainVisual" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" alt="Cinematic Visual Rendering">
@@ -989,22 +1085,39 @@
             <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=600&auto=format&fit=crop" alt="Peek Asset">
           </div>
         </main>
-
       </div>
     </div>
   </section>
 
-  <!-- ==========================================================================
-     INTERACTIVE LOGIC
-     ========================================================================== -->
+  <!-- SECTION 4: MOTION SHOWCASE -->
+  <section class="motion-section">
+    <div class="motion-container">
+      <header class="motion-header">
+        <span class="motion-badge">High Performance Motion</span>
+        <h2 class="motion-title">Cinematic generation with real-time feedback</h2>
+        <p class="motion-subtitle">Render broadcast-quality motion assets instantly with direct hardware acceleration and intelligent video loops.</p>
+      </header>
+
+      <div class="motion-viewport-card">
+        <video autoplay loop muted playsinline class="media-video">
+          <source src="text-match-cut.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <div class="motion-card-overlay">
+          <div class="motion-overlay-tag">Live Stream</div>
+          <h3 class="motion-overlay-title">4K Dynamic Motion Output</h3>
+          <p class="motion-overlay-desc">Seamless looping execution designed for fluid performance and optimized load times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // --------------------------------------------------
-      // Hero Navigation & Roller Logic
-      // --------------------------------------------------
+      // Mobile Nav & Roller
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
-      const navItems = document.querySelectorAll('.nav-link');
       const track = document.getElementById('featureTrack');
       const featureItems = document.querySelectorAll('.feature-item');
       
@@ -1018,22 +1131,13 @@
           hamburgerBtn.classList.toggle('open');
           navLinks.classList.toggle('active');
         });
-
-        navItems.forEach(e => {
-          e.addEventListener('click', () => {
-            hamburgerBtn.classList.remove('open');
-            navLinks.classList.remove('active');
-          });
-        });
       }
 
       function updateFeatureRoll() {
         if (!track || !featureItems.length) return;
-        featureItems.forEach((e, t) => {
-          e.classList.toggle('active', t === currentFeatureIndex);
-        });
-        const e = centerOffset - currentFeatureIndex * itemHeight;
-        track.style.transform = `translateY(${e}px)`;
+        featureItems.forEach((e, t) => e.classList.toggle('active', t === currentFeatureIndex));
+        const offset = centerOffset - currentFeatureIndex * itemHeight;
+        track.style.transform = `translateY(${offset}px)`;
       }
 
       updateFeatureRoll();
@@ -1043,37 +1147,12 @@
         updateFeatureRoll();
       }, 2000);
 
-      // --------------------------------------------------
-      // Services Showcase Filter & Category Switcher Logic
-      // --------------------------------------------------
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        });
-      });
-
+      // Category Switcher Logic
       const catItems = document.querySelectorAll('.cat-item');
-      const mainVisual = document.getElementById('mainVisual');
-
-      const sampleImages = {
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
-        video: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=1000&auto=format&fit=crop",
-        audio: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1000&auto=format&fit=crop",
-        '3d': "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop",
-        spaces: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop"
-      };
-
       catItems.forEach(item => {
         item.addEventListener('click', () => {
-          catItems.forEach(i => i.classList.remove('active'));
+          catItems.forEach(c => c.classList.remove('active'));
           item.classList.add('active');
-
-          const type = item.getAttribute('data-type');
-          if (sampleImages[type] && mainVisual) {
-            mainVisual.src = sampleImages[type];
-          }
         });
       });
     });
