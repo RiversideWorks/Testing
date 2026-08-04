@@ -14,7 +14,6 @@
       --text-heading: #261513;
       --text-sub: #6e6563;
       --card-bg: #1d1918;
-      --card-inner-bg: #282322;
       --accent-badge: #ffd9df;
       --accent-badge-text: #e0245e;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -23,7 +22,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-sans);
       background-color: #0b0507;
       color: #fff;
       overflow-x: hidden;
@@ -35,7 +34,7 @@
     }
 
     /* ==========================================================================
-       INTRO CHAT LOADER (DESIGN & COLOUR MATCHED TO WEBSITE)
+       INTRO CHAT LOADER (NO SCROLLBAR + TOP DISAPPEARING FADE EFFECT)
        ========================================================================== */
     #intro-loader {
       position: fixed;
@@ -62,12 +61,12 @@
     .chat-loader-window {
       width: 100%;
       max-width: 520px;
-      height: 580px;
-      background: rgba(20, 14, 16, 0.75);
+      height: 520px;
+      background: rgba(20, 14, 16, 0.85);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 24px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -80,6 +79,7 @@
       display: flex;
       align-items: center;
       gap: 0.85rem;
+      z-index: 2;
     }
 
     .chat-avatar {
@@ -95,22 +95,9 @@
       color: #fff;
     }
 
-    .chat-header-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chat-header-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .chat-header-status {
-      font-size: 0.75rem;
-      color: #ff3385;
-      font-weight: 600;
-    }
+    .chat-header-info { display: flex; flex-direction: column; }
+    .chat-header-name { font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .chat-header-status { font-size: 0.75rem; color: #ff3385; font-weight: 600; }
 
     .chat-loader-body {
       flex: 1;
@@ -120,9 +107,21 @@
       gap: 1.1rem;
       overflow-y: auto;
       scroll-behavior: smooth;
+      
+      /* Hide native scrollbars */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      /* Smooth top fade mask for disappearing older messages */
+      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 100%);
     }
 
-    /* Custom Bubble Tails (Matching Reference Image) */
+    .chat-loader-body::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Custom Chat Bubble Tails */
     .chat-bubble {
       position: relative;
       max-width: 82%;
@@ -269,16 +268,8 @@
       z-index: 101;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-item {
-      overflow: hidden;
-      height: 1.5rem;
-    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-item { overflow: hidden; height: 1.5rem; }
 
     .nav-link {
       display: flex;
@@ -290,12 +281,7 @@
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .nav-link span {
-      display: block;
-      height: 1.5rem;
-      line-height: 1.5rem;
-    }
-
+    .nav-link span { display: block; height: 1.5rem; line-height: 1.5rem; }
     .nav-link span:last-child { color: #ff3385; }
     .nav-item:hover .nav-link { transform: translateY(-1.5rem); }
 
@@ -391,11 +377,7 @@
       margin-bottom: 2.25rem;
     }
 
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
+    .hero-buttons { display: flex; gap: 1rem; align-items: center; }
 
     .btn-primary {
       background: #fff;
@@ -426,7 +408,6 @@
 
     .btn-secondary:hover { background: rgba(255, 255, 255, 0.16); }
 
-    /* Feature Roller */
     .feature-roller-wrapper {
       position: relative;
       display: flex;
@@ -468,13 +449,8 @@
       white-space: nowrap;
     }
 
-    .feature-item.active {
-      color: #ffffff;
-      font-weight: 800;
-      transform: scale(1.05);
-    }
+    .feature-item.active { color: #ffffff; font-weight: 800; transform: scale(1.05); }
 
-    /* Logos Marquee */
     .logos-wrapper {
       width: 100%;
       max-width: 1100px;
@@ -547,10 +523,7 @@
       color: #111;
     }
 
-    .cards-stack-wrapper { 
-      display: flex; 
-      flex-direction: column; 
-    }
+    .cards-stack-wrapper { display: flex; flex-direction: column; }
     
     .card-item {
       position: sticky;
@@ -953,7 +926,7 @@
       .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
       .card-image { height: 350px; }
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
-      .chat-loader-window { height: 90vh; }
+      .chat-loader-window { height: 85vh; }
     }
   </style>
 </head>
@@ -970,7 +943,7 @@
         </div>
       </div>
       <div class="chat-loader-body" id="chatLoaderBody">
-        <!-- Dynamic chat message sequence -->
+        <!-- Dynamic chat messages pop in here -->
       </div>
     </div>
   </div>
@@ -1236,13 +1209,13 @@
         }, step.delay);
       });
 
-      // Smooth Fade-out Loader at ~13.8 seconds
+      // Smooth Fade-out Loader after chat completion (~13.8s)
       setTimeout(() => {
         introLoader.classList.add('fade-out');
         document.body.classList.remove('loading');
       }, 13800);
 
-      // 2. Main Site Roller & Interaction Script
+      // 2. Feature Roller & Navigation Script
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
       const track = document.getElementById('featureTrack');
