@@ -55,14 +55,14 @@
     @keyframes marqueeScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
     /* Interiors Section (Sticky Card Stack) */
-    .interiors-section{background-color:#fff;color:#111;padding:6rem 4rem 6rem;position:relative;}
+    .interiors-section{background-color:#fff;color:#111;padding:6rem 4rem 60vh;position:relative;}
     .interiors-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 420px 280px;gap:3.5rem;align-items:start;}
     .sticky-left-content,.sticky-right-content{position:sticky;top:6rem;}
     .section-headline{font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:#111;}
     
     /* Card Stack Wrapper */
     .cards-stack-wrapper{display:flex;flex-direction:column;}
-    .card-item{position:sticky;top:6rem;background:#faf6f0;border-radius:6px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);margin-bottom:45vh;will-change:transform;}
+    .card-item{position:sticky;top:6rem;background:#faf6f0;border-radius:6px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);margin-bottom:60vh;will-change:transform;}
     .card-item:last-child{margin-bottom:0;}
     .card-item:nth-child(1){z-index:1;}
     .card-item:nth-child(2){z-index:2;}
@@ -85,7 +85,7 @@
       .hero-main{grid-template-columns:1fr;gap:3rem;}
       .hero-container{padding:1.5rem 2rem;}
       .feature-roller-wrapper{margin-left:0;}
-      .interiors-section{padding:4rem 2rem;}
+      .interiors-section{padding:4rem 2rem 4rem;}
       .interiors-container{grid-template-columns:1fr;gap:3rem;}
       .sticky-left-content,.sticky-right-content{position:static;}
       .card-item{position:static;margin-bottom:2rem;}
