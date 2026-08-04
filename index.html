@@ -3,445 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA — Web Design & Digital Marketing Agency</title>
+  <title>AURA — Interactive Object Disassembly</title>
   
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Anime.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
-      --bg-color: #f8f8f8;
-      --card-bg: #ffffff;
-      --text-main: #111111;
-      --text-muted: #666666;
-      --border-color: rgba(0, 0, 0, 0.08);
-      --accent: #000000;
-      --font-family: 'Plus Jakarta Sans', sans-serif;
+      --bg-color: #dcd8cf;
+      --text-main: #1f1e1c;
+      --text-muted: #65625a;
+      --line-color: #2c2a26;
+      --accent-red: #e04836;
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
-    html { scroll-behavior: smooth; }
     body {
-      font-family: var(--font-family);
+      font-family: var(--font-main);
       background-color: var(--bg-color);
       color: var(--text-main);
       overflow-x: hidden;
       line-height: 1.5;
     }
 
-    /* Navigation */
+    /* Top Nav */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 0; left: 0; width: 100%;
       padding: 2rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       z-index: 100;
-      background: rgba(248, 248, 248, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
+      mix-blend-mode: difference;
     }
-    .brand { font-weight: 800; font-size: 1.25rem; tracking: -0.03em; color: var(--text-main); text-decoration: none; }
-    .nav-menu { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-menu a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 0.9rem; transition: color 0.3s; }
-    .nav-menu a:hover { color: var(--text-main); }
+    .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; color: #fff; text-decoration: none; }
 
-    /* Section Structural Defaults */
-    section { padding: 8rem 4rem; position: relative; }
-    .section-header { margin-bottom: 4rem; max-width: 600px; }
-    .section-tag { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; display: block; }
-    .section-title { font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
-
-    /* Hero Section */
+    /* Intro Hero Section */
     .hero {
-      min-height: 100vh;
+      height: 70vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      padding-top: 10rem;
+      padding: 0 6rem;
     }
-    .hero-title-wrap { position: relative; max-width: 1000px; }
-    .hero-title {
-      font-size: clamp(3rem, 6.5vw, 6rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-      margin-bottom: 2rem;
-    }
-    .hero-title .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
-    .hero-title .char { display: inline-block; transform: translateY(100%); opacity: 0; }
-    .hero-sub {
-      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-      color: var(--text-muted);
-      max-width: 580px;
-      margin-bottom: 3rem;
-      opacity: 0;
-      transform: translateY(20px);
+    .hero-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; max-width: 800px; }
+    .hero-sub { margin-top: 1.5rem; font-size: 1.2rem; color: var(--text-muted); max-width: 500px; }
+
+    /* Pinned Disassembly Section */
+    .pin-wrapper {
+      height: 350vh; /* Scroll track length for disassembly */
+      position: relative;
     }
 
-    /* Kinetic SVG Graphic */
-    .hero-svg-wrap {
-      position: absolute;
-      right: -5%;
-      top: 20%;
-      width: 450px;
-      height: 450px;
-      z-index: -1;
-      opacity: 0.8;
-    }
-    .hero-svg path {
-      fill: none;
-      stroke: var(--text-main);
-      stroke-width: 1.5;
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
-    }
-
-    /* Know Us Section */
-    .know-us-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 6rem; align-items: center; }
-    .know-us-text { font-size: 1.25rem; color: var(--text-muted); line-height: 1.7; }
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-    .stat-card { border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
-    .stat-number { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.03em; display: block; }
-    .stat-label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-
-    /* Key Features Section */
-    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .feature-card {
-      background: var(--card-bg);
-      padding: 3rem 2.5rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      opacity: 0;
-      transform: translateY(40px);
-      transition: border-color 0.3s ease;
-    }
-    .feature-card:hover { border-color: var(--accent); }
-    .feature-num { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 2rem; display: block; }
-    .feature-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
-    .feature-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-
-    /* Services Section (Card Stack Layout) */
-    .services-container { display: flex; flex-direction: column; gap: 2rem; }
-    .service-card {
+    .sticky-viewport {
       position: sticky;
-      top: 8rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      padding: 4rem;
-      border-radius: 12px;
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 3rem;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.03);
-    }
-    .service-card:nth-child(1) { top: 8rem; z-index: 1; }
-    .service-card:nth-child(2) { top: 10rem; z-index: 2; }
-    .service-card:nth-child(3) { top: 12rem; z-index: 3; }
-
-    /* Projects Section */
-    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
-    .project-card { position: relative; overflow: hidden; border-radius: 8px; cursor: pointer; }
-    .project-img-wrap { width: 100%; height: 480px; overflow: hidden; background: #e0e0e0; }
-    .project-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-    .project-card:hover .project-img { transform: scale(1.05); }
-    .project-meta { margin-top: 1.5rem; display: flex; justify-space-between; align-items: center; }
-    .project-name { font-size: 1.25rem; font-weight: 700; }
-    .project-cat { font-size: 0.85rem; color: var(--text-muted); }
-
-    /* Contact Section */
-    .contact-container { max-width: 800px; margin: 0 auto; text-align: center; }
-    .contact-form { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; text-align: left; }
-    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .form-input {
+      top: 0;
+      height: 100vh;
       width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid var(--border-color);
-      padding: 1.2rem 0;
-      font-family: inherit;
-      font-size: 1.2rem;
-      color: var(--text-main);
-      outline: none;
-      transition: border-color 0.3s;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      align-items: center;
+      padding: 0 6rem;
+      overflow: hidden;
     }
-    .form-input:focus { border-color: var(--accent); }
-    .btn-submit {
-      margin-top: 2rem;
-      padding: 1.25rem 3rem;
-      background: var(--text-main);
-      color: var(--bg-color);
-      border: none;
-      border-radius: 99px;
-      font-family: inherit;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      align-self: center;
-      transition: transform 0.3s ease;
-    }
-    .btn-submit:hover { transform: translateY(-3px); }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      section { padding: 6rem 2rem; }
-      .nav { padding: 1.5rem 2rem; }
-      .know-us-grid, .services-container .service-card { grid-template-columns: 1fr; gap: 2rem; }
-      .features-grid, .projects-grid { grid-template-columns: 1fr; }
-      .hero-svg-wrap { display: none; }
+    /* Left Copy Column */
+    .info-column { z-index: 10; }
+    .info-tag { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; display: block; }
+    .info-title { font-size: 2.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .info-desc { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* Center Object & SVG Graphic Container */
+    .interactive-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    /* Exploded Blueprint SVG */
+    .disassembly-svg {
+      width: 100%;
+      max-width: 850px;
+      height: 850px;
+      overflow: visible;
+    }
+
+    /* Callout Lines & Text */
+    .callout-line { stroke: var(--line-color); stroke-width: 1; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; opacity: 0.4; }
+    .callout-text { font-family: var(--font-mono); font-size: 12px; fill: var(--text-main); opacity: 0; transition: opacity 0.2s; }
+
+    /* Bottom Timeline Scrubber UI */
+    .scrubber-card {
+      position: absolute;
+      bottom: 3rem;
+      right: 6rem;
+      background: #23221f;
+      color: #fff;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 20;
+    }
+    .scrubber-track {
+      width: 200px;
+      height: 14px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .scrubber-ticks { width: 100%; height: 100%; background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,0.3) 3px, rgba(255,255,255,0.3) 5px); }
+    .scrubber-thumb {
+      position: absolute;
+      left: 0%;
+      width: 3px;
+      height: 100%;
+      background: var(--accent-red);
+      box-shadow: 0 0 8px var(--accent-red);
+    }
+    .scrubber-val { font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+
+    /* Footer Section */
+    .footer-next { height: 100vh; display: flex; align-items: center; justify-content: center; background: #191816; color: #fff; }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav class="nav">
     <a href="#" class="brand">AURA.</a>
-    <ul class="nav-menu">
-      <li><a href="#know-us">Know Us</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
   </nav>
 
-  <!-- 1. HERO SECTION -->
-  <section class="hero" id="hero">
-    <div class="hero-title-wrap">
-      <h1 class="hero-title" id="heroTitle">
-        We shape digital products that scale.
-      </h1>
-      <p class="hero-sub" id="heroSub">
-        Full-service agency specializing in high-performance web development and precise digital marketing solutions.
-      </p>
-    </div>
-
-    <div class="hero-svg-wrap">
-      <svg class="hero-svg" viewBox="0 0 200 200">
-        <path id="svgPath" d="M 20, 100 Q 50, 20 100, 100 T 180, 100 C 180, 160 120, 180 100, 140 Z"></path>
-      </svg>
-    </div>
+  <!-- Intro Header -->
+  <section class="hero">
+    <h1 class="hero-title">The complete agency toolkit.</h1>
+    <p class="hero-sub">Scroll to disassemble and inspect the architectural components of our digital design engine.</p>
   </section>
 
-  <!-- 2. KNOW US SECTION -->
-  <section id="know-us">
-    <span class="section-tag">Know Us</span>
-    <div class="know-us-grid">
-      <div>
-        <h2 class="section-title" style="margin-bottom: 2rem;">Architecting high-impact web ecosystems for market leaders.</h2>
-        <p class="know-us-text">
-          Founded on principles of extreme clarity and execution speed, AURA bridges structural engineering with luxury web aesthetics. We build interactive web apps and marketing campaigns optimized for conversion.
-        </p>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-number" data-target="150">0</span>
-          <span class="stat-label">Projects Delivered</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number" data-target="98">0</span>
-          <span class="stat-label">% Satisfaction Rate</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. KEY FEATURES SECTION -->
-  <section id="features">
-    <div class="section-header">
-      <span class="section-tag">Capabilities</span>
-      <h2 class="section-title">Built for technical & visual performance.</h2>
-    </div>
-    <div class="features-grid">
-      <article class="feature-card">
-        <span class="feature-num">01 / DESIGN</span>
-        <h3 class="feature-title">Ultra-Minimal UI/UX</h3>
-        <p class="feature-desc">Pixel-perfect component architecture engineered for clarity, usability, and modern aesthetic elegance.</p>
-      </article>
-      <article class="feature-card">
-        <span class="feature-num">02 / DEV</span>
-        <h3 class="feature-title">Custom Engineering</h3>
-        <p class="feature-desc">Jamstack, WebGL, and scalable JavaScript architectures designed for high speed and SEO dominance.</p>
-      </article>
-      <article class="feature-card">
-        <span class="feature-num">03 / GROWTH</span>
-        <h3 class="feature-title">Digital Marketing</h3>
-        <p class="feature-desc">Data-driven user acquisition campaigns and search engine optimization structured for scalable ROI.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- 4. SERVICES SECTION (Card Deck Stack) -->
-  <section id="services">
-    <div class="section-header">
-      <span class="section-tag">Core Services</span>
-      <h2 class="section-title">End-to-end agency capabilities.</h2>
-    </div>
-    <div class="services-container">
-      <div class="service-card">
-        <div>
-          <span class="section-tag">01 / SERVICE</span>
-          <h3 style="font-size: 2rem; font-weight: 700;">Web Design & Strategy</h3>
-        </div>
-        <p style="color: var(--text-muted); font-size: 1.1rem;">
-          From responsive user interfaces to complex brand design systems. We craft custom design languages that communicate prestige, authority, and seamless user interaction across all viewports.
-        </p>
-      </div>
-      <div class="service-card">
-        <div>
-          <span class="section-tag">02 / SERVICE</span>
-          <h3 style="font-size: 2rem; font-weight: 700;">Full-Stack Development</h3>
-        </div>
-        <p style="color: var(--text-muted); font-size: 1.1rem;">
-          Front-end single-page applications, custom CMS integrations, and robust APIs built using modern web standards. Fast rendering speeds and fluid canvas-driven scroll animations out of the box.
-        </p>
-      </div>
-      <div class="service-card">
-        <div>
-          <span class="section-tag">03 / SERVICE</span>
-          <h3 style="font-size: 2rem; font-weight: 700;">Performance Marketing</h3>
-        </div>
-        <p style="color: var(--text-muted); font-size: 1.1rem;">
-          Targeted digital acquisition campaigns, conversion rate optimization (CRO), and organic search strategies calibrated to turn user interest into measurable business revenue.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. PROJECTS SECTION -->
-  <section id="projects">
-    <div class="section-header">
-      <span class="section-tag">Portfolio</span>
-      <h2 class="section-title">Selected Case Studies</h2>
-    </div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-img-wrap">
-          <img class="project-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" alt="Fintech Web Platform">
-        </div>
-        <div class="project-meta">
-          <span class="project-name">Vanguard Platform</span>
-          <span class="project-cat">Web Design & Dev</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-img-wrap">
-          <img class="project-img" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="E-Commerce Architecture">
-        </div>
-        <div class="project-meta">
-          <span class="project-name">KRONOS Atelier</span>
-          <span class="project-cat">E-Commerce & Marketing</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. CONTACT SECTION -->
-  <section id="contact">
-    <div class="contact-container">
-      <span class="section-tag">Start a Project</span>
-      <h2 class="section-title">Let’s build something extraordinary together.</h2>
+  <!-- Interactive Disassembly Viewport -->
+  <div class="pin-wrapper" id="scrollTrack">
+    <div class="sticky-viewport">
       
-      <form class="contact-form" onsubmit="event.preventDefault();">
-        <div class="form-group">
-          <input type="text" class="form-input" placeholder="Your Name" required>
+      <!-- Left Context Info -->
+      <div class="info-column">
+        <span class="info-tag">// ARCHITECTURE</span>
+        <h2 class="info-title">Precision engineered stack</h2>
+        <p class="info-desc">Break free from standard web templates. Every component is isolated, optimized, and assembled for maximum visual impact and smooth performance.</p>
+      </div>
+
+      <!-- Center Blueprint Graphic -->
+      <div class="interactive-stage">
+        <svg class="disassembly-svg" viewBox="-250 -350 900 800">
+          
+          <!-- CALLOUT LINES (Right Side) -->
+          <path id="cline-1" class="callout-line" d="M 120 -180 L 260 -220 L 340 -220" />
+          <text id="ctext-1" class="callout-text" x="350" y="-216">design_system</text>
+
+          <path id="cline-2" class="callout-line" d="M 110 -70 L 260 -110 L 340 -110" />
+          <text id="ctext-2" class="callout-text" x="350" y="-106">canvas_renderer</text>
+
+          <path id="cline-3" class="callout-line" d="M 90 40 L 260 0 L 340 0" />
+          <text id="ctext-3" class="callout-text" x="350" y="4">motion_engine</text>
+
+          <path id="cline-4" class="callout-line" d="M 110 160 L 260 110 L 340 110" />
+          <text id="ctext-4" class="callout-text" x="350" y="114">conversion_funnel</text>
+
+          <path id="cline-5" class="callout-line" d="M 120 270 L 260 220 L 340 220" />
+          <text id="ctext-5" class="callout-text" x="350" y="224">analytics_core</text>
+
+          <!-- CALLOUT LINES (Left Side) -->
+          <path id="cline-6" class="callout-line" d="M -120 -90 L -220 -50 L -290 -50" />
+          <text id="ctext-6" class="callout-text" x="-370" y="-46">scroll_scrubbing</text>
+
+          <path id="cline-7" class="callout-line" d="M -110 130 L -220 170 L -290 170" />
+          <text id="ctext-7" class="callout-text" x="-370" y="174">seo_architecture</text>
+
+
+          <!-- DISASSEMBLY LAYER 1: Top Ring -->
+          <g id="layer-1" transform="rotate(-28)">
+            <ellipse cx="0" cy="0" rx="140" ry="45" fill="none" stroke="var(--line-color)" stroke-width="2.5" />
+            <ellipse cx="0" cy="0" rx="110" ry="32" fill="none" stroke="var(--line-color)" stroke-width="1" stroke-dasharray="4 4" />
+            <path d="M -140 0 L -140 15 A 140 45 0 0 0 140 15 L 140 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
+          </g>
+
+          <!-- DISASSEMBLY LAYER 2: Upper Housing -->
+          <g id="layer-2" transform="rotate(-28)">
+            <ellipse cx="0" cy="0" rx="120" ry="38" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2" />
+            <path d="M -120 0 L -120 35 A 120 38 0 0 0 120 35 L 120 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
+            <!-- Interior Detail Teeth -->
+            <line x1="-80" y1="10" x2="-80" y2="38" stroke="var(--line-color)" stroke-width="1.5"/>
+            <line x1="-40" y1="20" x2="-40" y2="48" stroke="var(--line-color)" stroke-width="1.5"/>
+            <line x1="0" y1="23" x2="0" y2="50" stroke="var(--line-color)" stroke-width="1.5"/>
+            <line x1="40" y1="20" x2="40" y2="48" stroke="var(--line-color)" stroke-width="1.5"/>
+            <line x1="80" y1="10" x2="80" y2="38" stroke="var(--line-color)" stroke-width="1.5"/>
+          </g>
+
+          <!-- DISASSEMBLY LAYER 3: Core Mechanical Engine (Stays Central) -->
+          <g id="layer-3" transform="rotate(-28)">
+            <ellipse cx="0" cy="0" rx="95" ry="30" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2" />
+            <path d="M -95 0 L -95 50 A 95 30 0 0 0 95 50 L 95 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
+            <circle cx="0" cy="25" r="16" fill="none" stroke="var(--line-color)" stroke-width="2" />
+            <circle cx="0" cy="25" r="8" fill="var(--line-color)" />
+          </g>
+
+          <!-- DISASSEMBLY LAYER 4: Lower Chamber -->
+          <g id="layer-4" transform="rotate(-28)">
+            <ellipse cx="0" cy="0" rx="115" ry="36" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2" />
+            <path d="M -115 0 L -115 40 A 115 36 0 0 0 115 40 L 115 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
+            <path d="M -70 15 A 70 20 0 0 0 70 15" fill="none" stroke="var(--line-color)" stroke-width="1.5" stroke-dasharray="3 3" />
+          </g>
+
+          <!-- DISASSEMBLY LAYER 5: Base Mount -->
+          <g id="layer-5" transform="rotate(-28)">
+            <ellipse cx="0" cy="0" rx="150" ry="48" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2.5" />
+            <path d="M -150 0 L -150 20 A 150 48 0 0 0 150 20 L 150 0" fill="none" stroke="var(--line-color)" stroke-width="2.5" />
+            <ellipse cx="0" cy="10" rx="125" ry="38" fill="none" stroke="var(--line-color)" stroke-width="1" />
+          </g>
+
+        </svg>
+      </div>
+
+      <!-- Scrubber Track UI -->
+      <div class="scrubber-card">
+        <div class="scrubber-track">
+          <div class="scrubber-ticks"></div>
+          <div class="scrubber-thumb" id="scrubberThumb"></div>
         </div>
-        <div class="form-group">
-          <input type="email" class="form-input" placeholder="Your Email" required>
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-input" placeholder="Tell us about your project" required>
-        </div>
-        <button type="submit" class="btn-submit">Submit Inquiry</button>
-      </form>
+        <span class="scrubber-val" id="scrubberVal">000%</span>
+      </div>
+
     </div>
+  </div>
+
+  <section class="footer-next">
+    <h2 style="font-size: 2.5rem; font-weight: 700;">Ready to construct your product?</h2>
   </section>
 
-  <!-- ANIMATION & INTERACTION ENGINE -->
+  <!-- SCROLL SCRUBBING DISASSEMBLY LOGIC -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      
-      // 1. Hero Text Reveal & Path Animation (Anime.js)
-      const titleEl = document.getElementById('heroTitle');
-      const words = titleEl.innerText.split(' ');
-      titleEl.innerHTML = words.map(word => `<span class="word"><span class="char">${word}</span></span>`).join(' ');
+      const scrollTrack = document.getElementById('scrollTrack');
+      const scrubberThumb = document.getElementById('scrubberThumb');
+      const scrubberVal = document.getElementById('scrubberVal');
 
-      anime.timeline({ easing: 'easeOutExpo' })
-        .add({
-          targets: '.hero-title .char',
-          translateY: ['100%', '0%'],
-          opacity: [0, 1],
-          duration: 1200,
-          delay: anime.stagger(60)
-        })
-        .add({
-          targets: '#heroSub',
-          translateY: [20, 0],
-          opacity: [0, 1],
-          duration: 800
-        }, '-=600')
-        .add({
-          targets: '#svgPath',
-          strokeDashoffset: [anime.setDashoffset, 0],
-          duration: 2000,
-          easing: 'easeInOutSine'
-        }, '-=1000');
+      // SVG Layers to translate outwards
+      const layer1 = document.getElementById('layer-1');
+      const layer2 = document.getElementById('layer-2');
+      const layer3 = document.getElementById('layer-3');
+      const layer4 = document.getElementById('layer-4');
+      const layer5 = document.getElementById('layer-5');
 
-      // 2. Scroll Trigger Observer (IntersectionObserver)
-      const observerOptions = { threshold: 0.2 };
+      // Callout Lines and Text Elements
+      const calloutLines = document.querySelectorAll('.callout-line');
+      const calloutTexts = document.querySelectorAll('.callout-text');
 
-      // Feature Cards Stagger Reveal
-      const featuresObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            anime({
-              targets: '.feature-card',
-              translateY: [40, 0],
-              opacity: [0, 1],
-              delay: anime.stagger(150),
-              duration: 1000,
-              easing: 'easeOutQuart'
-            });
-            featuresObserver.unobserve(entry.target);
-          }
+      function updateDisassembly() {
+        const trackRect = scrollTrack.getBoundingClientRect();
+        const totalScrollableDistance = trackRect.height - window.innerHeight;
+        
+        // Calculate scroll progress (0.0 to 1.0) inside pinned track
+        let progress = -trackRect.top / totalScrollableDistance;
+        progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 & 1
+
+        // 1. Update Timeline Scrubber Bar
+        scrubberThumb.style.left = `${progress * 100}%`;
+        scrubberVal.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
+
+        // 2. Disassemble Object Layers along vertical axis (translateY)
+        const explodeDistance = progress * 240; // Max separation distance
+
+        layer1.setAttribute('transform', `translate(0, ${-explodeDistance * 1.1}) rotate(-28)`);
+        layer2.setAttribute('transform', `translate(0, ${-explodeDistance * 0.55}) rotate(-28)`);
+        layer3.setAttribute('transform', `translate(0, 0) rotate(-28)`); // Core stays central
+        layer4.setAttribute('transform', `translate(0, ${explodeDistance * 0.55}) rotate(-28)`);
+        layer5.setAttribute('transform', `translate(0, ${explodeDistance * 1.1}) rotate(-28)`);
+
+        // 3. Animate Callout Pointer Lines (strokeDashoffset) & Text Opacity
+        const lineOffset = 400 - (progress * 400);
+        calloutLines.forEach(line => {
+          line.style.strokeDashoffset = Math.max(0, lineOffset);
         });
-      }, observerOptions);
 
-      const featuresSection = document.getElementById('features');
-      if (featuresSection) featuresObserver.observe(featuresSection);
-
-      // Stat Counters Animation
-      const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            document.querySelectorAll('.stat-number').forEach(stat => {
-              const target = +stat.getAttribute('data-target');
-              anime({
-                targets: stat,
-                innerHTML: [0, target],
-                round: 1,
-                duration: 2000,
-                easing: 'easeOutExpo'
-              });
-            });
-            statsObserver.unobserve(entry.target);
-          }
+        calloutTexts.forEach(text => {
+          text.style.opacity = progress > 0.35 ? (progress - 0.35) * 1.5 : 0;
         });
-      }, observerOptions);
+      }
 
-      const knowUsSection = document.getElementById('know-us');
-      if (knowUsSection) statsObserver.observe(knowUsSection);
+      // Sync disassembly directly with scroll wheel / touch motion
+      window.addEventListener('scroll', updateDisassembly, { passive: true });
+      updateDisassembly(); // Initial run
     });
   </script>
 </body>
