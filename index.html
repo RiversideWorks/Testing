@@ -3,305 +3,253 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA — Interactive Object Disassembly</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+  <title>AURA — Continuous Global Object Morphing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
     :root {
-      --bg-color: #dcd8cf;
-      --text-main: #1f1e1c;
-      --text-muted: #65625a;
-      --line-color: #2c2a26;
-      --accent-red: #e04836;
-      --font-main: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --bg: #dcd8cf;
+      --text: #1f1e1c;
+      --muted: #65625a;
+      --accent: #e04836;
+      --mono: 'JetBrains Mono', monospace;
     }
 
     body {
-      font-family: var(--font-main);
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
-      line-height: 1.5;
     }
 
-    /* Top Nav */
+    /* Fixed Navigation */
     .nav {
-      position: fixed;
-      top: 0; left: 0; width: 100%;
-      padding: 2rem 4rem;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 100;
-      mix-blend-mode: difference;
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 2rem 4rem; display: flex; justify-content: space-between;
+      z-index: 100; mix-blend-mode: difference;
     }
-    .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; color: #fff; text-decoration: none; }
+    .brand { font-weight: 800; color: #fff; text-decoration: none; font-size: 1.2rem; }
 
-    /* Intro Hero Section */
-    .hero {
-      height: 70vh;
+    /* Central Fixed Viewport for the Continuous Object */
+    .global-stage-wrapper {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .main-svg { width: 100%; max-width: 700px; height: 700px; overflow: visible; }
+    
+    .layer-group { transition: transform 0.1s ease-out; transform-origin: center; }
+    .blueprint-line { stroke: var(--text); stroke-width: 1.5; fill: none; transition: all 0.2s ease-out; }
+    .callout-line { stroke: var(--text); stroke-width: 1; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; opacity: 0; }
+    .callout-text { font-family: var(--mono); font-size: 11px; fill: var(--text); opacity: 0; }
+
+    /* Scrollable Text Content Sections Overlay */
+    .content-container { position: relative; z-index: 10; }
+    .scroll-section {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 0 6rem;
+      max-width: 500px;
     }
-    .hero-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; max-width: 800px; }
-    .hero-sub { margin-top: 1.5rem; font-size: 1.2rem; color: var(--text-muted); max-width: 500px; }
+    .scroll-section.right-aligned { margin-left: auto; text-align: left; }
+    .section-tag { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; display: block; }
+    .section-title { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+    .section-desc { font-size: 1.1rem; color: var(--muted); line-height: 1.6; }
 
-    /* Pinned Disassembly Section */
-    .pin-wrapper {
-      height: 350vh; /* Scroll track length for disassembly */
-      position: relative;
+    /* Timeline Scrubber UI */
+    .scrubber {
+      position: fixed; bottom: 2rem; right: 4rem;
+      background: #191816; color: #fff; padding: 0.75rem 1.25rem;
+      border-radius: 6px; display: flex; align-items: center; gap: 1rem;
+      z-index: 100; font-family: var(--mono); font-size: 0.8rem;
     }
-
-    .sticky-viewport {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 380px 1fr;
-      align-items: center;
-      padding: 0 6rem;
-      overflow: hidden;
-    }
-
-    /* Left Copy Column */
-    .info-column { z-index: 10; }
-    .info-tag { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; display: block; }
-    .info-title { font-size: 2.75rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-    .info-desc { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; }
-
-    /* Center Object & SVG Graphic Container */
-    .interactive-stage {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Exploded Blueprint SVG */
-    .disassembly-svg {
-      width: 100%;
-      max-width: 850px;
-      height: 850px;
-      overflow: visible;
-    }
-
-    /* Callout Lines & Text */
-    .callout-line { stroke: var(--line-color); stroke-width: 1; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; opacity: 0.4; }
-    .callout-text { font-family: var(--font-mono); font-size: 12px; fill: var(--text-main); opacity: 0; transition: opacity 0.2s; }
-
-    /* Bottom Timeline Scrubber UI */
-    .scrubber-card {
-      position: absolute;
-      bottom: 3rem;
-      right: 6rem;
-      background: #23221f;
-      color: #fff;
-      padding: 0.8rem 1.2rem;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      z-index: 20;
-    }
-    .scrubber-track {
-      width: 200px;
-      height: 14px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 2px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-    .scrubber-ticks { width: 100%; height: 100%; background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,0.3) 3px, rgba(255,255,255,0.3) 5px); }
-    .scrubber-thumb {
-      position: absolute;
-      left: 0%;
-      width: 3px;
-      height: 100%;
-      background: var(--accent-red);
-      box-shadow: 0 0 8px var(--accent-red);
-    }
-    .scrubber-val { font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255,255,255,0.7); }
-
-    /* Footer Section */
-    .footer-next { height: 100vh; display: flex; align-items: center; justify-content: center; background: #191816; color: #fff; }
+    .scrubber-bar { width: 120px; height: 4px; background: rgba(255,255,255,0.2); position: relative; }
+    .scrubber-fill { height: 100%; width: 0%; background: var(--accent); }
   </style>
 </head>
 <body>
 
-  <nav class="nav">
-    <a href="#" class="brand">AURA.</a>
-  </nav>
+  <nav class="nav"><a href="#" class="brand">AURA.</a></nav>
 
-  <!-- Intro Header -->
-  <section class="hero">
-    <h1 class="hero-title">The complete agency toolkit.</h1>
-    <p class="hero-sub">Scroll to disassemble and inspect the architectural components of our digital design engine.</p>
-  </section>
-
-  <!-- Interactive Disassembly Viewport -->
-  <div class="pin-wrapper" id="scrollTrack">
-    <div class="sticky-viewport">
+  <!-- PINNED GLOBAL OBJECT CONTAINER -->
+  <div class="global-stage-wrapper">
+    <svg class="main-svg" viewBox="-300 -350 600 700" id="mainSvg">
       
-      <!-- Left Context Info -->
-      <div class="info-column">
-        <span class="info-tag">// ARCHITECTURE</span>
-        <h2 class="info-title">Precision engineered stack</h2>
-        <p class="info-desc">Break free from standard web templates. Every component is isolated, optimized, and assembled for maximum visual impact and smooth performance.</p>
-      </div>
+      <!-- CALLOUT POINTERS -->
+      <path id="calloutLine1" class="callout-line" d="M 120 -150 L 220 -190 L 280 -190" />
+      <text id="calloutText1" class="callout-text" x="290" y="-186">DESIGN_CORE</text>
 
-      <!-- Center Blueprint Graphic -->
-      <div class="interactive-stage">
-        <svg class="disassembly-svg" viewBox="-250 -350 900 800">
-          
-          <!-- CALLOUT LINES (Right Side) -->
-          <path id="cline-1" class="callout-line" d="M 120 -180 L 260 -220 L 340 -220" />
-          <text id="ctext-1" class="callout-text" x="350" y="-216">design_system</text>
+      <path id="calloutLine2" class="callout-line" d="M -120 150 L -220 190 L -280 190" />
+      <text id="calloutText2" class="callout-text" x="-360" y="194">ANIMATION_ENGINE</text>
 
-          <path id="cline-2" class="callout-line" d="M 110 -70 L 260 -110 L 340 -110" />
-          <text id="ctext-2" class="callout-text" x="350" y="-106">canvas_renderer</text>
+      <!-- OBJECT LAYER 1 (TOP RING) -->
+      <g id="layer1" class="layer-group">
+        <ellipse cx="0" cy="-60" rx="140" ry="42" class="blueprint-line" fill="#dcd8cf" />
+        <ellipse cx="0" cy="-60" rx="100" ry="30" class="blueprint-line" stroke-dasharray="4 4" />
+      </g>
 
-          <path id="cline-3" class="callout-line" d="M 90 40 L 260 0 L 340 0" />
-          <text id="ctext-3" class="callout-text" x="350" y="4">motion_engine</text>
+      <!-- OBJECT LAYER 2 (MID CHAMBER) -->
+      <g id="layer2" class="layer-group">
+        <ellipse cx="0" cy="0" rx="120" ry="36" class="blueprint-line" fill="#dcd8cf" />
+        <path d="M -120 0 L -120 40 A 120 36 0 0 0 120 40 L 120 0" class="blueprint-line" fill="#dcd8cf" />
+        <circle id="coreNode" cx="0" cy="20" r="10" fill="var(--text)" />
+      </g>
 
-          <path id="cline-4" class="callout-line" d="M 110 160 L 260 110 L 340 110" />
-          <text id="ctext-4" class="callout-text" x="350" y="114">conversion_funnel</text>
+      <!-- OBJECT LAYER 3 (BOTTOM BASE) -->
+      <g id="layer3" class="layer-group">
+        <ellipse cx="0" cy="60" rx="150" ry="45" class="blueprint-line" fill="#dcd8cf" />
+        <path d="M -150 60 L -150 80 A 150 45 0 0 0 150 80 L 150 60" class="blueprint-line" fill="#dcd8cf" />
+      </g>
 
-          <path id="cline-5" class="callout-line" d="M 120 270 L 260 220 L 340 220" />
-          <text id="ctext-5" class="callout-text" x="350" y="224">analytics_core</text>
-
-          <!-- CALLOUT LINES (Left Side) -->
-          <path id="cline-6" class="callout-line" d="M -120 -90 L -220 -50 L -290 -50" />
-          <text id="ctext-6" class="callout-text" x="-370" y="-46">scroll_scrubbing</text>
-
-          <path id="cline-7" class="callout-line" d="M -110 130 L -220 170 L -290 170" />
-          <text id="ctext-7" class="callout-text" x="-370" y="174">seo_architecture</text>
-
-
-          <!-- DISASSEMBLY LAYER 1: Top Ring -->
-          <g id="layer-1" transform="rotate(-28)">
-            <ellipse cx="0" cy="0" rx="140" ry="45" fill="none" stroke="var(--line-color)" stroke-width="2.5" />
-            <ellipse cx="0" cy="0" rx="110" ry="32" fill="none" stroke="var(--line-color)" stroke-width="1" stroke-dasharray="4 4" />
-            <path d="M -140 0 L -140 15 A 140 45 0 0 0 140 15 L 140 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
-          </g>
-
-          <!-- DISASSEMBLY LAYER 2: Upper Housing -->
-          <g id="layer-2" transform="rotate(-28)">
-            <ellipse cx="0" cy="0" rx="120" ry="38" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2" />
-            <path d="M -120 0 L -120 35 A 120 38 0 0 0 120 35 L 120 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
-            <!-- Interior Detail Teeth -->
-            <line x1="-80" y1="10" x2="-80" y2="38" stroke="var(--line-color)" stroke-width="1.5"/>
-            <line x1="-40" y1="20" x2="-40" y2="48" stroke="var(--line-color)" stroke-width="1.5"/>
-            <line x1="0" y1="23" x2="0" y2="50" stroke="var(--line-color)" stroke-width="1.5"/>
-            <line x1="40" y1="20" x2="40" y2="48" stroke="var(--line-color)" stroke-width="1.5"/>
-            <line x1="80" y1="10" x2="80" y2="38" stroke="var(--line-color)" stroke-width="1.5"/>
-          </g>
-
-          <!-- DISASSEMBLY LAYER 3: Core Mechanical Engine (Stays Central) -->
-          <g id="layer-3" transform="rotate(-28)">
-            <ellipse cx="0" cy="0" rx="95" ry="30" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2" />
-            <path d="M -95 0 L -95 50 A 95 30 0 0 0 95 50 L 95 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
-            <circle cx="0" cy="25" r="16" fill="none" stroke="var(--line-color)" stroke-width="2" />
-            <circle cx="0" cy="25" r="8" fill="var(--line-color)" />
-          </g>
-
-          <!-- DISASSEMBLY LAYER 4: Lower Chamber -->
-          <g id="layer-4" transform="rotate(-28)">
-            <ellipse cx="0" cy="0" rx="115" ry="36" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2" />
-            <path d="M -115 0 L -115 40 A 115 36 0 0 0 115 40 L 115 0" fill="none" stroke="var(--line-color)" stroke-width="2" />
-            <path d="M -70 15 A 70 20 0 0 0 70 15" fill="none" stroke="var(--line-color)" stroke-width="1.5" stroke-dasharray="3 3" />
-          </g>
-
-          <!-- DISASSEMBLY LAYER 5: Base Mount -->
-          <g id="layer-5" transform="rotate(-28)">
-            <ellipse cx="0" cy="0" rx="150" ry="48" fill="#dcd8cf" stroke="var(--line-color)" stroke-width="2.5" />
-            <path d="M -150 0 L -150 20 A 150 48 0 0 0 150 20 L 150 0" fill="none" stroke="var(--line-color)" stroke-width="2.5" />
-            <ellipse cx="0" cy="10" rx="125" ry="38" fill="none" stroke="var(--line-color)" stroke-width="1" />
-          </g>
-
-        </svg>
-      </div>
-
-      <!-- Scrubber Track UI -->
-      <div class="scrubber-card">
-        <div class="scrubber-track">
-          <div class="scrubber-ticks"></div>
-          <div class="scrubber-thumb" id="scrubberThumb"></div>
-        </div>
-        <span class="scrubber-val" id="scrubberVal">000%</span>
-      </div>
-
-    </div>
+    </svg>
   </div>
 
-  <section class="footer-next">
-    <h2 style="font-size: 2.5rem; font-weight: 700;">Ready to construct your product?</h2>
-  </section>
+  <!-- SCROLLABLE SECTIONS OVERLAY -->
+  <div class="content-container" id="pageWrapper">
+    
+    <!-- Section 1: Hero -->
+    <section class="scroll-section">
+      <span class="section-tag">01 // PRODUCT</span>
+      <h1 class="section-title">The Complete Design Engine</h1>
+      <p class="section-desc">A unified digital framework built to shape elite brand experiences.</p>
+    </section>
 
-  <!-- SCROLL SCRUBBING DISASSEMBLY LOGIC -->
+    <!-- Section 2: Know Us (Disassembly) -->
+    <section class="scroll-section right-aligned">
+      <span class="section-tag">02 // DISASSEMBLY</span>
+      <h2 class="section-title">Exploded Layer Architecture</h2>
+      <p class="section-desc">Every layer breaks down into modular component systems engineered for speed and precision.</p>
+    </section>
+
+    <!-- Section 3: Features (Blueprint Drawing) -->
+    <section class="scroll-section">
+      <span class="section-tag">03 // BLUEPRINT</span>
+      <h2 class="section-title">Technical Wireframes</h2>
+      <p class="section-desc">Stripped-back mechanical drawings revealing the raw structural codebase underneath.</p>
+    </section>
+
+    <!-- Section 4: Services (Matrix Morph) -->
+    <section class="scroll-section right-aligned">
+      <span class="section-tag">04 // MATRIX</span>
+      <h2 class="section-title">Dynamic Capabilities</h2>
+      <p class="section-desc">Web development, motion physics, and digital marketing strategies operating in sync.</p>
+    </section>
+
+    <!-- Section 5: Contact (Re-assembly) -->
+    <section class="scroll-section">
+      <span class="section-tag">05 // RE-ASSEMBLY</span>
+      <h2 class="section-title">Construct Your Vision</h2>
+      <p class="section-desc">Ready to assemble your next project? Let's build something extraordinary.</p>
+    </section>
+
+  </div>
+
+  <!-- Scrubber -->
+  <div class="scrubber">
+    <div class="scrubber-bar"><div class="scrubber-fill" id="scrubberFill"></div></div>
+    <span id="scrubberPercent">000%</span>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const scrollTrack = document.getElementById('scrollTrack');
-      const scrubberThumb = document.getElementById('scrubberThumb');
-      const scrubberVal = document.getElementById('scrubberVal');
+      const pageWrapper = document.getElementById('pageWrapper');
+      const scrubberFill = document.getElementById('scrubberFill');
+      const scrubberPercent = document.getElementById('scrubberPercent');
 
-      // SVG Layers to translate outwards
-      const layer1 = document.getElementById('layer-1');
-      const layer2 = document.getElementById('layer-2');
-      const layer3 = document.getElementById('layer-3');
-      const layer4 = document.getElementById('layer-4');
-      const layer5 = document.getElementById('layer-5');
+      const layer1 = document.getElementById('layer1');
+      const layer2 = document.getElementById('layer2');
+      const layer3 = document.getElementById('layer3');
+      const coreNode = document.getElementById('coreNode');
+      const mainSvg = document.getElementById('mainSvg');
 
-      // Callout Lines and Text Elements
-      const calloutLines = document.querySelectorAll('.callout-line');
-      const calloutTexts = document.querySelectorAll('.callout-text');
+      const calloutLine1 = document.getElementById('calloutLine1');
+      const calloutText1 = document.getElementById('calloutText1');
+      const calloutLine2 = document.getElementById('calloutLine2');
+      const calloutText2 = document.getElementById('calloutText2');
 
-      function updateDisassembly() {
-        const trackRect = scrollTrack.getBoundingClientRect();
-        const totalScrollableDistance = trackRect.height - window.innerHeight;
-        
-        // Calculate scroll progress (0.0 to 1.0) inside pinned track
-        let progress = -trackRect.top / totalScrollableDistance;
-        progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 & 1
+      function syncGlobalObjectWithScroll() {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = Math.max(0, Math.min(1, window.scrollY / totalHeight));
 
-        // 1. Update Timeline Scrubber Bar
-        scrubberThumb.style.left = `${progress * 100}%`;
-        scrubberVal.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
+        // Update UI Scrubber
+        scrubberFill.style.width = `${progress * 100}%`;
+        scrubberPercent.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
 
-        // 2. Disassemble Object Layers along vertical axis (translateY)
-        const explodeDistance = progress * 240; // Max separation distance
+        // =========================================================================
+        // CONTINUOUS MORPHING STATE MACHINE (0.0 -> 1.0)
+        // =========================================================================
 
-        layer1.setAttribute('transform', `translate(0, ${-explodeDistance * 1.1}) rotate(-28)`);
-        layer2.setAttribute('transform', `translate(0, ${-explodeDistance * 0.55}) rotate(-28)`);
-        layer3.setAttribute('transform', `translate(0, 0) rotate(-28)`); // Core stays central
-        layer4.setAttribute('transform', `translate(0, ${explodeDistance * 0.55}) rotate(-28)`);
-        layer5.setAttribute('transform', `translate(0, ${explodeDistance * 1.1}) rotate(-28)`);
+        // STAGE 1 -> STAGE 2 (0.0 to 0.25): Exploded Disassembly
+        if (progress <= 0.25) {
+          const p1 = progress / 0.25; // Normalised 0-1 for Stage 1
+          
+          layer1.style.transform = `translateY(${-p1 * 180}px) rotate(${-p1 * 15}deg)`;
+          layer2.style.transform = `translateY(0px)`;
+          layer3.style.transform = `translateY(${p1 * 180}px) rotate(${p1 * 15}deg)`;
 
-        // 3. Animate Callout Pointer Lines (strokeDashoffset) & Text Opacity
-        const lineOffset = 400 - (progress * 400);
-        calloutLines.forEach(line => {
-          line.style.strokeDashoffset = Math.max(0, lineOffset);
-        });
+          // Draw Callout Lines
+          const lineOffset = 400 - (p1 * 400);
+          calloutLine1.style.strokeDashoffset = lineOffset;
+          calloutLine2.style.strokeDashoffset = lineOffset;
+          calloutLine1.style.opacity = p1;
+          calloutLine2.style.opacity = p1;
+          calloutText1.style.opacity = p1 > 0.5 ? (p1 - 0.5) * 2 : 0;
+          calloutText2.style.opacity = p1 > 0.5 ? (p1 - 0.5) * 2 : 0;
+          
+          mainSvg.style.transform = `scale(1) rotate(0deg)`;
+        } 
+        // STAGE 2 -> STAGE 3 (0.25 to 0.50): Blueprint Wireframe Flattening
+        else if (progress > 0.25 && progress <= 0.50) {
+          const p2 = (progress - 0.25) / 0.25; // Normalised 0-1 for Stage 2
 
-        calloutTexts.forEach(text => {
-          text.style.opacity = progress > 0.35 ? (progress - 0.35) * 1.5 : 0;
-        });
+          // Contract layers slightly into a flat 2D blueprint grid
+          layer1.style.transform = `translateY(${-180 + (p2 * 100)}px) rotate(0deg)`;
+          layer2.style.transform = `translateY(0px)`;
+          layer3.style.transform = `translateY(${180 - (p2 * 100)}px) rotate(0deg)`;
+
+          // Hide shading fills for technical drawing wireframe look
+          document.querySelectorAll('.blueprint-line').forEach(el => {
+            el.style.fill = p2 > 0.3 ? 'transparent' : '#dcd8cf';
+          });
+
+          mainSvg.style.transform = `scale(${1 - (p2 * 0.15)}) rotate(${p2 * 45}deg)`;
+        } 
+        // STAGE 3 -> STAGE 4 (0.50 to 0.75): Matrix Expansion
+        else if (progress > 0.50 && progress <= 0.75) {
+          const p3 = (progress - 0.50) / 0.25;
+
+          layer1.style.transform = `translateY(${-80 - (p3 * 120)}px) scale(${1 + p3 * 0.3})`;
+          layer2.style.transform = `scale(${1 + p3 * 0.5})`;
+          layer3.style.transform = `translateY(${80 + (p3 * 120)}px) scale(${1 + p3 * 0.3})`;
+
+          coreNode.setAttribute('r', 10 + (p3 * 25));
+
+          mainSvg.style.transform = `scale(0.85) rotate(${45 + (p3 * 90)}deg)`;
+        } 
+        // STAGE 4 -> STAGE 5 (0.75 to 1.00): Re-assembly into Core Engine
+        else {
+          const p4 = (progress - 0.75) / 0.25;
+
+          layer1.style.transform = `translateY(${-200 * (1 - p4)}px) scale(1)`;
+          layer2.style.transform = `translateY(0px) scale(1)`;
+          layer3.style.transform = `translateY(${200 * (1 - p4)}px) scale(1)`;
+
+          // Restore original shading fills
+          document.querySelectorAll('.blueprint-line').forEach(el => {
+            el.style.fill = '#dcd8cf';
+          });
+
+          coreNode.setAttribute('r', 35 - (p4 * 25));
+          mainSvg.style.transform = `scale(${0.85 + (p4 * 0.15)}) rotate(${135 + (p4 * 225)}deg)`;
+        }
       }
 
-      // Sync disassembly directly with scroll wheel / touch motion
-      window.addEventListener('scroll', updateDisassembly, { passive: true });
-      updateDisassembly(); // Initial run
+      window.addEventListener('scroll', syncGlobalObjectWithScroll, { passive: true });
+      syncGlobalObjectWithScroll();
     });
   </script>
 </body>
