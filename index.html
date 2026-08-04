@@ -212,3 +212,512 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services Section</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-page: #f9f7f4;
+      --text-heading: #261513;
+      --text-sub: #6e6563;
+      --card-bg: #1d1918;
+      --card-inner-bg: #282322;
+      --accent-badge: #ffd9df;
+      --accent-badge-text: #e0245e;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-heading);
+      padding: 5rem 2rem;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .services-container {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Section Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .header-title {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-heading);
+      margin-bottom: 0.75rem;
+    }
+
+    .header-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    /* Top Filter Tabs */
+    .filter-tabs {
+      display: inline-flex;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 99px;
+      gap: 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 3rem;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .filter-btn {
+      border: none;
+      background: transparent;
+      padding: 0.65rem 1.4rem;
+      border-radius: 99px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn.active {
+      background: #1e1b1a;
+      color: #ffffff;
+    }
+
+    .badge-new {
+      background: var(--accent-badge);
+      color: var(--accent-badge-text);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 99px;
+      text-transform: uppercase;
+    }
+
+    /* Main Card Stage */
+    .stage-card {
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 2.5rem;
+      color: #ffffff;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 2rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Left Sidebar Navigation */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .sidebar-intro .title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-intro .desc {
+      font-size: 0.88rem;
+      color: #a39c9a;
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+
+    .tour-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .tour-link:hover { gap: 10px; }
+
+    /* Vertical Category Accordion */
+    .cat-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cat-item {
+      background: transparent;
+      border: none;
+      color: #a39c9a;
+      text-align: left;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .cat-item-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cat-item.active {
+      color: #ffffff;
+    }
+
+    .cat-progress {
+      height: 2px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .cat-progress-fill {
+      height: 100%;
+      width: 40%;
+      background: #ffffff;
+    }
+
+    .cat-item.active .cat-progress {
+      display: block;
+    }
+
+    .cat-subtext {
+      font-size: 0.8rem;
+      color: #8c8380;
+      font-weight: 400;
+      line-height: 1.4;
+      display: none;
+    }
+
+    .cat-item.active .cat-subtext {
+      display: block;
+    }
+
+    /* Showcase Center Area */
+    .showcase-area {
+      display: grid;
+      grid-template-columns: 1fr 280px 100px;
+      gap: 1.25rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .media-viewport {
+      width: 100%;
+      height: 480px;
+      background: #100d0d;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .media-viewport img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Floating Tool Menu Overlay */
+    .tool-panel {
+      background: rgba(32, 28, 27, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+    }
+
+    .tool-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .tool-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tool-icon {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .tool-info .name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .tool-info .sub {
+      font-size: 0.72rem;
+      color: #8c8380;
+    }
+
+    /* Peek Slider Preview */
+    .peek-card {
+      width: 100%;
+      height: 480px;
+      background: #2b2524;
+      border-radius: 18px;
+      overflow: hidden;
+      opacity: 0.5;
+    }
+    .peek-card img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Responsive Breakdown */
+    @media (max-width: 1024px) {
+      .stage-card { grid-template-columns: 1fr; }
+      .showcase-area { grid-template-columns: 1fr; }
+      .peek-card { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="services-container">
+    
+    <!-- Header -->
+    <header class="header">
+      <h2 class="header-title">One place to create anything</h2>
+      <p class="header-subtitle">Pick your starting point. Every tool, every model, every format.</p>
+    </header>
+
+    <!-- Top Filter Pill Navigation -->
+    <nav class="filter-tabs">
+      <button class="filter-btn active">Creative Suite</button>
+      <button class="filter-btn">MCP & API <span class="badge-new">New</span></button>
+      <button class="filter-btn">Agents <span class="badge-new">New</span></button>
+      <button class="filter-btn">Plugins <span class="badge-new">New</span></button>
+      <button class="filter-btn">Stock</button>
+    </nav>
+
+    <!-- Main Showcase Stage Card -->
+    <div class="stage-card">
+      
+      <!-- Left Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-intro">
+          <h3 class="title">Pro-level production, end to end</h3>
+          <p class="desc">Start with an idea. Direct the shots. Add sound. Explore variations. Explore workflows. Connect in Spaces. Your team, creating together.</p>
+          <a href="#" class="tour-link">Take a tour &rarr;</a>
+        </div>
+
+        <!-- Vertical Category Switcher -->
+        <div class="cat-menu">
+          
+          <button class="cat-item active" data-type="image">
+            <div class="cat-item-header">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              Image
+            </div>
+            <p class="cat-subtext">Generate, edit, resize, upscale. Keep characters and brand consistent across every shot.</p>
+            <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+          </button>
+
+          <button class="cat-item" data-type="video">
+            <div class="cat-item-header">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Video
+            </div>
+            <p class="cat-subtext">Turn prompts into cinematic 4K video clips with dynamic motion controls.</p>
+            <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+          </button>
+
+          <button class="cat-item" data-type="audio">
+            <div class="cat-item-header">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              Audio
+            </div>
+            <p class="cat-subtext">Synthesize voices, generate ambient soundtracks, and isolate sound stems.</p>
+            <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+          </button>
+
+          <button class="cat-item" data-type="3d">
+            <div class="cat-item-header">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              3D
+            </div>
+            <p class="cat-subtext">Generate production-ready textured 3D meshes and spatial environments.</p>
+            <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+          </button>
+
+          <button class="cat-item" data-type="spaces">
+            <div class="cat-item-header">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Spaces
+            </div>
+            <p class="cat-subtext">Real-time collaborative multiplayer canvas for your entire team.</p>
+            <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+          </button>
+
+        </div>
+      </aside>
+
+      <!-- Center Showcase Area -->
+      <main class="showcase-area">
+        
+        <!-- Media Viewport Frame -->
+        <div class="media-viewport">
+          <img id="mainVisual" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" alt="Cinematic Visual Rendering">
+        </div>
+
+        <!-- Floating Tool Selection Menu -->
+        <div class="tool-panel" id="toolPanel">
+          <div class="tool-item">
+            <div class="tool-icon">🖼️</div>
+            <div class="tool-info">
+              <div class="name">Image generator</div>
+              <div class="sub">Create images from text prompts</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <div class="tool-icon">✏️</div>
+            <div class="tool-info">
+              <div class="name">Image editor</div>
+              <div class="sub">Edit and modify existing images</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <div class="tool-icon">🔍</div>
+            <div class="tool-info">
+              <div class="name">Image Upscaler</div>
+              <div class="sub">Enhance resolution and detail</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <div class="tool-icon">🔄</div>
+            <div class="tool-info">
+              <div class="name">Variations</div>
+              <div class="sub">Create variations of an image</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <div class="tool-icon">☀️</div>
+            <div class="tool-info">
+              <div class="name">Relight</div>
+              <div class="sub">Change lighting and atmosphere</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <div class="tool-icon">🎬</div>
+            <div class="tool-info">
+              <div class="name">Cinematic Shot</div>
+              <div class="sub">Generate cinematic compositions</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <div class="tool-icon">✨</div>
+            <div class="tool-info">
+              <div class="name">Skin Enhancer</div>
+              <div class="sub">Retouch and enhance skin details</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carousel Peek Card -->
+        <div class="peek-card">
+          <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=600&auto=format&fit=crop" alt="Peek Asset">
+        </div>
+
+      </main>
+
+    </div>
+
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Top Filter Navigation Active State Toggle
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+      // Left Accordion Tabs & Dynamic Content Switcher
+      const catItems = document.querySelectorAll('.cat-item');
+      const mainVisual = document.getElementById('mainVisual');
+
+      const sampleImages = {
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
+        video: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=1000&auto=format&fit=crop",
+        audio: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1000&auto=format&fit=crop",
+        '3d': "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop",
+        spaces: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop"
+      };
+
+      catItems.forEach(item => {
+        item.addEventListener('click', () => {
+          catItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          const type = item.getAttribute('data-type');
+          if (sampleImages[type]) {
+            mainVisual.src = sampleImages[type];
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
