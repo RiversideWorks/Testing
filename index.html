@@ -10,6 +10,8 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Plus Jakarta Sans',sans-serif;background-color:#0b0507;color:#fff;overflow-x:hidden;}
+    
+    /* Hero Section */
     .hero-container{position:relative;min-height:100vh;width:100%;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,rgba(11,5,7,0.6) 0%,rgba(11,5,7,0.85) 100%),url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;padding:2rem 4rem 3rem;}
     .navbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;max-width:1400px;margin:0 auto;z-index:10;}
     .brand-logo{font-weight:800;font-size:1.25rem;color:#fff;text-decoration:none;letter-spacing:-0.02em;z-index:101;}
@@ -37,41 +39,78 @@
     .btn-primary:hover{background:#e6e6e6;}
     .btn-secondary{background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:0.85rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:background 0.25s ease;}
     .btn-secondary:hover{background:rgba(255,255,255,0.16);}
+    
+    /* Roller Text Feature */
     .feature-roller-wrapper{position:relative;display:flex;align-items:center;height:240px;overflow:hidden;margin-left:2rem;mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 25%,black 75%,transparent 100%);}
     .fixed-arrow{position:absolute;left:0;top:50%;transform:translateY(-50%);color:#ff3385;font-size:1.25rem;z-index:10;pointer-events:none;}
     .feature-track{display:flex;flex-direction:column;padding-left:2.25rem;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);will-change:transform;}
     .feature-item{height:48px;display:flex;align-items:center;font-size:clamp(1.2rem,2.2vw,1.75rem);font-weight:400;color:rgba(255,255,255,0.25);transition:color 0.4s ease,font-weight 0.4s ease,transform 0.4s ease;white-space:nowrap;}
     .feature-item.active{color:#ffffff;font-weight:800;transform:scale(1.05);}
+    
+    /* Logos Marquee */
     .logos-wrapper{width:100%;max-width:1100px;margin:2rem auto 0;overflow:hidden;position:relative;padding:1rem 0;mask-image:linear-gradient(to right,transparent,black 15%,black 85%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 15%,black 85%,transparent);}
     .logos-label{text-align:center;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.5rem;font-weight:500;}
     .logos-track{display:flex;gap:4rem;width:max-content;animation:marqueeScroll 20s linear infinite;}
     .logo-item{font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;color:rgba(255,255,255,0.5);white-space:nowrap;text-transform:uppercase;}
     @keyframes marqueeScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-    .interiors-section{background-color:#fff;color:#111;padding:6rem 4rem 8rem;}
+
+    /* Interiors Section (Sticky Card Stack) */
+    .interiors-section{background-color:#fff;color:#111;padding:6rem 4rem 6rem;position:relative;}
     .interiors-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 420px 280px;gap:3.5rem;align-items:start;}
     .sticky-left-content,.sticky-right-content{position:sticky;top:6rem;}
     .section-headline{font-size:clamp(2rem,3.5vw,3rem);font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:#111;}
-    .cards-stack-wrapper{display:flex;flex-direction:column;gap:5rem;padding-bottom:70vh;}
+    
+    /* Card Stack Wrapper */
+    .cards-stack-wrapper{display:flex;flex-direction:column;gap:5rem;padding-bottom:0;}
     .card-item{position:sticky;top:6rem;background:#faf6f0;border-radius:6px;overflow:hidden;box-shadow:0 -10px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06);will-change:transform;}
     .card-item:nth-child(1){z-index:1;}
     .card-item:nth-child(2){z-index:2;}
     .card-item:nth-child(3){z-index:3;}
     .card-item:nth-child(4){z-index:4;}
-    .card-image{width:100%;height:480px;object-fit:cover;display:block;}
+    .card-image{width:100%;height:460px;object-fit:cover;display:block;}
     .card-info{padding:1.5rem;background:#faf6f0;}
     .card-title{font-size:1.15rem;font-weight:700;color:#111;margin-bottom:0.4rem;}
     .card-description{font-size:0.88rem;line-height:1.5;color:#666;}
+    
+    /* Right Sticky Block */
     .sticky-right-content{display:flex;flex-direction:column;gap:1.75rem;}
     .right-description{font-size:0.95rem;line-height:1.6;color:#444;}
     .btn-more-about{display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;color:#111;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;border:1px solid #111;padding:0.65rem 1.25rem;width:fit-content;transition:all 0.25s ease;}
     .btn-more-about:hover{background-color:#111;color:#fff;}
     .btn-more-about .icon-box{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#111;color:#fff;font-size:0.75rem;margin-left:0.5rem;transition:background 0.25s ease;}
     .btn-more-about:hover .icon-box{background:#fff;color:#111;}
-    @media(max-width:1024px){.hero-main{grid-template-columns:1fr;gap:3rem;}.hero-container{padding:1.5rem 2rem;}.feature-roller-wrapper{margin-left:0;}.interiors-section{padding:4rem 2rem;}.interiors-container{grid-template-columns:1fr;gap:3rem;}.sticky-left-content,.sticky-right-content{position:static;}.cards-stack-wrapper{gap:2rem;padding-bottom:0;}.card-item{position:static;}}
-    @media(max-width:768px){.navbar{display:flex;justify-content:space-between;}.hamburger{display:flex;}.nav-links{position:fixed;top:0;right:-100%;width:100%;height:100vh;background:rgba(11,5,7,0.96);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right 0.4s cubic-bezier(0.16,1,0.3,1);z-index:90;}.nav-links.active{right:0;}.nav-item{height:auto;}.nav-link{font-size:1.75rem;font-weight:700;}.nav-link span:last-child{display:none;}.hero-buttons{flex-direction:column;align-items:stretch;}.btn-primary,.btn-secondary{text-align:center;justify-content:center;}.card-image{height:350px;}}
+
+    /* Subsequent Section (Follow-up content) */
+    .next-section{background-color:#0b0507;color:#fff;padding:8rem 4rem;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;}
+    .next-section-title{font-size:clamp(2.5rem,4vw,4rem);font-weight:800;letter-spacing:-0.02em;}
+
+    @media(max-width:1024px){
+      .hero-main{grid-template-columns:1fr;gap:3rem;}
+      .hero-container{padding:1.5rem 2rem;}
+      .feature-roller-wrapper{margin-left:0;}
+      .interiors-section{padding:4rem 2rem;}
+      .interiors-container{grid-template-columns:1fr;gap:3rem;}
+      .sticky-left-content,.sticky-right-content{position:static;}
+      .cards-stack-wrapper{gap:2rem;padding-bottom:0;}
+      .card-item{position:static;}
+    }
+    @media(max-width:768px){
+      .navbar{display:flex;justify-content:space-between;}
+      .hamburger{display:flex;}
+      .nav-links{position:fixed;top:0;right:-100%;width:100%;height:100vh;background:rgba(11,5,7,0.96);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right 0.4s cubic-bezier(0.16,1,0.3,1);z-index:90;}
+      .nav-links.active{right:0;}
+      .nav-item{height:auto;}
+      .nav-link{font-size:1.75rem;font-weight:700;}
+      .nav-link span:last-child{display:none;}
+      .hero-buttons{flex-direction:column;align-items:stretch;}
+      .btn-primary,.btn-secondary{text-align:center;justify-content:center;}
+      .card-image{height:350px;}
+    }
   </style>
 </head>
 <body>
+
+  <!-- Hero Section -->
   <div class="hero-container">
     <nav class="navbar">
       <a href="#" class="brand-logo">Magnific</a>
@@ -124,6 +163,7 @@
     </div>
   </div>
 
+  <!-- Sticky Cards Section -->
   <section class="interiors-section">
     <div class="interiors-container">
       <div class="sticky-left-content">
@@ -169,6 +209,11 @@
         <a href="#" class="btn-more-about">MORE ABOUT <span class="icon-box">↗</span></a>
       </div>
     </div>
+  </section>
+
+  <!-- Next Section -->
+  <section class="next-section">
+    <h2 class="next-section-title">Designed for modern spaces.</h2>
   </section>
 
   <script>
