@@ -3,53 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA — Precision Engineering</title>
+  <title>AURA — Mouse Engine Architecture</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
-      --bg: #121316;
-      --bg-blueprint: #0b2238;
-      --card-bg: rgba(22, 24, 29, 0.75);
-      --text: #f0f3f8;
-      --muted: #8a94a6;
-      --line: #2d333f;
-      --accent-blue: #0088ff;
-      --accent-red: #ff3b30;
+      /* Dark Theme (Assembled) */
+      --bg-dark: #121214;
+      --card-dark: rgba(26, 26, 30, 0.7);
+      --text-dark: #f0f0f2;
+      --line-dark: rgba(255, 255, 255, 0.12);
+      
+      /* Light Blueprint Theme (Technical Wireframe) */
+      --bg-light: #dcd8d0;
+      --card-light: rgba(210, 205, 195, 0.75);
+      --text-light: #18181a;
+      --line-light: rgba(0, 0, 0, 0.2);
+
+      --accent: #ff3b30;
+      --accent-blue: #007aff;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
 
     body {
       font-family: var(--font-sans);
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
       overflow-x: hidden;
       line-height: 1.5;
-      transition: background-color 0.8s ease;
+      transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Navigation */
+    /* Theme Switch Classes */
+    body.blueprint-mode {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    /* Fixed Navigation */
     .nav {
       position: fixed;
       top: 0; left: 0; width: 100%;
       padding: 1.75rem 4rem;
       display: flex; justify-content: space-between; align-items: center;
       z-index: 100;
-      background: rgba(18, 19, 22, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-dark);
+      transition: border-color 0.8s;
     }
-    .brand { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
-    .nav-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-blue); }
+    body.blueprint-mode .nav { border-bottom-color: var(--line-light); }
+    .brand { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.03em; color: inherit; text-decoration: none; }
+    .nav-status { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); }
 
-    /* Fixed Viewport for Graphic Stage */
+    /* Fixed Viewport Stage */
     .stage-container {
       position: fixed;
       top: 0; left: 0;
@@ -61,20 +74,32 @@
 
     .mouse-svg {
       width: 100%;
-      max-width: 900px;
-      height: 900px;
+      max-width: 850px;
+      height: 850px;
       overflow: visible;
     }
 
-    /* Vector Component Styles */
-    .stroke-main { stroke: #e6edf8; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
-    .fill-body { fill: #1a1c23; stroke: #e6edf8; stroke-width: 1.5; }
-    .accent-switch { fill: #0066cc; stroke: #0088ff; stroke-width: 1; }
-    .accent-lens { fill: rgba(0, 136, 255, 0.15); stroke: #0088ff; stroke-width: 1.25; }
-    .callout-line { stroke: var(--accent-blue); stroke-width: 1; stroke-dasharray: 400; stroke-dashoffset: 400; fill: none; opacity: 0; }
-    .callout-text { font-family: var(--font-mono); font-size: 10px; fill: var(--text); opacity: 0; letter-spacing: 0.1em; }
+    /* Vector Component Styles & Phase Transitions */
+    .mouse-part {
+      transition: fill 0.8s ease, stroke 0.8s ease, stroke-width 0.8s ease, opacity 0.5s ease;
+    }
 
-    /* Scroll Track & Overlay Sections */
+    /* Dark Mode Solid Shading */
+    .part-fill { fill: #222328; stroke: #454752; stroke-width: 1.5; }
+    .part-accent { fill: #111215; stroke: var(--accent); stroke-width: 2; }
+    .part-glass { fill: rgba(0, 122, 255, 0.2); stroke: var(--accent-blue); stroke-width: 1.5; }
+
+    /* Blueprint Wireframe Mode Override */
+    body.blueprint-mode .part-fill { fill: none; stroke: #2a2a2e; stroke-width: 1.25; }
+    body.blueprint-mode .part-accent { fill: none; stroke: #111113; stroke-width: 1.5; }
+    body.blueprint-mode .part-glass { fill: none; stroke: var(--accent-blue); stroke-width: 1.5; stroke-dasharray: 4 2; }
+
+    /* Schematic Callout Lines */
+    .callout-line { stroke: var(--text-dark); stroke-width: 1; stroke-dasharray: 400; stroke-dashoffset: 400; fill: none; opacity: 0; transition: stroke 0.8s; }
+    body.blueprint-mode .callout-line { stroke: var(--text-light); }
+    .callout-label { font-family: var(--font-mono); font-size: 10px; fill: inherit; opacity: 0; letter-spacing: 0.12em; }
+
+    /* Scroll Overlay Sections */
     .scroll-track { position: relative; z-index: 2; }
     .section {
       min-height: 100vh;
@@ -84,240 +109,259 @@
     }
     .section.right { justify-content: flex-end; }
 
-    .section-card {
+    .card {
       max-width: 420px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
+      background: var(--card-dark);
+      backdrop-filter: blur(20px);
       padding: 2.5rem;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid var(--line-dark);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      transition: background 0.8s, border-color 0.8s;
     }
-    
-    .tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
-    .title { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
-    .desc { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+    body.blueprint-mode .card {
+      background: var(--card-light);
+      border-color: var(--line-light);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
 
-    /* Bottom HUD Scrubber */
+    .tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
+    .title { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
+    .desc { font-size: 0.95rem; opacity: 0.75; line-height: 1.6; }
+
+    /* Bottom Anime.js Style Scrubbing HUD */
     .hud {
       position: fixed;
       bottom: 2rem; right: 4rem;
-      background: rgba(22, 24, 29, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--card-dark);
+      border: 1px solid var(--line-dark);
       padding: 0.75rem 1.5rem;
       border-radius: 99px;
       display: flex; align-items: center; gap: 1.25rem;
       z-index: 100;
       font-family: var(--font-mono);
       font-size: 0.8rem;
+      backdrop-filter: blur(12px);
+      transition: background 0.8s, border-color 0.8s;
     }
-    .progress-bar { width: 120px; height: 3px; background: rgba(255, 255, 255, 0.15); position: relative; border-radius: 2px; overflow: hidden; }
-    .progress-fill { height: 100%; width: 0%; background: var(--accent-blue); }
+    body.blueprint-mode .hud { background: var(--card-light); border-color: var(--line-light); }
+    .progress-bar { width: 120px; height: 3px; background: rgba(125, 125, 125, 0.3); position: relative; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: var(--accent); }
   </style>
 </head>
 <body>
 
   <nav class="nav">
     <a href="#" class="brand">AURA // MOUSE_ENGINE</a>
-    <span class="nav-tag">[ SYSTEM_DISASSEMBLY_VIEW ]</span>
+    <span class="nav-status" id="navState">[ PHASE 01: ASSEMBLED_3D ]</span>
   </nav>
 
   <!-- PINNED GRAPHIC STAGE -->
   <div class="stage-container">
     <svg class="mouse-svg" viewBox="-400 -400 800 800">
       
-      <!-- CALLOUT POINTER LINES -->
+      <!-- SCHEMATIC CALLOUT POINTERS -->
       <g id="callouts">
-        <path class="callout-line" id="cLine1" d="M 110 -210 L 260 -250 L 330 -250" />
-        <text class="callout-text" id="cText1" x="340" y="-246">01 // ERGONOMICS_TOP_SHELL</text>
+        <path class="callout-line" id="cLine1" d="M 120 -240 L 270 -280 L 340 -280" />
+        <text class="callout-label" id="cText1" x="350" y="-276">01 // TOP_SHELL_COVER</text>
 
-        <path class="callout-line" id="cLine2" d="M -120 -80 L -250 -120 L -320 -120" />
-        <text class="callout-text" id="cText2" x="-460" y="-116">02 // TACTILE_MICRO_SWITCHES</text>
+        <path class="callout-line" id="cLine2" d="M -130 -110 L -270 -150 L -340 -150" />
+        <text class="callout-label" id="cText2" x="-490" y="-146">02 // OMRON_SWITCH_ARRAY</text>
 
-        <path class="callout-line" id="cLine3" d="M 140 30 L 260 70 L 330 70" />
-        <text class="callout-text" id="cText3" x="340" y="74">03 // OPTICAL_SENSOR_&_DSP</text>
+        <path class="callout-line" id="cLine3" d="M 150 20 L 270 60 L 340 60" />
+        <text class="callout-label" id="cText3" x="350" y="64">03 // OPTICAL_LENS_STACK</text>
 
-        <path class="callout-line" id="cLine4" d="M -130 180 L -250 220 L -320 220" />
-        <text class="callout-text" id="cText4" x="-450" y="224">04 // BASE_CHASSIS_&_SKATES</text>
+        <path class="callout-line" id="cLine4" d="M -140 160 L -270 200 L -340 200" />
+        <text class="callout-label" id="cText4" x="-480" y="204">04 // BASE_FRAME_CHASSIS</text>
       </g>
 
-      <!-- ISOMETRIC DISASSEMBLED MOUSE ASSEMBLY -->
-      <g id="mouseAssembly" transform="rotate(-25)">
+      <!-- ISOMETRIC MOUSE ASSEMBLY ENGINE -->
+      <g id="mouseAssembly" transform="rotate(-35) scale(0.95)">
         
-        <!-- LAYER 1: TOP ERGONOMIC SHELL & DPI BUTTON -->
-        <g id="layerTopShell">
-          <path d="M -110 -220 C -60 -270 60 -270 110 -220 C 140 -180 150 -120 120 -80 C 80 -40 -80 -40 -120 -80 C -150 -120 -140 -180 -110 -220 Z" class="fill-body" />
-          <!-- Clicker Split Line -->
-          <line x1="0" y1="-265" x2="0" y2="-170" class="stroke-main" />
-          <!-- Scroll Wheel Slot -->
-          <rect x="-12" y="-220" width="24" height="45" rx="12" class="fill-body" />
+        <!-- LAYER 1: TOP ERGONOMIC SHELL -->
+        <g id="layerTop">
+          <path d="M -110 -220 C -60 -270 60 -270 110 -220 C 140 -180 150 -120 120 -80 C 80 -40 -80 -40 -120 -80 C -150 -120 -140 -180 -110 -220 Z" class="mouse-part part-fill" />
+          <line x1="0" y1="-265" x2="0" y2="-170" class="mouse-part part-accent" />
+          <rect x="-12" y="-220" width="24" height="45" rx="12" class="mouse-part part-fill" />
         </g>
 
         <!-- LAYER 2: MID FRAME, SCROLL WHEEL & SWITCHES -->
-        <g id="layerMidFrame">
-          <path d="M -100 -120 C -50 -160 50 -160 100 -120 C 120 -90 120 -50 100 -20 C 60 20 -60 20 -100 -20 C -120 -50 -120 -90 -100 -120 Z" class="fill-body" />
-          <!-- Scroll Wheel Assembly -->
-          <ellipse cx="0" cy="-90" rx="14" ry="24" class="fill-body" />
-          <ellipse cx="0" cy="-90" rx="8" ry="16" class="stroke-main" />
-          <!-- Left & Right Omron Micro-Switches -->
-          <rect x="-65" y="-120" width="28" height="18" rx="3" class="accent-switch" />
-          <rect x="37" y="-120" width="28" height="18" rx="3" class="accent-switch" />
+        <g id="layerMid">
+          <path d="M -100 -120 C -50 -160 50 -160 100 -120 C 120 -90 120 -50 100 -20 C 60 20 -60 20 -100 -20 C -120 -50 -120 -90 -100 -120 Z" class="mouse-part part-fill" />
+          <ellipse cx="0" cy="-90" rx="14" ry="24" class="mouse-part part-accent" />
+          <rect x="-65" y="-120" width="28" height="18" rx="3" class="mouse-part part-accent" />
+          <rect x="37" y="-120" width="28" height="18" rx="3" class="mouse-part part-accent" />
         </g>
 
-        <!-- LAYER 3: MAIN PCB & OPTICAL SENSOR ENGINE -->
+        <!-- LAYER 3: MAIN PCB & OPTICAL LENS ARRAY -->
         <g id="layerPCB">
-          <!-- Printed Circuit Board Base -->
-          <path d="M -90 -30 L 90 -30 L 100 60 L -100 60 Z" fill="#112211" stroke="#00ff88" stroke-width="1.25" />
-          <!-- DSP Processing Chip -->
-          <rect x="-20" y="0" width="40" height="30" rx="2" fill="#050505" stroke="#ffffff" stroke-width="1" />
-          <circle cx="0" cy="15" r="4" fill="var(--accent-red)" />
+          <path d="M -90 -30 L 90 -30 L 100 60 L -100 60 Z" class="mouse-part part-fill" />
+          <rect x="-22" y="-5" width="44" height="32" rx="3" class="mouse-part part-accent" />
           
-          <!-- LENS ARRAY (Expands Horizontally on Scroll) -->
-          <g id="lensArray">
-            <ellipse cx="-120" cy="15" rx="8" ry="16" class="accent-lens" />
-            <ellipse cx="-90" cy="15" rx="10" ry="20" class="accent-lens" />
-            <ellipse cx="-60" cy="15" rx="12" ry="24" class="accent-lens" />
+          <!-- EXPANDABLE OPTICAL LENS ARRAY -->
+          <g id="lensStack">
+            <ellipse cx="-130" cy="10" rx="8" ry="18" class="mouse-part part-glass" />
+            <ellipse cx="-100" cy="10" rx="10" ry="22" class="mouse-part part-glass" />
+            <ellipse cx="-70" cy="10" rx="12" ry="26" class="mouse-part part-glass" />
           </g>
         </g>
 
-        <!-- LAYER 4: BOTTOM CHASSIS & POWER BASE -->
+        <!-- LAYER 4: BOTTOM CHASSIS BASE -->
         <g id="layerBase">
-          <path d="M -120 80 C -70 40 70 40 120 80 C 150 130 140 200 110 240 C 60 280 -60 280 -110 240 C -140 200 -150 130 -120 80 Z" class="fill-body" />
-          <!-- Sensor Opening Window -->
-          <rect x="-18" y="140" width="36" height="24" rx="4" class="stroke-main" />
-          <!-- Glide Skates -->
-          <path d="M -80 95 C -40 80 40 80 80 95" class="stroke-main" stroke-width="3" />
-          <path d="M -70 250 C -30 260 30 260 70 250" class="stroke-main" stroke-width="3" />
+          <path d="M -120 80 C -70 40 70 40 120 80 C 150 130 140 200 110 240 C 60 280 -60 280 -110 240 C -140 200 -150 130 -120 80 Z" class="mouse-part part-fill" />
+          <rect x="-18" y="140" width="36" height="24" rx="4" class="mouse-part part-accent" />
         </g>
 
       </g>
     </svg>
   </div>
 
-  <!-- SCROLLABLE CONTENT SECTIONS -->
+  <!-- SCROLL NARRATIVE TRACK -->
   <main class="scroll-track">
     
     <section class="section">
-      <div class="section-card">
-        <span class="tag">01 // DESIGN & ERGONOMICS</span>
-        <h1 class="title">Precision Shell Architecture</h1>
-        <p class="desc">Form meets tactile execution. Engineered for optimal grip physics, low latency click response, and seamless brand presence.</p>
+      <div class="card">
+        <span class="tag">01 // ASSEMBLED STATE</span>
+        <h1 class="title">Complete Hardware Engine</h1>
+        <p class="desc">A sleek, solid hardware shell engineered for low latency, smooth ergonomics, and high-frequency tactile response.</p>
       </div>
     </section>
 
     <section class="section right">
-      <div class="section-card">
-        <span class="tag">02 // TACTILE INTERACTION</span>
-        <h2 class="title">Mechanical Switches & Encoder</h2>
-        <p class="desc">Every click triggers micro-second responses. Dual tactile Omron switches paired with an optical scroll encoder for flawless feedback.</p>
+      <div class="card">
+        <span class="tag">02 // DISASSEMBLY</span>
+        <h2 class="title">KINETIC SEPARATION</h2>
+        <p class="desc">Components translate along isometric vectors to reveal internal micro-switches, scroll encoders, and PCB traces.</p>
       </div>
     </section>
 
     <section class="section">
-      <div class="section-card">
-        <span class="tag">03 // OPTICAL PROCESSING</span>
-        <h2 class="title">DSP Optical Engine</h2>
-        <p class="desc">Multi-lens glass array focusing high-frequency tracking signals directly into an onboard DSP microprocessor for 26,000 DPI accuracy.</p>
+      <div class="card">
+        <span class="tag">03 // BLUEPRINT MODE</span>
+        <h2 class="title">Schematic Vector Wireframe</h2>
+        <p class="desc">Shaded surfaces dissolve into light-mode technical blueprint strokes, echoing the aesthetic of animejs.com.</p>
       </div>
     </section>
 
     <section class="section right">
-      <div class="section-card">
-        <span class="tag">04 // SCHEMATIC BLUEPRINT</span>
-        <h2 class="title">System Architecture</h2>
-        <p class="desc">Stripped-back blueprint breakdown highlighting component layout, modularity, and rapid assembly standards.</p>
+      <div class="card">
+        <span class="tag">04 // SCHEMATIC DISASSEMBLY</span>
+        <h2 class="title">Technical Callout Matrix</h2>
+        <p class="desc">Sub-assemblies split once again in blueprint mode with HUD lines connecting individual system components.</p>
       </div>
     </section>
 
   </main>
 
-  <!-- HUD STATUS -->
+  <!-- ANIME.JS STYLE SCRUBBER HUD -->
   <div class="hud">
-    <span>PHASE: <strong id="hudPhase" style="color:var(--accent-blue)">ASSEMBLED</strong></span>
+    <span>PROGRESS:</span>
     <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
     <span id="pNum">000%</span>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const navState = document.getElementById('navState');
       const pFill = document.getElementById('pFill');
       const pNum = document.getElementById('pNum');
-      const hudPhase = document.getElementById('hudPhase');
 
       const mouseAssembly = document.getElementById('mouseAssembly');
-      const lTop = document.getElementById('layerTopShell');
-      const lMid = document.getElementById('layerMidFrame');
+      const lTop = document.getElementById('layerTop');
+      const lMid = document.getElementById('layerMid');
       const lPCB = document.getElementById('layerPCB');
       const lBase = document.getElementById('layerBase');
-      const lensArray = document.getElementById('lensArray');
+      const lensStack = document.getElementById('lensStack');
 
       const cLines = document.querySelectorAll('.callout-line');
-      const cTexts = document.querySelectorAll('.callout-text');
+      const cTexts = document.querySelectorAll('.callout-label');
 
       let currentScroll = 0;
       let targetScroll = 0;
-      const ease = 0.08; // Inertia smoothing
+      const ease = 0.075; // Lerp inertia physics
 
       window.addEventListener('scroll', () => {
         targetScroll = window.scrollY;
       }, { passive: true });
 
-      function renderPhysics() {
+      function renderLoop() {
         currentScroll += (targetScroll - currentScroll) * ease;
         
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         const progress = Math.max(0, Math.min(1, currentScroll / maxScroll));
 
-        // Update Progress UI
+        // Update Scrubbing Bar
         pFill.style.width = `${progress * 100}%`;
         pNum.innerText = `${Math.round(progress * 100).toString().padStart(3, '0')}%`;
 
-        // Blueprint Transition at Stage 4
-        if (progress > 0.72) {
-          document.body.style.backgroundColor = 'var(--bg-blueprint)';
-          hudPhase.innerText = "BLUEPRINT_VIEW";
+        // =========================================================================
+        // 4-PHASE TIMELINE ANIMATION ENGINE
+        // =========================================================================
+
+        // PHASE 1: Assembled Solid Mouse (0% - 25%)
+        // PHASE 2: First Disassembly in Dark Mode (25% - 50%)
+        // PHASE 3: Turn into Light Blueprint Mode (50% - 75%)
+        // PHASE 4: Second Disassembly with Schematic Lines (75% - 100%)
+
+        // Toggle Blueprint Mode (Phase 3 & 4)
+        if (progress > 0.50) {
+          document.body.classList.add('blueprint-mode');
         } else {
-          document.body.style.backgroundColor = 'var(--bg)';
-          if (progress < 0.25) hudPhase.innerText = "ASSEMBLED";
-          else if (progress < 0.50) hudPhase.innerText = "DISASSEMBLED";
-          else hudPhase.innerText = "OPTICAL_EXPANSION";
+          document.body.classList.remove('blueprint-mode');
         }
 
-        // =========================================================================
-        // CONTINUOUS LAYER TRANSFORM & EXPLOSION MATRIX
-        // =========================================================================
+        // Calculate Dynamic Explosive Distance based on Phase Curves
+        let explodeFactor = 0;
 
-        // 1. Mouse Assembly Rotation & Pitch Shift
-        const rotation = -25 + (progress * 35);
-        mouseAssembly.setAttribute('transform', `rotate(${rotation}) scale(${1 - progress * 0.1})`);
+        if (progress <= 0.25) {
+          // Phase 1: Fully Assembled
+          explodeFactor = 0;
+          navState.innerText = "[ PHASE 01: ASSEMBLED_3D ]";
+        } else if (progress > 0.25 && progress <= 0.50) {
+          // Phase 2: Disassemble in Dark Mode
+          explodeFactor = ((progress - 0.25) / 0.25) * 220;
+          navState.innerText = "[ PHASE 02: KINETIC_DISASSEMBLY ]";
+        } else if (progress > 0.50 && progress <= 0.72) {
+          // Phase 3: Snap back to assembled in Light Blueprint Mode
+          const subProg = (progress - 0.50) / 0.22;
+          explodeFactor = 220 * (1 - subProg);
+          navState.innerText = "[ PHASE 03: BLUEPRINT_TRANSITION ]";
+        } else {
+          // Phase 4: Disassemble again in Light Blueprint Mode with Callouts
+          const subProg = (progress - 0.72) / 0.28;
+          explodeFactor = subProg * 250;
+          navState.innerText = "[ PHASE 04: SCHEMATIC_EXPLOSION ]";
+        }
 
-        // 2. Vertical Explosive Separation
-        const explode = Math.sin(progress * Math.PI) * 230;
+        // Global Isometric Rotation Engine
+        const globalRotation = -35 + (progress * 50);
+        mouseAssembly.setAttribute('transform', `rotate(${globalRotation}) scale(${0.95 - (progress * 0.1)})`);
 
-        lTop.style.transform = `translateY(${-explode * 1.3}px)`;
-        lMid.style.transform = `translateY(${-explode * 0.5}px)`;
-        lPCB.style.transform = `translateY(${explode * 0.3}px)`;
-        lBase.style.transform = `translateY(${explode * 1.1}px)`;
+        // Vertical Component Disassembly
+        lTop.style.transform = `translateY(${-explodeFactor * 1.3}px)`;
+        lMid.style.transform = `translateY(${-explodeFactor * 0.5}px)`;
+        lPCB.style.transform = `translateY(${explodeFactor * 0.3}px)`;
+        lBase.style.transform = `translateY(${explodeFactor * 1.1}px)`;
 
-        // 3. Horizontal Optical Lens Array Expansion (Image 1 Effect)
-        const lensShift = progress > 0.4 ? Math.min(1, (progress - 0.4) / 0.3) * 60 : 0;
-        lensArray.style.transform = `translateX(${-lensShift}px)`;
+        // Lens Array Horizontal Expansion (Phase 2 & 4)
+        const lensShift = (progress > 0.25 && progress <= 0.50) || progress > 0.72 ? (explodeFactor / 250) * 50 : 0;
+        lensStack.style.transform = `translateX(${-lensShift}px)`;
 
-        // 4. Callout Line Pointers
+        // Callout Lines (Only Active during Phase 4 Blueprint Disassembly)
+        const showCallouts = progress > 0.75;
         cLines.forEach(line => {
-          const dashOffset = 400 - (progress * 800);
-          line.style.strokeDashoffset = Math.max(0, dashOffset);
-          line.style.opacity = progress > 0.18 && progress < 0.88 ? 1 : 0;
+          line.style.strokeDashoffset = showCallouts ? Math.max(0, 400 - ((progress - 0.75) * 1600)) : 400;
+          line.style.opacity = showCallouts ? 1 : 0;
         });
 
         cTexts.forEach(text => {
-          text.style.opacity = progress > 0.25 && progress < 0.82 ? (progress - 0.25) * 3 : 0;
+          text.style.opacity = showCallouts ? Math.min(1, (progress - 0.8) * 5) : 0;
         });
 
-        requestAnimationFrame(renderPhysics);
+        requestAnimationFrame(renderLoop);
       }
 
-      requestAnimationFrame(renderPhysics);
+      requestAnimationFrame(renderLoop);
     });
   </script>
 </body>
