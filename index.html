@@ -68,7 +68,7 @@
       justify-content: center;
     }
 
-    /* Updated to a proper rectangle shape with adjusted width and padding */
+    /* Proper rectangle shape with adjusted width and padding */
     .eye-pill {
       background: #000000;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -542,12 +542,12 @@
     .btn-more-about:hover .icon-box { background: #fff; color: #111; }
 
     /* ==========================================================================
-       SECTION 3: SERVICES SHOWCASE SECTION
+       SECTION 3: SERVICES SHOWCASE SECTION (Updated to match reference dimensions & interactive tabs)
        ========================================================================== */
     .services-wrapper {
       background-color: var(--bg-page);
       color: var(--text-heading);
-      padding: 5rem 2rem;
+      padding: 7rem 3rem;
       display: flex;
       justify-content: center;
       width: 100%;
@@ -557,21 +557,21 @@
 
     .services-container {
       width: 100%;
-      max-width: 1280px;
+      max-width: 1520px; /* Expanded max-width for broader layout */
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .header { text-align: center; margin-bottom: 2.5rem; }
+    .header { text-align: center; margin-bottom: 3rem; }
     .header-title {
-      font-size: 3rem;
+      font-size: clamp(2.5rem, 4vw, 3.6rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text-heading);
       margin-bottom: 0.75rem;
     }
-    .header-subtitle { font-size: 1.1rem; color: var(--text-sub); font-weight: 500; }
+    .header-subtitle { font-size: 1.15rem; color: var(--text-sub); font-weight: 500; }
 
     .filter-tabs {
       display: inline-flex;
@@ -579,18 +579,18 @@
       padding: 6px;
       border-radius: 99px;
       gap: 6px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      margin-bottom: 3rem;
-      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 3.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .filter-btn {
       border: none;
       background: transparent;
-      padding: 0.65rem 1.4rem;
+      padding: 0.75rem 1.6rem;
       border-radius: 99px;
       font-family: var(--font-sans);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
       color: var(--text-sub);
       cursor: pointer;
@@ -614,27 +614,29 @@
 
     .stage-card {
       width: 100%;
+      max-width: 1480px;
       background: var(--card-bg);
-      border-radius: 28px;
-      padding: 2.5rem;
+      border-radius: 32px;
+      padding: 3rem;
       color: #ffffff;
       display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 2rem;
+      grid-template-columns: 360px 1fr;
+      gap: 3rem;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+      min-height: 600px;
     }
 
     .sidebar { display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; }
-    .sidebar-intro .title { font-size: 1.5rem; font-weight: 700; line-height: 1.25; margin-bottom: 1rem; }
-    .sidebar-intro .desc { font-size: 0.88rem; color: #a39c9a; line-height: 1.55; margin-bottom: 1.25rem; }
+    .sidebar-intro .title { font-size: 1.7rem; font-weight: 700; line-height: 1.25; margin-bottom: 1rem; }
+    .sidebar-intro .desc { font-size: 0.92rem; color: #a39c9a; line-height: 1.6; margin-bottom: 1.5rem; }
 
     .tour-link {
       color: #ffffff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -643,7 +645,7 @@
 
     .tour-link:hover { gap: 10px; }
 
-    .cat-menu { display: flex; flex-direction: column; gap: 0.75rem; }
+    .cat-menu { display: flex; flex-direction: column; gap: 0.6rem; }
 
     .cat-item {
       background: transparent;
@@ -651,13 +653,13 @@
       color: #a39c9a;
       text-align: left;
       font-family: var(--font-sans);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      padding: 0.75rem 0;
+      padding: 0.8rem 0;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.4rem;
       transition: color 0.2s;
     }
 
@@ -677,7 +679,7 @@
     .cat-item.active .cat-progress { display: block; }
 
     .cat-subtext {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: #8c8380;
       font-weight: 400;
       line-height: 1.4;
@@ -688,17 +690,17 @@
 
     .showcase-area {
       display: grid;
-      grid-template-columns: 1fr 280px 100px;
-      gap: 1.25rem;
+      grid-template-columns: 1fr 320px 110px;
+      gap: 1.5rem;
       align-items: center;
       position: relative;
     }
 
     .media-viewport {
       width: 100%;
-      height: 480px;
+      height: 520px;
       background: #100d0d;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
       position: relative;
     }
@@ -709,20 +711,20 @@
       background: rgba(32, 28, 27, 0.92);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 0.75rem;
+      border-radius: 18px;
+      padding: 0.9rem;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+      gap: 0.4rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
     .tool-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 0.6rem 0.75rem;
-      border-radius: 10px;
+      gap: 12px;
+      padding: 0.7rem 0.85rem;
+      border-radius: 12px;
       cursor: pointer;
       transition: background 0.2s;
     }
@@ -730,30 +732,61 @@
     .tool-item:hover { background: rgba(255, 255, 255, 0.06); }
 
     .tool-icon {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       background: rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       flex-shrink: 0;
     }
 
-    .tool-info .name { font-size: 0.82rem; font-weight: 600; color: #ffffff; margin-bottom: 2px; }
-    .tool-info .sub { font-size: 0.72rem; color: #8c8380; }
+    .tool-info .name { font-size: 0.86rem; font-weight: 600; color: #ffffff; margin-bottom: 2px; }
+    .tool-info .sub { font-size: 0.75rem; color: #8c8380; }
 
     .peek-card {
       width: 100%;
-      height: 480px;
+      height: 520px;
       background: #2b2524;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
       opacity: 0.5;
     }
 
     .peek-card img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Tab dynamic content container styles */
+    .tab-content-view {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+    .tab-content-view.active-tab-view {
+      display: grid;
+      grid-template-columns: 1fr 320px 110px;
+      gap: 1.5rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Alternate tab views for dynamic interaction */
+    .generic-tab-display {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 520px;
+      background: rgba(25, 21, 22, 0.8);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      padding: 3rem;
+    }
+    .generic-tab-display h3 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: #fff; }
+    .generic-tab-display p { font-size: 1.05rem; color: #a39c9a; max-width: 600px; line-height: 1.6; }
 
     /* ==========================================================================
        SECTION 4: MOTION SHOWCASE
@@ -1372,6 +1405,13 @@
     }
     .footer-copyright-bar .legal-links a:hover { color: #ffffff; }
 
+    @media (max-width: 1400px) {
+      .services-wrapper { padding: 5rem 2rem; }
+      .stage-card { grid-template-columns: 320px 1fr; padding: 2.5rem; gap: 2rem; }
+      .showcase-area, .tab-content-view.active-tab-view { grid-template-columns: 1fr 280px 100px; }
+      .media-viewport, .peek-card, .generic-tab-display { height: 460px; }
+    }
+
     @media (max-width: 1200px) {
       .hacienda-slider-dock { left: 2rem; }
       .hacienda-pill-slider { width: 76px; padding: 10px 8px; border-radius: 24px; }
@@ -1387,8 +1427,9 @@
       .sticky-left-content, .sticky-right-content { position: static; }
       .card-item { position: static; margin-bottom: 2rem; }
       .stage-card { grid-template-columns: 1fr; }
-      .showcase-area { grid-template-columns: 1fr; }
-      .peek-card { display: none; }
+      .showcase-area, .tab-content-view.active-tab-view { grid-template-columns: 1fr; }
+      .tool-panel, .peek-card { display: none; }
+      .media-viewport, .generic-tab-display { height: 380px; }
       .motion-section { padding: 4rem 2rem; }
       .motion-viewport-card { height: 420px; }
       
@@ -1593,7 +1634,7 @@
     </div>
   </section>
 
-  <!-- SECTION 3: SERVICES SHOWCASE -->
+  <!-- SECTION 3: SERVICES SHOWCASE (Expanded proportions & clickable filter tabs with dynamic card changes) -->
   <section class="services-wrapper">
     <div class="services-container">
       <header class="header">
@@ -1601,76 +1642,131 @@
         <p class="header-subtitle">Pick your starting point. Every tool, every model, every format.</p>
       </header>
 
-      <nav class="filter-tabs">
-        <button class="filter-btn active">Creative Suite</button>
-        <button class="filter-btn">MCP &amp; API <span class="badge-new">New</span></button>
-        <button class="filter-btn">Agents <span class="badge-new">New</span></button>
-        <button class="filter-btn">Plugins <span class="badge-new">New</span></button>
-        <button class="filter-btn">Stock</button>
+      <nav class="filter-tabs" id="filterTabs">
+        <button class="filter-btn active" data-tab="creative">Creative Suite</button>
+        <button class="filter-btn" data-tab="mcp">MCP &amp; API <span class="badge-new">New</span></button>
+        <button class="filter-btn" data-tab="agents">Agents <span class="badge-new">New</span></button>
+        <button class="filter-btn" data-tab="plugins">Plugins <span class="badge-new">New</span></button>
+        <button class="filter-btn" data-tab="stock">Stock</button>
       </nav>
 
       <div class="stage-card">
-        <aside class="sidebar">
-          <div class="sidebar-intro">
-            <h3 class="title">Pro-level production, end to end</h3>
-            <p class="desc">Start with an idea. Direct the shots. Add sound. Explore variations. Explore workflows. Connect in Spaces. Your team, creating together.</p>
-            <a href="#" class="tour-link">Take a tour &rarr;</a>
-          </div>
-
-          <div class="cat-menu">
-            <button class="cat-item active">
-              <div class="cat-item-header">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                Image
-              </div>
-              <p class="cat-subtext">Generate, edit, resize, upscale. Keep characters and brand consistent across every shot.</p>
-              <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-            </button>
-
-            <button class="cat-item">
-              <div class="cat-item-header">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-                Video
-              </div>
-              <p class="cat-subtext">Turn prompts into cinematic 4K video clips with dynamic motion controls.</p>
-              <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-            </button>
-
-            <button class="cat-item">
-              <div class="cat-item-header">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                Audio
-              </div>
-              <p class="cat-subtext">Synthesize voices, generate ambient soundtracks, and isolate sound stems.</p>
-              <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-            </button>
-          </div>
-        </aside>
-
-        <main class="showcase-area">
-          <div class="media-viewport">
-            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" alt="Cinematic Visual Rendering">
-          </div>
-
-          <div class="tool-panel">
-            <div class="tool-item">
-              <div class="tool-icon">🖼️</div>
-              <div class="tool-info"><div class="name">Image generator</div><div class="sub">Create images from text prompts</div></div>
+        
+        <!-- TAB VIEW 1: CREATIVE SUITE (Default) -->
+        <div class="tab-content-view active-tab-view" id="tab-creative">
+          <aside class="sidebar">
+            <div class="sidebar-intro">
+              <h3 class="title">Pro-level production, end to end</h3>
+              <p class="desc">Start with an idea. Direct the shots. Add sound. Explore variations. Explore workflows. Connect in Spaces. Your team, creating together.</p>
+              <a href="#" class="tour-link">Take a tour &rarr;</a>
             </div>
-            <div class="tool-item">
-              <div class="tool-icon">✏️</div>
-              <div class="tool-info"><div class="name">Image editor</div><div class="sub">Edit and modify existing images</div></div>
-            </div>
-            <div class="tool-item">
-              <div class="tool-icon">🔍</div>
-              <div class="tool-info"><div class="name">Image Upscaler</div><div class="sub">Enhance resolution and detail</div></div>
-            </div>
-          </div>
 
-          <div class="peek-card">
-            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=600&auto=format&fit=crop" alt="Peek Asset">
+            <div class="cat-menu">
+              <button class="cat-item active">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                  Image
+                </div>
+                <p class="cat-subtext">Generate, edit, resize, upscale. Keep characters and brand consistent across every shot.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+
+              <button class="cat-item">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                  Video
+                </div>
+                <p class="cat-subtext">Turn prompts into cinematic 4K video clips with dynamic motion controls.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+
+              <button class="cat-item">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                  Audio
+                </div>
+                <p class="cat-subtext">Synthesize voices, generate ambient soundtracks, and isolate sound stems.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+
+              <button class="cat-item">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                  3D
+                </div>
+                <p class="cat-subtext">Sculpt and render textured 3D meshes directly from descriptive text prompts.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+
+              <button class="cat-item">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  Spaces
+                </div>
+                <p class="cat-subtext">Collaborative real-time rooms for teams to co-create and review assets.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+            </div>
+          </aside>
+
+          <main class="showcase-area">
+            <div class="media-viewport">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop" alt="Cinematic Visual Rendering">
+            </div>
+
+            <div class="tool-panel">
+              <div class="tool-item">
+                <div class="tool-icon">🖼️</div>
+                <div class="tool-info"><div class="name">Image generator</div><div class="sub">Create images from text prompts</div></div>
+              </div>
+              <div class="tool-item">
+                <div class="tool-icon">✏️</div>
+                <div class="tool-info"><div class="name">Image editor</div><div class="sub">Edit and modify existing images</div></div>
+              </div>
+              <div class="tool-item">
+                <div class="tool-icon">🔍</div>
+                <div class="tool-info"><div class="name">Image Upscaler</div><div class="sub">Enhance resolution and detail</div></div>
+              </div>
+            </div>
+
+            <div class="peek-card">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Peek Asset">
+            </div>
+          </main>
+        </div>
+
+        <!-- TAB VIEW 2: MCP & API -->
+        <div class="tab-content-view" id="tab-mcp">
+          <div class="generic-tab-display">
+            <h3>Model Context Protocol &amp; Developer APIs</h3>
+            <p>Integrate Magnific directly into your custom pipelines, enterprise infrastructure, and automated creative tools with our robust REST APIs and MCP servers.</p>
           </div>
-        </main>
+        </div>
+
+        <!-- TAB VIEW 3: AGENTS -->
+        <div class="tab-content-view" id="tab-agents">
+          <div class="generic-tab-display">
+            <h3>Autonomous Creative Agents</h3>
+            <p>Deploy specialized AI agents capable of executing multi-step production campaigns, generating brand variants, and maintaining visual consistency automatically.</p>
+          </div>
+        </div>
+
+        <!-- TAB VIEW 4: PLUGINS -->
+        <div class="tab-content-view" id="tab-plugins">
+          <div class="generic-tab-display">
+            <h3>Ecosystem Plugins &amp; Extensions</h3>
+            <p>Connect seamlessly with your favorite professional design software including Photoshop, Figma, Premiere Pro, and Blender through our official plugins.</p>
+          </div>
+        </div>
+
+        <!-- TAB VIEW 5: STOCK -->
+        <div class="tab-content-view" id="tab-stock">
+          <div class="generic-tab-display">
+            <h3>Curated Generative Stock Library</h3>
+            <p>Explore millions of pristine, high-resolution assets, textures, 3D models, and audio stems ready for instant licensing and remixing.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1808,7 +1904,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // =========================================================================
-      // LOADER SCRIPT WITH UPDATED 0.7s INTERVALS & SINGLE EYE WINK
+      // LOADER SCRIPT (0.7s intervals & single eye wink)
       // =========================================================================
       const introLoader = document.getElementById('intro-loader');
       const pupilL = document.getElementById('pupilLeft');
@@ -1832,7 +1928,6 @@
           pupilR.className = `pupil ${dir}`;
         }
 
-        // 0.7 seconds per side interval
         setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 700);
         setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 1400);
         setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 2100);
@@ -1841,13 +1936,11 @@
           tagUp?.classList.add('active'); 
         }, 2800);
 
-        // Center look and single eye wink at 3.5s
         setTimeout(() => {
           setEyeDirection('look-center');
-          rightEyeElem?.classList.add('wink'); // Only right eye winks
+          rightEyeElem?.classList.add('wink');
         }, 3500);
 
-        // Fade out loader at 4.2s
         setTimeout(() => {
           if (introLoader) {
             introLoader.classList.add('fade-out');
@@ -1889,6 +1982,27 @@
         currentFeatureIndex = (currentFeatureIndex + 1) % featureItems.length;
         updateFeatureRoll();
       }, 2000);
+
+      // =========================================================================
+      // SECTION 3 TAB SWITCHING LOGIC (Clickable Filter Tabs)
+      // =========================================================================
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const tabViews = document.querySelectorAll('.tab-content-view');
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const targetTab = btn.getAttribute('data-tab');
+          tabViews.forEach(view => {
+            view.classList.remove('active-tab-view');
+            if (view.id === `tab-${targetTab}`) {
+              view.classList.add('active-tab-view');
+            }
+          });
+        });
+      });
 
       // =========================================================================
       // HACIENDA INTERACTIVE GALLERY SLIDER
