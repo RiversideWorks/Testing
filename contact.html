@@ -17,8 +17,8 @@
       --accent-pink: #ff3385;
       --pill-bg: rgba(255, 255, 255, 0.04);
       --pill-border: rgba(255, 255, 255, 0.12);
-      --pill-active-bg: #ffffff;
-      --pill-active-text: #0b0507;
+      --pill-active-bg: var(--accent-pink);
+      --pill-active-text: #ffffff;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
@@ -40,10 +40,10 @@
       padding: 2.5rem 4rem;
     }
 
-    /* Top Navigation matching index.html style */
-    .nav-header {
-      display: flex;
-      justify-content: space-between;
+    /* Top Navigation - Identical to Home Page */
+    .navbar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
       width: 100%;
       max-width: 1400px;
@@ -53,40 +53,33 @@
     .brand-logo {
       font-weight: 800;
       font-size: 1.25rem;
-      letter-spacing: -0.02em;
-      color: var(--text-main);
+      color: #fff;
       text-decoration: none;
+      letter-spacing: -0.02em;
     }
 
-    .nav-links-center {
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-item { overflow: hidden; height: 1.5rem; }
+
+    .nav-link {
       display: flex;
-      gap: 3rem;
-      list-style: none;
-    }
-
-    .nav-links-center a {
+      flex-direction: column;
       text-decoration: none;
       color: rgba(255, 255, 255, 0.8);
       font-weight: 500;
       font-size: 0.95rem;
-      transition: color 0.2s;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .nav-links-center a:hover {
-      color: var(--accent-pink);
-    }
+    .nav-link span { display: block; height: 1.5rem; line-height: 1.5rem; }
+    .nav-link span:last-child { color: var(--accent-pink); }
+    .nav-item:hover .nav-link { transform: translateY(-1.5rem); }
 
-    .nav-right-group {
+    .nav-actions {
       display: flex;
+      justify-content: flex-end;
       align-items: center;
-      gap: 2.5rem;
-    }
-
-    .contact-nav-link {
-      text-decoration: none;
-      color: var(--text-main);
-      font-weight: 700;
-      font-size: 0.9rem;
+      gap: 2rem;
     }
 
     .clock-display {
@@ -144,8 +137,9 @@
     .pill-btn.active {
       background: var(--pill-active-bg);
       color: var(--pill-active-text);
-      border-color: var(--pill-active-bg);
+      border-color: var(--accent-pink);
       font-weight: 700;
+      box-shadow: 0 4px 15px rgba(255, 51, 133, 0.4);
     }
 
     /* Form Fields */
@@ -246,7 +240,7 @@
       color: var(--accent-pink);
     }
 
-    /* Footer matching dark theme */
+    /* Footer - Identical to Home Page */
     .footer-wrapper {
       width: 100%;
       max-width: 1400px;
@@ -255,7 +249,7 @@
       justify-content: space-between;
       align-items: flex-end;
       font-size: 0.85rem;
-      color: var(--text-main);
+      color: #ffffff;
       font-weight: 500;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding-top: 2rem;
@@ -275,18 +269,18 @@
 
     .footer-left-links a, .footer-right-links a {
       text-decoration: none;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.5);
       transition: color 0.2s;
     }
 
     .footer-left-links a:hover, .footer-right-links a:hover {
-      color: var(--text-main);
+      color: #ffffff;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 768px) {
       body { padding: 1.5rem; }
-      .nav-links-center { display: none; }
+      .navbar { grid-template-columns: auto auto; }
+      .nav-links { display: none; }
       .footer-wrapper { flex-direction: column; gap: 2rem; align-items: flex-start; }
       .footer-right-links { align-items: flex-start; }
     }
@@ -294,15 +288,32 @@
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
-  <header class="nav-header">
+  <!-- Top Navigation Header matching Home Page -->
+  <header class="navbar">
     <a href="index.html" class="brand-logo">CREATIVE.</a>
-    <ul class="nav-links-center">
-      <li><a href="index.html#services">SERVICES</a></li>
-      <li><a href="index.html">PROJECTS</a></li>
+    
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="index.html" class="nav-link">
+          <span>Home</span>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="index.html#services" class="nav-link">
+          <span>Services</span>
+          <span>Services</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="contact.html" class="nav-link">
+          <span>Contact Us</span>
+          <span>Contact Us</span>
+        </a>
+      </li>
     </ul>
-    <div class="nav-right-group">
-      <a href="contact.html" class="contact-nav-link" style="color: var(--accent-pink);">CONTACT US</a>
+
+    <div class="nav-actions">
       <div class="clock-display" id="liveClock">12:12:40</div>
     </div>
   </header>
@@ -373,7 +384,7 @@
     </form>
   </main>
 
-  <!-- Footer -->
+  <!-- Footer - Identical to Home Page -->
   <footer class="footer-wrapper">
     <ul class="footer-left-links">
       <li><a href="#magazine">MAGAZINE</a></li>
@@ -402,7 +413,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Toggle pill buttons behavior for interests (multi-select)
+    // Toggle pill buttons behavior for interests (multi-select with theme accent)
     const interestPills = document.querySelectorAll('#interestPills .pill-btn');
     interestPills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -410,7 +421,7 @@
       });
     });
 
-    // Toggle pill buttons behavior for budget (single select)
+    // Toggle pill buttons behavior for budget (single select with theme accent)
     const budgetPills = document.querySelectorAll('#budgetPills .pill-btn');
     budgetPills.forEach(pill => {
       pill.addEventListener('click', () => {
