@@ -988,7 +988,7 @@
     }
 
     /* ==========================================================================
-       SECTION 6: STACK TEXT REVEAL (SPROUT FROM TEXT + ZERO GAP BLOCK)
+       SECTION 6: STACK TEXT REVEAL ("MORRISON AWNINGS")
        ========================================================================== */
     .stack-text-section {
       position: relative;
@@ -1020,26 +1020,117 @@
 
     .stack-line {
       position: absolute;
-      font-size: clamp(3.2rem, 11vw, 9.5rem);
+      font-size: clamp(2.2rem, 7.8vw, 7.2rem);
       font-weight: 900;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.035em;
       line-height: 1;
       white-space: nowrap;
       text-transform: uppercase;
       text-align: center;
       color: #ffffff;
       user-select: none;
-      will-change: transform, clip-path;
+      will-change: transform;
     }
 
-    /* Individual slice bands corresponding to each row index */
-    .stack-line[data-index="-3"] { clip-path: inset(0% 0% 83.33% 0%); }
-    .stack-line[data-index="-2"] { clip-path: inset(16.66% 0% 66.66% 0%); }
-    .stack-line[data-index="-1"] { clip-path: inset(33.33% 0% 50% 0%); }
-    .stack-line[data-index="0"]  { clip-path: inset(0% 0% 0% 0%); }
-    .stack-line[data-index="1"]  { clip-path: inset(50% 0% 33.33% 0%); }
-    .stack-line[data-index="2"]  { clip-path: inset(66.66% 0% 16.66% 0%); }
-    .stack-line[data-index="3"]  { clip-path: inset(83.33% 0% 0% 0%); }
+    .stack-line.top-slice {
+      clip-path: inset(0 0 48% 0);
+    }
+
+    .stack-line.bottom-slice {
+      clip-path: inset(48% 0 0 0);
+    }
+
+    .stack-line.main-line {
+      clip-path: none;
+      z-index: 2;
+    }
+
+    /* ==========================================================================
+       SECTION 7: REVEAL TEXT ON SCROLL (SWISS STYLE BOLD TYPOGRAPHY)
+       ========================================================================== */
+    .text-reveal-section {
+      position: relative;
+      height: 300vh;
+      background-color: #ffffff;
+      color: #0a0a0c;
+      z-index: 25;
+    }
+
+    .text-reveal-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .text-reveal-container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .text-reveal-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #888892;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .text-reveal-label::before {
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #ff3385;
+      border-radius: 50%;
+    }
+
+    .text-reveal-paragraph {
+      font-family: var(--font-sans);
+      font-size: clamp(2rem, 4.4vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.32em 0.38em;
+      user-select: none;
+    }
+
+    .reveal-word {
+      position: relative;
+      display: inline-block;
+      white-space: pre;
+    }
+
+    .word-muted {
+      color: #e2e8f0;
+      transition: color 0.2s ease;
+    }
+
+    .word-active {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #0a0a0c;
+      overflow: hidden;
+      width: 0%;
+      white-space: nowrap;
+      pointer-events: none;
+      will-change: width;
+    }
 
     /* ==========================================================================
        RESPONSIVE BREAKPOINTS (ALL DEVICES)
@@ -1067,6 +1158,8 @@
       .hacienda-slider-dock { left: 1.5rem; }
       .hacienda-pill-slider { width: 70px; gap: 8px; border-radius: 22px; }
       .slider-thumb { width: 52px; height: 52px; border-radius: 12px; }
+
+      .text-reveal-paragraph { font-size: clamp(1.75rem, 4vw, 3rem); }
     }
 
     @media (max-width: 768px) {
@@ -1121,6 +1214,9 @@
         justify-content: flex-start;
       }
       .slider-thumb { width: 48px; height: 48px; border-radius: 12px; }
+
+      .text-reveal-sticky { padding: 2rem 1.5rem; }
+      .text-reveal-paragraph { gap: 0.25em 0.3em; }
     }
 
     @media (max-width: 480px) {
@@ -1385,17 +1481,29 @@
     </div>
   </section>
 
-  <!-- SECTION 6: STACK TEXT REVEAL -->
+  <!-- SECTION 6: STACK TEXT REVEAL ("MORRISON AWNINGS") -->
   <section class="stack-text-section" id="stackTextSection">
     <div class="stack-text-sticky">
       <div class="stack-text-container" id="stackTextContainer">
-        <div class="stack-line" data-index="-3">HELLO FRAMER</div>
-        <div class="stack-line" data-index="-2">HELLO FRAMER</div>
-        <div class="stack-line" data-index="-1">HELLO FRAMER</div>
-        <div class="stack-line" data-index="0">HELLO FRAMER</div>
-        <div class="stack-line" data-index="1">HELLO FRAMER</div>
-        <div class="stack-line" data-index="2">HELLO FRAMER</div>
-        <div class="stack-line" data-index="3">HELLO FRAMER</div>
+        <div class="stack-line top-slice" data-index="-3">MORRISON AWNINGS</div>
+        <div class="stack-line top-slice" data-index="-2">MORRISON AWNINGS</div>
+        <div class="stack-line top-slice" data-index="-1">MORRISON AWNINGS</div>
+        <div class="stack-line main-line" data-index="0">MORRISON AWNINGS</div>
+        <div class="stack-line bottom-slice" data-index="1">MORRISON AWNINGS</div>
+        <div class="stack-line bottom-slice" data-index="2">MORRISON AWNINGS</div>
+        <div class="stack-line bottom-slice" data-index="3">MORRISON AWNINGS</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: REVEAL TEXT ON SCROLL (SWISS TYPOGRAPHY) -->
+  <section class="text-reveal-section" id="textRevealSection">
+    <div class="text-reveal-sticky">
+      <div class="text-reveal-container">
+        <div class="text-reveal-label">Heritage &amp; Craftsmanship</div>
+        <p class="text-reveal-paragraph" id="revealParagraph">
+          <!-- Populated dynamically via JS for exact word-by-word mid-character clip fill -->
+        </p>
       </div>
     </div>
   </section>
@@ -1591,7 +1699,7 @@
       }
 
       // =========================================================================
-      // 4. ACCURATE STACK TEXT REVEAL (SPROUT FROM TEXT + ZERO GAP BLOCK)
+      // 4. ACCURATE STACK TEXT REVEAL SPROUT LOGIC
       // =========================================================================
       const stackSection = document.getElementById('stackTextSection');
       const stackLines = document.querySelectorAll('.stack-line');
@@ -1604,33 +1712,80 @@
 
         if (totalHeight <= 0) return;
 
-        // Progress goes strictly from 0.0 (entry/start) to 1.0 (full expansion)
         const scrollOffset = -rect.top;
         const progress = Math.min(1, Math.max(0, scrollOffset / totalHeight));
 
-        // Get active font size
-        const fontPx = parseFloat(window.getComputedStyle(stackLines[3]).fontSize);
+        const mainLine = document.querySelector('.stack-line.main-line');
+        const fontPx = parseFloat(window.getComputedStyle(mainLine).fontSize);
         
-        // Exact compact step distance for zero-gap stacking when fully expanded
-        const maxStep = fontPx * 0.42;
+        const step = fontPx * 0.42;
 
         stackLines.forEach((line) => {
           const idx = parseInt(line.getAttribute('data-index'), 10);
-          
-          // Displacement starts strictly at 0 (center text overlay) and sprouts outward
-          const currentY = idx * maxStep * progress;
+          const y = idx * step * progress;
 
-          line.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
+          line.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
         });
       }
 
-      // Scroll Event Listener
+      // =========================================================================
+      // 5. REVEAL TEXT ON SCROLL BUILDER & FLUID FILL ENGINE
+      // =========================================================================
+      const rawText = "For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism and our awnings can be seen in iconic shops, restaurants, hotels, flagship stores, bars and pubs across the UK.";
+      const revealParagraph = document.getElementById('revealParagraph');
+
+      if (revealParagraph) {
+        const words = rawText.split(' ');
+        revealParagraph.innerHTML = words.map((word, i) => `
+          <span class="reveal-word" data-word-index="${i}">
+            <span class="word-muted">${word}</span>
+            <span class="word-active">${word}</span>
+          </span>
+        `).join('');
+      }
+
+      const textRevealSection = document.getElementById('textRevealSection');
+      const activeWordElements = document.querySelectorAll('.text-reveal-paragraph .word-active');
+
+      function updateTextRevealOnScroll() {
+        if (!textRevealSection || !activeWordElements.length) return;
+
+        const rect = textRevealSection.getBoundingClientRect();
+        const totalScrollHeight = rect.height - window.innerHeight;
+
+        if (totalScrollHeight <= 0) return;
+
+        const scrollOffset = -rect.top;
+        const totalProgress = Math.min(1, Math.max(0, scrollOffset / totalScrollHeight));
+
+        const totalWords = activeWordElements.length;
+
+        activeWordElements.forEach((el, index) => {
+          const wordStart = index / totalWords;
+          const wordEnd = (index + 1) / totalWords;
+
+          if (totalProgress >= wordEnd) {
+            el.style.width = '100%';
+          } else if (totalProgress <= wordStart) {
+            el.style.width = '0%';
+          } else {
+            // Fluid partial percentage fill within the word
+            const wordProgress = (totalProgress - wordStart) / (wordEnd - wordStart);
+            el.style.width = `${(wordProgress * 100).toFixed(1)}%`;
+          }
+        });
+      }
+
+      // Master Scroll Event Listener
       window.addEventListener('scroll', () => {
         handleScrollDrivenGallery();
         updateStackTextReveal();
+        updateTextRevealOnScroll();
       }, { passive: true });
 
+      // Initial Trigger
       updateStackTextReveal();
+      updateTextRevealOnScroll();
     });
   </script>
 </body>
