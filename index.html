@@ -34,7 +34,7 @@
     body.loading { overflow: hidden; }
 
     /* ==========================================================================
-       INTRO LOADER (Updated: Rectangular shape, 1 second per side, 1-eye wink)
+       INTRO LOADER (Updated: Rectangular shape, 0.7s per side, single-eye wink)
        ========================================================================== */
     #intro-loader {
       position: fixed;
@@ -66,7 +66,7 @@
       justify-content: center;
     }
 
-    /* Updated to look like a rectangle shape */
+    /* Rectangular container shape */
     .eye-pill {
       background: #000000;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -109,8 +109,8 @@
       96% { transform: scaleY(0.1); }
     }
 
-    /* Single eye wink animation */
-    .eye.wink { animation: singleWink 1s ease forwards; }
+    /* Single eye wink animation lasting 0.7 seconds */
+    .eye.wink { animation: singleWink 0.7s ease forwards; }
 
     @keyframes singleWink {
       0%, 100% { transform: scaleY(1); }
@@ -161,7 +161,7 @@
     .popup-tag.up.active { transform: translateX(-50%) translateY(0) scale(1); }
 
     /* ==========================================================================
-       NAVIGATION BAR (Matching Home Page)
+       NAVIGATION BAR
        ========================================================================== */
     .navbar-container {
       background-color: var(--primary);
@@ -256,7 +256,7 @@
     .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
     /* ==========================================================================
-       CONTACT PAGE INTERACTIVE FORM & VIDEO REFERENCE LAYOUT
+       CONTACT PAGE LAYOUT
        ========================================================================== */
     .contact-main {
       max-width: 1100px;
@@ -275,17 +275,8 @@
       margin-bottom: 1.75rem;
     }
 
-    /* Interactive Service Pills Grid */
-    .services-selection-area {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
-    }
+    .services-selection-area { display: flex; flex-direction: column; }
+    .pills-grid { display: flex; flex-wrap: wrap; gap: 0.85rem; }
 
     .service-pill {
       background: rgba(255, 255, 255, 0.04);
@@ -314,18 +305,8 @@
       box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
     }
 
-    /* Form Fields & Details Section */
-    .form-fields-container {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-    }
-
-    .input-row-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .form-fields-container { display: flex; flex-direction: column; gap: 2.5rem; }
+    .input-row-group { display: flex; flex-direction: column; gap: 0.75rem; }
 
     .field-label {
       font-size: clamp(1.8rem, 3.2vw, 2.6rem);
@@ -347,31 +328,12 @@
       transition: border-color 0.25s ease;
     }
 
-    .custom-input::placeholder, .custom-textarea::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
+    .custom-input::placeholder, .custom-textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
+    .custom-input:focus, .custom-textarea:focus { border-color: var(--secondary); }
+    .custom-textarea { resize: vertical; min-height: 120px; }
 
-    .custom-input:focus, .custom-textarea:focus {
-      border-color: var(--secondary);
-    }
-
-    .custom-textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    /* Budget Selection Pills */
-    .budget-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .budget-pills-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
+    .budget-section { display: flex; flex-direction: column; gap: 1.25rem; }
+    .budget-pills-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
     .budget-pill {
       background: rgba(255, 255, 255, 0.04);
@@ -387,11 +349,7 @@
       user-select: none;
     }
 
-    .budget-pill:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
+    .budget-pill:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
     .budget-pill.active {
       background: var(--secondary);
       color: var(--primary);
@@ -399,7 +357,6 @@
       font-weight: 700;
     }
 
-    /* Start Here / Bottom Info Callout */
     .start-here-section {
       border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding-top: 4rem;
@@ -408,30 +365,11 @@
       gap: 1.5rem;
     }
 
-    .start-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
+    .start-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; }
+    .start-title span { border-bottom: 2px solid var(--secondary); padding-bottom: 2px; }
 
-    .start-title span {
-      border-bottom: 2px solid var(--secondary);
-      padding-bottom: 2px;
-    }
-
-    .contact-direct-info {
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.6;
-    }
-
-    .contact-direct-info a {
-      color: #fff;
-      text-decoration: underline;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-
+    .contact-direct-info { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+    .contact-direct-info a { color: #fff; text-decoration: underline; font-weight: 600; transition: color 0.2s; }
     .contact-direct-info a:hover { color: var(--secondary); }
 
     .btn-submit-form {
@@ -449,13 +387,10 @@
       margin-top: 1rem;
     }
 
-    .btn-submit-form:hover {
-      background: #e03b2f;
-      transform: translateY(-2px);
-    }
+    .btn-submit-form:hover { background: #e03b2f; transform: translateY(-2px); }
 
     /* ==========================================================================
-       SECTION 9: PRIXA DIGITAL FOOTER (Identical to Home Page)
+       FOOTER SECTION
        ========================================================================== */
     .footer-section {
       background-color: var(--primary);
@@ -475,23 +410,8 @@
       gap: 3.5rem;
     }
 
-    .footer-row-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      width: 100%;
-    }
-
-    .footer-title-prixa {
-      font-size: clamp(4.5rem, 13.5vw, 12rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 0.85;
-      color: #ffffff;
-      margin: 0;
-      text-transform: uppercase;
-    }
+    .footer-row-top { display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; }
+    .footer-title-prixa { font-size: clamp(4.5rem, 13.5vw, 12rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.85; color: #ffffff; margin: 0; text-transform: uppercase; }
 
     .footer-gif-box {
       flex: 1;
@@ -504,64 +424,19 @@
       position: relative;
     }
 
-    .footer-gif-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(100%) contrast(120%);
-    }
+    .footer-gif-box img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%) contrast(120%); }
 
-    .footer-nav-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      text-align: right;
-    }
-
-    .footer-nav-list a {
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: opacity 0.25s ease;
-    }
-
+    .footer-nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; text-align: right; }
+    .footer-nav-list a { color: #ffffff; text-decoration: none; font-size: 1rem; font-weight: 500; transition: opacity 0.25s ease; }
     .footer-nav-list a:hover { opacity: 0.6; }
 
-    .footer-submeta-row {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      align-items: center;
-      gap: 2rem;
-      padding: 1rem 0;
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.75);
-    }
-
+    .footer-submeta-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; align-items: center; gap: 2rem; padding: 1rem 0; font-size: 0.95rem; color: rgba(255, 255, 255, 0.75); }
     .footer-submeta-col.center { text-align: center; line-height: 1.4; }
-    .footer-submeta-col.right {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1.5rem;
-    }
-
-    .footer-submeta-col.right a {
-      color: rgba(255, 255, 255, 0.8);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
+    .footer-submeta-col.right { display: flex; justify-content: flex-end; gap: 1.5rem; }
+    .footer-submeta-col.right a { color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.2s ease; }
     .footer-submeta-col.right a:hover { color: #ffffff; }
 
-    .footer-row-bottom {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      width: 100%;
-    }
-
+    .footer-row-bottom { display: flex; align-items: center; gap: 2rem; width: 100%; }
     .footer-cta-box {
       background-color: var(--secondary);
       color: var(--primary);
@@ -579,47 +454,13 @@
       flex-shrink: 0;
       border: none;
     }
+    .footer-cta-box:hover { background-color: #e03b2f; transform: scale(1.02); }
+    .footer-title-digital { font-size: clamp(4.5rem, 13.5vw, 12rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.85; color: #ffffff; margin: 0; text-transform: uppercase; flex-grow: 1; }
 
-    .footer-cta-box:hover {
-      background-color: #e03b2f;
-      transform: scale(1.02);
-    }
-
-    .footer-title-digital {
-      font-size: clamp(4.5rem, 13.5vw, 12rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 0.85;
-      color: #ffffff;
-      margin: 0;
-      text-transform: uppercase;
-      flex-grow: 1;
-    }
-
-    .footer-copyright-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      padding-top: 2rem;
-      margin-top: 2rem;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .footer-copyright-bar .brand-statement {
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
+    .footer-copyright-bar { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 2rem; margin-top: 2rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); }
+    .footer-copyright-bar .brand-statement { letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; color: rgba(255, 255, 255, 0.8); }
     .footer-copyright-bar .legal-links { display: flex; gap: 1.5rem; }
-    .footer-copyright-bar .legal-links a {
-      color: rgba(255, 255, 255, 0.5);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .footer-copyright-bar .legal-links a { color: rgba(255, 255, 255, 0.5); text-decoration: none; transition: color 0.2s; }
     .footer-copyright-bar .legal-links a:hover { color: #ffffff; }
 
     @media (max-width: 992px) {
@@ -662,7 +503,7 @@
 </head>
 <body class="loading">
 
-  <!-- INTRO LOADER (Updated Timings & Rectangular Shape) -->
+  <!-- INTRO LOADER -->
   <div id="intro-loader">
     <div class="eye-stage">
       <div class="eye-pill">
@@ -695,11 +536,10 @@
     </nav>
   </div>
 
-  <!-- CONTACT US PAGE: INTERACTIVE FORM & VIDEO LAYOUT -->
+  <!-- CONTACT US PAGE CONTENT -->
   <main class="contact-main">
     <form class="contact-form-wrapper" onsubmit="event.preventDefault(); alert('Thank you! Your project inquiry has been submitted successfully.');">
       
-      <!-- 1. I'm interested in Section -->
       <div class="services-selection-area">
         <h2 class="section-title">I'm interested in...</h2>
         <div class="pills-grid" id="servicePills">
@@ -722,7 +562,6 @@
         </div>
       </div>
 
-      <!-- 2. Text Input Fields -->
       <div class="form-fields-container" style="margin-top: 4.5rem;">
         <div class="input-row-group">
           <label class="field-label" for="userName">Your name</label>
@@ -740,7 +579,6 @@
         </div>
       </div>
 
-      <!-- 3. Project Budget Section -->
       <div class="budget-section" style="margin-top: 4.5rem;">
         <h2 class="section-title" style="margin-bottom: 0.5rem;">Project budget (USD)</h2>
         <div class="budget-pills-row" id="budgetPills">
@@ -752,7 +590,6 @@
         </div>
       </div>
 
-      <!-- 4. Start Here & Submit Section -->
       <div class="start-here-section" style="margin-top: 4.5rem;">
         <h2 class="start-title">Have a project idea? <span>Start here.</span></h2>
         <div class="contact-direct-info">
@@ -765,7 +602,7 @@
     </form>
   </main>
 
-  <!-- PRIXA DIGITAL FOOTER (Identical to Home Page) -->
+  <!-- FOOTER SECTION -->
   <footer class="footer-section">
     <div class="footer-container">
       <div class="footer-row-top">
@@ -808,7 +645,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Session storage loader logic (Updated timings: exactly 1 second per side look and 1 second single eye wink)
+      // 1. Session storage loader logic (Updated: 0.7s per side look, single-eye wink for 0.7s)
       const introLoader = document.getElementById('intro-loader');
       const pupilL = document.getElementById('pupilLeft');
       const pupilR = document.getElementById('pupilRight');
@@ -831,20 +668,20 @@
           pupilR.className = `pupil ${dir}`;
         }
 
-        // 1 second per look stage layout timeline
-        setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 500);
-        setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 1500);
-        setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 2500);
+        // 0.7 seconds timeline per view direction
+        setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 300);
+        setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 1000);
+        setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 1700);
         setTimeout(() => { 
           setEyeDirection('look-up'); 
           tagUp?.classList.add('active'); 
-        }, 3500);
+        }, 2400);
 
-        // 1 second single-eye wink stage
+        // Center look + single-eye wink for 0.7s
         setTimeout(() => {
           setEyeDirection('look-center');
           rightEyeElem?.classList.add('wink');
-        }, 4500);
+        }, 3100);
 
         // Fade out loader after wink completes
         setTimeout(() => {
@@ -852,7 +689,7 @@
             introLoader.classList.add('fade-out');
             document.body.classList.remove('loading');
           }
-        }, 5500);
+        }, 3800);
       }
 
       // 2. Mobile Hamburger Navigation Toggle
