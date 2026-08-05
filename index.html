@@ -136,24 +136,9 @@
       white-space: nowrap;
     }
 
-    .popup-tag.right {
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%) translateX(20px) scale(0.85);
-    }
-
-    .popup-tag.left {
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%) translateX(-20px) scale(0.85);
-    }
-
-    .popup-tag.down {
-      bottom: 45px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px) scale(0.85);
-    }
-
+    .popup-tag.right { right: 15px; top: 50%; transform: translateY(-50%) translateX(20px) scale(0.85); }
+    .popup-tag.left { left: 15px; top: 50%; transform: translateY(-50%) translateX(-20px) scale(0.85); }
+    .popup-tag.down { bottom: 45px; left: 50%; transform: translateX(-50%) translateY(20px) scale(0.85); }
     .popup-tag.up {
       top: 45px;
       left: 50%;
@@ -321,6 +306,155 @@
 
     .btn-secondary:hover { background: rgba(255, 255, 255, 0.16); }
 
+    /* ==========================================================================
+       SECTION 2: INTERIORS SECTION
+       ========================================================================== */
+    .interiors-section {
+      background-color: #fff;
+      color: #111;
+      padding: 6rem 4rem 2rem;
+      position: relative;
+    }
+
+    .interiors-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 420px 280px;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .sticky-left-content, .sticky-right-content {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .section-headline {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: #111;
+    }
+
+    .cards-stack-wrapper { display: flex; flex-direction: column; }
+    
+    .card-item {
+      position: sticky;
+      top: 6rem;
+      background: #faf6f0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      margin-bottom: 40vh;
+      will-change: transform;
+    }
+
+    .card-item:last-child { margin-bottom: 18vh; }
+    .card-image { width: 100%; height: 440px; object-fit: cover; display: block; }
+    .card-info { padding: 1.5rem; background: #faf6f0; }
+    .card-title { font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 0.4rem; }
+    .card-description { font-size: 0.88rem; line-height: 1.5; color: #666; }
+
+    /* ==========================================================================
+       SECTION 3: SERVICES SHOWCASE SECTION
+       ========================================================================== */
+    .services-wrapper {
+      background-color: var(--bg-page);
+      color: var(--text-heading);
+      padding: 5rem 2rem;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    .services-container {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header { text-align: center; margin-bottom: 2.5rem; }
+    .header-title { font-size: 3rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text-heading); margin-bottom: 0.75rem; }
+    .header-subtitle { font-size: 1.1rem; color: var(--text-sub); font-weight: 500; }
+
+    /* ==========================================================================
+       SECTION 4: MOTION SHOWCASE
+       ========================================================================== */
+    .motion-section {
+      background-color: #0b0507;
+      color: #ffffff;
+      padding: 6rem 4rem;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .motion-container {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       SECTION 8: MARQUEE / TICKER TAPE
+       ========================================================================== */
+    .ticker-section {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 5rem 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 30;
+      display: flex;
+      user-select: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: tickerMarquee 26s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-track:hover { animation-play-state: paused; }
+
+    .ticker-group {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding-right: 3rem;
+    }
+
+    .ticker-text {
+      font-family: var(--font-sans);
+      font-size: clamp(3.5rem, 7.5vw, 6.5rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    @keyframes tickerMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ==========================================================================
+       SECTION 9: FOOTER
+       ========================================================================== */
     .footer-section {
       background-color: #000000;
       color: #ffffff;
@@ -349,7 +483,7 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="hero-container">
+  <section class="hero-container" id="home">
     <header class="navbar">
       <a href="index.html" class="brand-logo">CREATIVE.</a>
       
@@ -367,6 +501,7 @@
           </a>
         </li>
         <li class="nav-item">
+          <!-- CONNECTED TO CONTACT PAGE -->
           <a href="contact.html" class="nav-link">
             <span>Contact Us</span>
             <span>Contact Us</span>
@@ -375,7 +510,7 @@
       </ul>
 
       <div class="nav-actions">
-        <!-- REDIRECT LINK TO CONTACT US PAGE -->
+        <!-- CONNECTED TO CONTACT PAGE -->
         <a href="contact.html" class="btn-chat">Let's Chat</a>
       </div>
     </header>
@@ -390,10 +525,29 @@
         <p class="hero-description">We combine innovative interior architecture with cutting-edge digital experiences to elevate physical and brand presence.</p>
         
         <div class="hero-buttons">
-          <!-- REDIRECT LINK TO CONTACT US PAGE -->
+          <!-- CONNECTED TO CONTACT PAGE -->
           <a href="contact.html" class="btn-primary">Get Started</a>
           <a href="#services" class="btn-secondary">Explore Work →</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Anchor Section -->
+  <div id="services"></div>
+
+  <!-- Ticker Section -->
+  <section class="ticker-section">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span class="ticker-text">Architecture</span>
+        <span class="ticker-text">Interiors</span>
+        <span class="ticker-text">Digital Experience</span>
+      </div>
+      <div class="ticker-group">
+        <span class="ticker-text">Architecture</span>
+        <span class="ticker-text">Interiors</span>
+        <span class="ticker-text">Digital Experience</span>
       </div>
     </div>
   </section>
