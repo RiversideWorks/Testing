@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us — 10011.CO</title>
+  <title>Contact Us — Creative Platform &amp; Interiors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-color: #ffffff;
-      --text-main: #111111;
-      --text-muted: #888888;
-      --border-color: #e2e2e2;
-      --pill-bg: #ffffff;
-      --pill-active-bg: #111111;
-      --pill-active-text: #ffffff;
+      --bg-page: #0b0507;
+      --text-main: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --border-color: rgba(255, 255, 255, 0.15);
+      --accent-pink: #ff3385;
+      --pill-bg: rgba(255, 255, 255, 0.04);
+      --pill-border: rgba(255, 255, 255, 0.12);
+      --pill-active-bg: #ffffff;
+      --pill-active-text: #0b0507;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
@@ -28,7 +30,7 @@
 
     body {
       font-family: var(--font-sans);
-      background-color: var(--bg-color);
+      background-color: var(--bg-page);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -38,7 +40,7 @@
       padding: 2.5rem 4rem;
     }
 
-    /* Top Navigation */
+    /* Top Navigation matching index.html style */
     .nav-header {
       display: flex;
       justify-content: space-between;
@@ -49,8 +51,8 @@
     }
 
     .brand-logo {
-      font-weight: 700;
-      font-size: 1.1rem;
+      font-weight: 800;
+      font-size: 1.25rem;
       letter-spacing: -0.02em;
       color: var(--text-main);
       text-decoration: none;
@@ -64,38 +66,37 @@
 
     .nav-links-center a {
       text-decoration: none;
-      color: var(--text-main);
+      color: rgba(255, 255, 255, 0.8);
       font-weight: 500;
-      font-size: 0.9rem;
-      letter-spacing: -0.01em;
-      transition: opacity 0.2s;
+      font-size: 0.95rem;
+      transition: color 0.2s;
     }
 
     .nav-links-center a:hover {
-      opacity: 0.6;
+      color: var(--accent-pink);
     }
 
     .nav-right-group {
       display: flex;
       align-items: center;
-      gap: 3rem;
+      gap: 2.5rem;
     }
 
     .contact-nav-link {
       text-decoration: none;
       color: var(--text-main);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.9rem;
     }
 
     .clock-display {
       font-size: 0.85rem;
-      color: var(--text-main);
+      color: var(--text-muted);
       font-weight: 500;
       font-variant-numeric: tabular-nums;
     }
 
-    /* Main Form Container */
+    /* Main Contact Container */
     .contact-container {
       width: 100%;
       max-width: 900px;
@@ -109,7 +110,7 @@
     /* Section: Interested In */
     .section-title {
       font-size: clamp(2.2rem, 4vw, 3.2rem);
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: -0.03em;
       margin-bottom: 1.75rem;
       color: var(--text-main);
@@ -123,26 +124,28 @@
 
     .pill-btn {
       background: var(--pill-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
+      border: 1px solid var(--pill-border);
+      color: rgba(255, 255, 255, 0.85);
       padding: 0.85rem 1.6rem;
       border-radius: 9999px;
       font-family: var(--font-sans);
       font-size: 0.95rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
     }
 
     .pill-btn:hover {
-      border-color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .pill-btn.active {
       background: var(--pill-active-bg);
       color: var(--pill-active-text);
       border-color: var(--pill-active-bg);
+      font-weight: 700;
     }
 
     /* Form Fields */
@@ -168,15 +171,15 @@
       font-size: clamp(1.5rem, 2.5vw, 2.2rem);
       color: var(--text-main);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.25s;
     }
 
     .minimal-input::placeholder, .minimal-textarea::placeholder {
-      color: #d0d0d0;
+      color: rgba(255, 255, 255, 0.25);
     }
 
     .minimal-input:focus, .minimal-textarea:focus {
-      border-color: var(--text-main);
+      border-color: var(--accent-pink);
     }
 
     .minimal-textarea {
@@ -193,9 +196,9 @@
 
     .budget-label {
       font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: -0.03em;
-      color: #d0d0d0;
+      color: rgba(255, 255, 255, 0.35);
     }
 
     /* Direct Contact Info Block */
@@ -208,7 +211,7 @@
 
     .block-headline {
       font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1.2;
     }
@@ -217,6 +220,11 @@
       color: var(--text-main);
       text-decoration: underline;
       text-underline-offset: 8px;
+      transition: color 0.2s;
+    }
+
+    .block-headline a:hover {
+      color: var(--accent-pink);
     }
 
     .contact-methods {
@@ -234,7 +242,11 @@
       text-underline-offset: 4px;
     }
 
-    /* Footer */
+    .contact-methods a:hover {
+      color: var(--accent-pink);
+    }
+
+    /* Footer matching dark theme */
     .footer-wrapper {
       width: 100%;
       max-width: 1400px;
@@ -245,6 +257,8 @@
       font-size: 0.85rem;
       color: var(--text-main);
       font-weight: 500;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 2rem;
     }
 
     .footer-left-links, .footer-right-links {
@@ -261,12 +275,12 @@
 
     .footer-left-links a, .footer-right-links a {
       text-decoration: none;
-      color: var(--text-main);
-      transition: opacity 0.2s;
+      color: var(--text-muted);
+      transition: color 0.2s;
     }
 
     .footer-left-links a:hover, .footer-right-links a:hover {
-      opacity: 0.5;
+      color: var(--text-main);
     }
 
     /* Responsive adjustments */
@@ -282,13 +296,13 @@
 
   <!-- Top Navigation Header -->
   <header class="nav-header">
-    <a href="index.html" class="brand-logo">10011.CO</a>
+    <a href="index.html" class="brand-logo">CREATIVE.</a>
     <ul class="nav-links-center">
       <li><a href="index.html#services">SERVICES</a></li>
-      <li><a href="index.html#projects">PROJECTS</a></li>
+      <li><a href="index.html">PROJECTS</a></li>
     </ul>
     <div class="nav-right-group">
-      <a href="contact.html" class="contact-nav-link">CONTACT US</a>
+      <a href="contact.html" class="contact-nav-link" style="color: var(--accent-pink);">CONTACT US</a>
       <div class="clock-display" id="liveClock">12:12:40</div>
     </div>
   </header>
@@ -351,7 +365,7 @@
       <div class="direct-contact-block" style="margin-top: 5rem;">
         <h2 class="block-headline">Have a project idea?<br><a href="#start">Start here.</a></h2>
         <div class="contact-methods">
-          <div>email us <a href="mailto:info@10011.co">info@10011.co</a></div>
+          <div>email us <a href="mailto:digital@prixa.org">digital@prixa.org</a></div>
           <div>schedule a call <a href="https://calendly.com" target="_blank">calendly</a></div>
         </div>
       </div>
@@ -366,10 +380,10 @@
       <li><a href="#jobs">JOBS</a></li>
     </ul>
     <ul class="footer-right-links">
-      <li><a href="#instagram" target="_blank">INSTAGRAM</a></li>
-      <li><a href="#tiktok" target="_blank">TIKTOK</a></li>
-      <li><a href="#twitter" target="_blank">TWITTER</a></li>
-      <li><a href="#github" target="_blank">GITHUB</a></li>
+      <li><a href="https://instagram.com" target="_blank">INSTAGRAM</a></li>
+      <li><a href="https://tiktok.com" target="_blank">TIKTOK</a></li>
+      <li><a href="https://twitter.com" target="_blank">TWITTER</a></li>
+      <li><a href="https://github.com" target="_blank">GITHUB</a></li>
     </ul>
   </footer>
 
@@ -388,7 +402,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Toggle pill buttons behavior (multi-select for interests, single/multi for budget)
+    // Toggle pill buttons behavior for interests (multi-select)
     const interestPills = document.querySelectorAll('#interestPills .pill-btn');
     interestPills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -396,6 +410,7 @@
       });
     });
 
+    // Toggle pill buttons behavior for budget (single select)
     const budgetPills = document.querySelectorAll('#budgetPills .pill-btn');
     budgetPills.forEach(pill => {
       pill.addEventListener('click', () => {
