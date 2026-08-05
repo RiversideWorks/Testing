@@ -6,7 +6,7 @@
   <title>Creative Platform &amp; Interiors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -831,21 +831,32 @@
     .motion-overlay-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; }
 
     /* ==========================================================================
-       SECTION 5: HACIENDA INTERACTIVE GALLERY (REFRAINED ACCORDING TO SPEC)
+       SECTION 5: HACIENDA SCROLL-PINNED GALLERY
        ========================================================================== */
     .hacienda-section-wrapper {
-      padding: 4rem 2rem 6rem;
-      display: flex;
-      justify-content: center;
-      background-color: #0b0507;
       position: relative;
+      height: 500vh;
+      background-color: #0b0507;
       z-index: 10;
+    }
+
+    .hacienda-sticky-pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      box-sizing: border-box;
     }
 
     .hacienda-boxed-container {
       width: 100%;
       max-width: 1280px;
-      height: 760px;
+      height: 85vh;
+      max-height: 760px;
       border-radius: 36px;
       position: relative;
       overflow: hidden;
@@ -857,7 +868,6 @@
       user-select: none;
     }
 
-    /* Background Display Image Layer */
     .hacienda-bg-layer {
       position: absolute;
       inset: 0;
@@ -871,13 +881,11 @@
       z-index: 1;
     }
 
-    /* Smooth Zoom Out Animation Trigger State */
     .hacienda-bg-layer.zoom-effect {
       transform: scale(1.18);
       opacity: 0.82;
     }
 
-    /* Subtle Overlay for Contrast */
     .hacienda-overlay {
       position: absolute;
       inset: 0;
@@ -886,7 +894,6 @@
       pointer-events: none;
     }
 
-    /* Center Overlay Bold Typography */
     .hacienda-title-overlay {
       position: absolute;
       z-index: 4;
@@ -907,7 +914,6 @@
       transform: scale(0.92) translateY(12px);
     }
 
-    /* Slider Dock Placement - Left Aligned & Distinct Rounded Box */
     .hacienda-slider-dock {
       position: absolute;
       left: 3rem;
@@ -919,7 +925,6 @@
       align-items: center;
     }
 
-    /* Top Floating Handle Pill Bar Element */
     .slider-handle-bar {
       width: 42px;
       height: 14px;
@@ -943,7 +948,6 @@
       border-radius: 99px;
     }
 
-    /* Slider Main Container - Squarish with Smooth Rounded Top & Bottom Corners */
     .hacienda-pill-slider {
       width: 84px;
       background: rgba(25, 20, 22, 0.55);
@@ -958,14 +962,13 @@
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.08);
       max-height: 560px;
       overflow-y: auto;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
 
     .hacienda-pill-slider::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Edge */
+      display: none;
     }
 
-    /* Squared Preview Item with Rounded Corners */
     .slider-thumb {
       width: 64px;
       height: 64px;
@@ -991,7 +994,6 @@
       transform: scale(1.05);
     }
 
-    /* Active Highlighted State - Double Ring/Outline Effect */
     .slider-thumb.active {
       opacity: 1;
       border-color: #ffffff;
@@ -1000,10 +1002,65 @@
     }
 
     /* ==========================================================================
+       SECTION 6: STACK TEXT REVEAL (AWWWARDS STYLE EFFECT)
+       ========================================================================== */
+    .stack-text-section {
+      position: relative;
+      height: 320vh;
+      background-color: #a259ff;
+      color: #ffffff;
+      z-index: 20;
+    }
+
+    .stack-text-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .stack-text-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stack-line {
+      position: absolute;
+      font-size: clamp(3.2rem, 10.5vw, 9.5rem);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      white-space: nowrap;
+      text-transform: uppercase;
+      text-align: center;
+      color: #ffffff;
+      user-select: none;
+      will-change: transform, clip-path;
+      transform-origin: center center;
+    }
+
+    /* Outer lines start completely collapsed into the center line */
+    .stack-line[data-index="-3"],
+    .stack-line[data-index="-2"],
+    .stack-line[data-index="-1"],
+    .stack-line[data-index="1"],
+    .stack-line[data-index="2"],
+    .stack-line[data-index="3"] {
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
        RESPONSIVE BREAKPOINTS (ALL DEVICES)
        ========================================================================== */
     @media (max-width: 1200px) {
-      .hacienda-boxed-container { height: 640px; }
       .hacienda-slider-dock { left: 2rem; }
       .hacienda-pill-slider { width: 76px; padding: 10px 8px; border-radius: 24px; }
       .slider-thumb { width: 58px; height: 58px; border-radius: 14px; }
@@ -1023,8 +1080,6 @@
       .motion-section { padding: 4rem 2rem; }
       .motion-viewport-card { height: 420px; }
       
-      /* Hacienda Tablet Adjustment */
-      .hacienda-boxed-container { height: 560px; border-radius: 28px; }
       .hacienda-slider-dock { left: 1.5rem; }
       .hacienda-pill-slider { width: 70px; gap: 8px; border-radius: 22px; }
       .slider-thumb { width: 52px; height: 52px; border-radius: 12px; }
@@ -1058,9 +1113,8 @@
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
       .eye-stage { transform: scale(0.85); }
 
-      /* Hacienda Mobile View - Bottom Horizontal Floating Dock */
-      .hacienda-section-wrapper { padding: 2rem 1rem 4rem; }
-      .hacienda-boxed-container { height: 500px; border-radius: 24px; }
+      .hacienda-sticky-pin { padding: 1rem; }
+      .hacienda-boxed-container { height: 75vh; border-radius: 24px; }
       .hacienda-slider-dock {
         left: 50%;
         top: auto;
@@ -1070,11 +1124,7 @@
         width: 90%;
         max-width: 360px;
       }
-      .slider-handle-bar {
-        width: 38px;
-        height: 8px;
-        margin-bottom: 6px;
-      }
+      .slider-handle-bar { width: 38px; height: 8px; margin-bottom: 6px; }
       .slider-handle-bar::after { width: 14px; height: 2px; }
       .hacienda-pill-slider {
         width: 100%;
@@ -1090,7 +1140,6 @@
     }
 
     @media (max-width: 480px) {
-      .hacienda-boxed-container { height: 440px; border-radius: 20px; }
       .hacienda-title-overlay { font-size: 3.2rem; }
       .slider-thumb { width: 42px; height: 42px; border-radius: 10px; }
     }
@@ -1101,7 +1150,6 @@
   <!-- INTRO LOADER: DIRECTIONAL EYES -->
   <div id="intro-loader">
     <div class="eye-stage">
-      <!-- Central Badge Capsule -->
       <div class="eye-pill">
         <div class="eyes-wrapper">
           <div class="eye"><div class="pupil" id="pupilLeft"></div></div>
@@ -1109,7 +1157,6 @@
         </div>
       </div>
 
-      <!-- Popup Text Tags -->
       <div class="popup-tag right" id="tagRight">Stressing</div>
       <div class="popup-tag left" id="tagLeft">Expensive</div>
       <div class="popup-tag down" id="tagDown">Protracted</div>
@@ -1333,30 +1380,39 @@
     </div>
   </section>
 
-  <!-- SECTION 5: HACIENDA INTERACTIVE GALLERY (REFRAINED DESIGN & DOCK) -->
-  <section class="hacienda-section-wrapper">
-    <div class="hacienda-boxed-container" id="haciendaContainer">
-      
-      <!-- Background Main Image Layer -->
-      <div class="hacienda-bg-layer" id="haciendaBgLayer"></div>
-      
-      <!-- Contrast Overlay -->
-      <div class="hacienda-overlay"></div>
+  <!-- SECTION 5: HACIENDA INTERACTIVE GALLERY -->
+  <section class="hacienda-section-wrapper" id="haciendaScrollWrapper">
+    <div class="hacienda-sticky-pin">
+      <div class="hacienda-boxed-container" id="haciendaContainer">
+        
+        <div class="hacienda-bg-layer" id="haciendaBgLayer"></div>
+        <div class="hacienda-overlay"></div>
 
-      <!-- Center Title Display -->
-      <h2 class="hacienda-title-overlay" id="haciendaTitle">Hacienda</h2>
+        <h2 class="hacienda-title-overlay" id="haciendaTitle">Hacienda</h2>
 
-      <!-- Left Aligned Floating Dock UI -->
-      <div class="hacienda-slider-dock">
-        <!-- Top Floating Handle Pill Bar -->
-        <div class="slider-handle-bar"></div>
-
-        <!-- Main Squarish Slider Container -->
-        <div class="hacienda-pill-slider" id="haciendaPillSlider">
-          <!-- Thumbnails populated dynamically via JS -->
+        <div class="hacienda-slider-dock">
+          <div class="slider-handle-bar"></div>
+          <div class="hacienda-pill-slider" id="haciendaPillSlider">
+            <!-- Thumbnails populated dynamically via JS -->
+          </div>
         </div>
-      </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: STACK TEXT REVEAL (AWWWARDS-STYLE REVEAL) -->
+  <section class="stack-text-section" id="stackTextSection">
+    <div class="stack-text-sticky">
+      <div class="stack-text-container" id="stackTextContainer">
+        <div class="stack-line" data-index="-3">HELLO FRAMER</div>
+        <div class="stack-line" data-index="-2">HELLO FRAMER</div>
+        <div class="stack-line" data-index="-1">HELLO FRAMER</div>
+        <div class="stack-line" data-index="0">HELLO FRAMER</div>
+        <div class="stack-line" data-index="1">HELLO FRAMER</div>
+        <div class="stack-line" data-index="2">HELLO FRAMER</div>
+        <div class="stack-line" data-index="3">HELLO FRAMER</div>
+      </div>
     </div>
   </section>
 
@@ -1428,7 +1484,7 @@
       }, 2000);
 
       // =========================================================================
-      // 3. HACIENDA INTERACTIVE GALLERY SLIDER LOGIC
+      // 3. HACIENDA INTERACTIVE GALLERY SLIDER (GLOBAL SCROLL DRIVEN)
       // =========================================================================
       const galleryData = [
         {
@@ -1473,7 +1529,7 @@
         }
       ];
 
-      const haciendaContainer = document.getElementById('haciendaContainer');
+      const scrollWrapper = document.getElementById('haciendaScrollWrapper');
       const bgLayer = document.getElementById('haciendaBgLayer');
       const titleElem = document.getElementById('haciendaTitle');
       const pillSlider = document.getElementById('haciendaPillSlider');
@@ -1481,7 +1537,6 @@
       let activeIndex = 0;
       let isAnimating = false;
 
-      // Render thumbnails inside slider container
       if (pillSlider) {
         galleryData.forEach((item, idx) => {
           const thumb = document.createElement('div');
@@ -1490,7 +1545,7 @@
           thumb.innerHTML = `<img src="${item.thumb}" alt="${item.title}" loading="lazy">`;
           
           thumb.addEventListener('click', () => {
-            if (idx !== activeIndex && !isAnimating) {
+            if (idx !== activeIndex) {
               setActiveSlide(idx);
             }
           });
@@ -1499,16 +1554,13 @@
         });
       }
 
-      // Initialize initial background image
       if (bgLayer && galleryData.length > 0) {
         bgLayer.style.backgroundImage = `url('${galleryData[0].image}')`;
       }
 
-      // Transition & Smooth Zoom-Out animation function
       function setActiveSlide(newIndex) {
-        if (isAnimating) return;
-        isAnimating = true;
-
+        if (newIndex === activeIndex && !isAnimating) return;
+        
         const thumbs = pillSlider.querySelectorAll('.slider-thumb');
         thumbs.forEach(t => t.classList.remove('active'));
         
@@ -1517,46 +1569,98 @@
           thumbs[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
         }
 
-        // 1. Trigger zoom state on background layer
         bgLayer.classList.add('zoom-effect');
         titleElem.classList.add('changing');
 
         setTimeout(() => {
-          // 2. Change Image & Title text mid-transition
           activeIndex = newIndex;
           bgLayer.style.backgroundImage = `url('${galleryData[activeIndex].image}')`;
           titleElem.textContent = galleryData[activeIndex].title;
 
-          // 3. Perform smooth zoom out back to scale(1)
           requestAnimationFrame(() => {
             bgLayer.classList.remove('zoom-effect');
             titleElem.classList.remove('changing');
           });
-
-          setTimeout(() => {
-            isAnimating = false;
-          }, 800);
         }, 300);
       }
 
-      // Wheel/Scroll Trigger when user scrolls over the Hacienda container
-      if (haciendaContainer) {
-        haciendaContainer.addEventListener('wheel', (e) => {
-          e.preventDefault();
-          if (isAnimating) return;
+      function handleScrollDrivenGallery() {
+        if (!scrollWrapper) return;
 
-          if (e.deltaY > 0) {
-            // Scroll down -> Next image
-            const nextIdx = (activeIndex + 1) % galleryData.length;
-            setActiveSlide(nextIdx);
-          } else if (e.deltaY < 0) {
-            // Scroll up -> Previous image
-            const prevIdx = (activeIndex - 1 + galleryData.length) % galleryData.length;
-            setActiveSlide(prevIdx);
+        const rect = scrollWrapper.getBoundingClientRect();
+        const totalScrollableHeight = rect.height - window.innerHeight;
+
+        if (totalScrollableHeight <= 0) return;
+
+        const scrollOffset = -rect.top;
+        if (scrollOffset >= 0 && scrollOffset <= totalScrollableHeight) {
+          const progress = scrollOffset / totalScrollableHeight;
+          const targetIndex = Math.min(
+            galleryData.length - 1,
+            Math.max(0, Math.floor(progress * galleryData.length))
+          );
+
+          if (targetIndex !== activeIndex) {
+            setActiveSlide(targetIndex);
           }
-        }, { passive: false });
+        }
       }
 
+      // =========================================================================
+      // 4. STACK TEXT REVEAL LOGIC (AWWWARDS SCROLL-BASED UNPACKING)
+      // =========================================================================
+      const stackSection = document.getElementById('stackTextSection');
+      const stackLines = document.querySelectorAll('.stack-line');
+
+      function updateStackTextReveal() {
+        if (!stackSection || !stackLines.length) return;
+
+        const rect = stackSection.getBoundingClientRect();
+        const totalHeight = rect.height - window.innerHeight;
+
+        if (totalHeight <= 0) return;
+
+        // Calculate progress from 0 (entry) to 1 (full expansion)
+        const scrollProgress = Math.min(1, Math.max(0, -rect.top / totalHeight));
+
+        // Max vertical distance gap between lines when fully expanded
+        const maxGap = Math.min(window.innerHeight * 0.13, 110);
+
+        stackLines.forEach(line => {
+          const idx = parseInt(line.getAttribute('data-index'), 10);
+          
+          if (idx === 0) {
+            // Center line stays stable in exact center
+            line.style.transform = `translate3d(0, 0, 0)`;
+            line.style.clipPath = `inset(0% 0% 0% 0%)`;
+          } else {
+            // Calculate proportional target Y position
+            const currentY = idx * maxGap * scrollProgress;
+            
+            // Dynamic slice clipping effect during middle stage
+            const sliceInset = Math.max(0, (1 - scrollProgress) * 42); 
+            
+            if (idx < 0) {
+              // Top lines slice upwards
+              line.style.clipPath = `inset(0% 0% ${sliceInset}% 0%)`;
+            } else {
+              // Bottom lines slice downwards
+              line.style.clipPath = `inset(${sliceInset}% 0% 0% 0%)`;
+            }
+
+            line.style.transform = `translate3d(0, ${currentY}px, 0)`;
+          }
+        });
+      }
+
+      // Single Unified Scroll Handler for both pin sections
+      window.addEventListener('scroll', () => {
+        handleScrollDrivenGallery();
+        updateStackTextReveal();
+      }, { passive: true });
+
+      // Initial execution
+      updateStackTextReveal();
     });
   </script>
 </body>
