@@ -831,7 +831,7 @@
     .motion-overlay-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; }
 
     /* ==========================================================================
-       SECTION 5: HACIENDA INTERACTIVE GALLERY (BOXED)
+       SECTION 5: HACIENDA INTERACTIVE GALLERY (REFRAINED ACCORDING TO SPEC)
        ========================================================================== */
     .hacienda-section-wrapper {
       padding: 4rem 2rem 6rem;
@@ -845,11 +845,11 @@
     .hacienda-boxed-container {
       width: 100%;
       max-width: 1280px;
-      height: 720px;
-      border-radius: 32px;
+      height: 760px;
+      border-radius: 36px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.12);
       display: flex;
       align-items: center;
@@ -857,7 +857,7 @@
       user-select: none;
     }
 
-    /* Background Display Image */
+    /* Background Display Image Layer */
     .hacienda-bg-layer {
       position: absolute;
       inset: 0;
@@ -874,14 +874,14 @@
     /* Smooth Zoom Out Animation Trigger State */
     .hacienda-bg-layer.zoom-effect {
       transform: scale(1.18);
-      opacity: 0.85;
+      opacity: 0.82;
     }
 
-    /* Subtle overlay for typography contrast */
+    /* Subtle Overlay for Contrast */
     .hacienda-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.5) 100%);
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.55) 100%);
       z-index: 2;
       pointer-events: none;
     }
@@ -890,52 +890,93 @@
     .hacienda-title-overlay {
       position: absolute;
       z-index: 4;
-      font-size: clamp(3.5rem, 10vw, 8.5rem);
+      font-size: clamp(4rem, 11vw, 9.5rem);
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.04em;
       text-transform: none;
       text-align: center;
       pointer-events: none;
-      text-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
       line-height: 1;
     }
 
     .hacienda-title-overlay.changing {
       opacity: 0;
-      transform: scale(0.92) translateY(10px);
+      transform: scale(0.92) translateY(12px);
     }
 
-    /* Left Aligned Vertical Thumbnail Slider Pill */
-    .hacienda-pill-slider {
+    /* Slider Dock Placement - Left Aligned & Distinct Rounded Box */
+    .hacienda-slider-dock {
       position: absolute;
-      left: 2.5rem;
+      left: 3rem;
       top: 50%;
       transform: translateY(-50%);
       z-index: 10;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 9999px;
-      padding: 8px 6px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+      align-items: center;
     }
 
+    /* Top Floating Handle Pill Bar Element */
+    .slider-handle-bar {
+      width: 42px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 9999px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-handle-bar::after {
+      content: '';
+      width: 18px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.65);
+      border-radius: 99px;
+    }
+
+    /* Slider Main Container - Squarish with Smooth Rounded Top & Bottom Corners */
+    .hacienda-pill-slider {
+      width: 84px;
+      background: rgba(25, 20, 22, 0.55);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 28px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.08);
+      max-height: 560px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .hacienda-pill-slider::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Edge */
+    }
+
+    /* Squared Preview Item with Rounded Corners */
     .slider-thumb {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
       position: relative;
+      opacity: 0.55;
       border: 2px solid transparent;
-      opacity: 0.6;
-      transition: transform 0.35s ease, border-color 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
     }
 
     .slider-thumb img {
@@ -946,19 +987,29 @@
     }
 
     .slider-thumb:hover {
-      opacity: 0.95;
-      transform: scale(1.08);
+      opacity: 0.9;
+      transform: scale(1.05);
     }
 
+    /* Active Highlighted State - Double Ring/Outline Effect */
     .slider-thumb.active {
       opacity: 1;
       border-color: #ffffff;
-      transform: scale(1.12);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 255, 255, 0.5);
+      transform: scale(1.06);
+      box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.4), 0 10px 22px rgba(0, 0, 0, 0.5);
     }
 
-    /* Responsive Breakpoints */
-    @media (max-width: 1024px) {
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS (ALL DEVICES)
+       ========================================================================== */
+    @media (max-width: 1200px) {
+      .hacienda-boxed-container { height: 640px; }
+      .hacienda-slider-dock { left: 2rem; }
+      .hacienda-pill-slider { width: 76px; padding: 10px 8px; border-radius: 24px; }
+      .slider-thumb { width: 58px; height: 58px; border-radius: 14px; }
+    }
+
+    @media (max-width: 992px) {
       .hero-main { grid-template-columns: 1fr; gap: 3rem; }
       .hero-container { padding: 1.5rem 2rem; }
       .feature-roller-wrapper { margin-left: 0; }
@@ -970,9 +1021,13 @@
       .showcase-area { grid-template-columns: 1fr; }
       .peek-card { display: none; }
       .motion-section { padding: 4rem 2rem; }
-      .motion-viewport-card { height: 400px; }
-      .hacienda-boxed-container { height: 560px; }
-      .hacienda-pill-slider { left: 1.5rem; }
+      .motion-viewport-card { height: 420px; }
+      
+      /* Hacienda Tablet Adjustment */
+      .hacienda-boxed-container { height: 560px; border-radius: 28px; }
+      .hacienda-slider-dock { left: 1.5rem; }
+      .hacienda-pill-slider { width: 70px; gap: 8px; border-radius: 22px; }
+      .slider-thumb { width: 52px; height: 52px; border-radius: 12px; }
     }
 
     @media (max-width: 768px) {
@@ -1003,19 +1058,41 @@
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
       .eye-stage { transform: scale(0.85); }
 
-      /* Mobile adjustment for Boxed Hacienda Section */
+      /* Hacienda Mobile View - Bottom Horizontal Floating Dock */
       .hacienda-section-wrapper { padding: 2rem 1rem 4rem; }
-      .hacienda-boxed-container { height: 480px; border-radius: 20px; }
-      .hacienda-pill-slider {
+      .hacienda-boxed-container { height: 500px; border-radius: 24px; }
+      .hacienda-slider-dock {
         left: 50%;
         top: auto;
         bottom: 1.5rem;
         transform: translateX(-50%);
-        flex-direction: row;
-        padding: 6px 8px;
-        gap: 6px;
+        flex-direction: column;
+        width: 90%;
+        max-width: 360px;
       }
-      .slider-thumb { width: 36px; height: 36px; border-radius: 8px; }
+      .slider-handle-bar {
+        width: 38px;
+        height: 8px;
+        margin-bottom: 6px;
+      }
+      .slider-handle-bar::after { width: 14px; height: 2px; }
+      .hacienda-pill-slider {
+        width: 100%;
+        max-height: none;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 8px 10px;
+        border-radius: 20px;
+        gap: 8px;
+        justify-content: flex-start;
+      }
+      .slider-thumb { width: 48px; height: 48px; border-radius: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .hacienda-boxed-container { height: 440px; border-radius: 20px; }
+      .hacienda-title-overlay { font-size: 3.2rem; }
+      .slider-thumb { width: 42px; height: 42px; border-radius: 10px; }
     }
   </style>
 </head>
@@ -1256,7 +1333,7 @@
     </div>
   </section>
 
-  <!-- SECTION 5: HACIENDA INTERACTIVE GALLERY (BOXED / LEFT SLIDER) -->
+  <!-- SECTION 5: HACIENDA INTERACTIVE GALLERY (REFRAINED DESIGN & DOCK) -->
   <section class="hacienda-section-wrapper">
     <div class="hacienda-boxed-container" id="haciendaContainer">
       
@@ -1269,9 +1346,15 @@
       <!-- Center Title Display -->
       <h2 class="hacienda-title-overlay" id="haciendaTitle">Hacienda</h2>
 
-      <!-- Left-Aligned Vertical Pill Slider UI -->
-      <div class="hacienda-pill-slider" id="haciendaPillSlider">
-        <!-- Thumbnails populated dynamically via JS -->
+      <!-- Left Aligned Floating Dock UI -->
+      <div class="hacienda-slider-dock">
+        <!-- Top Floating Handle Pill Bar -->
+        <div class="slider-handle-bar"></div>
+
+        <!-- Main Squarish Slider Container -->
+        <div class="hacienda-pill-slider" id="haciendaPillSlider">
+          <!-- Thumbnails populated dynamically via JS -->
+        </div>
       </div>
 
     </div>
@@ -1398,7 +1481,7 @@
       let activeIndex = 0;
       let isAnimating = false;
 
-      // Render thumbnails inside the left vertical pill slider
+      // Render thumbnails inside slider container
       if (pillSlider) {
         galleryData.forEach((item, idx) => {
           const thumb = document.createElement('div');
@@ -1416,7 +1499,7 @@
         });
       }
 
-      // Initialize background image
+      // Initialize initial background image
       if (bgLayer && galleryData.length > 0) {
         bgLayer.style.backgroundImage = `url('${galleryData[0].image}')`;
       }
@@ -1428,7 +1511,11 @@
 
         const thumbs = pillSlider.querySelectorAll('.slider-thumb');
         thumbs.forEach(t => t.classList.remove('active'));
-        if (thumbs[newIndex]) thumbs[newIndex].classList.add('active');
+        
+        if (thumbs[newIndex]) {
+          thumbs[newIndex].classList.add('active');
+          thumbs[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        }
 
         // 1. Trigger zoom state on background layer
         bgLayer.classList.add('zoom-effect');
