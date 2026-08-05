@@ -830,6 +830,133 @@
     .motion-overlay-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
     .motion-overlay-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; }
 
+    /* ==========================================================================
+       SECTION 5: HACIENDA INTERACTIVE GALLERY (BOXED)
+       ========================================================================== */
+    .hacienda-section-wrapper {
+      padding: 4rem 2rem 6rem;
+      display: flex;
+      justify-content: center;
+      background-color: #0b0507;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hacienda-boxed-container {
+      width: 100%;
+      max-width: 1280px;
+      height: 720px;
+      border-radius: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    /* Background Display Image */
+    .hacienda-bg-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transform: scale(1);
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+      z-index: 1;
+    }
+
+    /* Smooth Zoom Out Animation Trigger State */
+    .hacienda-bg-layer.zoom-effect {
+      transform: scale(1.18);
+      opacity: 0.85;
+    }
+
+    /* Subtle overlay for typography contrast */
+    .hacienda-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.5) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Center Overlay Bold Typography */
+    .hacienda-title-overlay {
+      position: absolute;
+      z-index: 4;
+      font-size: clamp(3.5rem, 10vw, 8.5rem);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.04em;
+      text-transform: none;
+      text-align: center;
+      pointer-events: none;
+      text-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      line-height: 1;
+    }
+
+    .hacienda-title-overlay.changing {
+      opacity: 0;
+      transform: scale(0.92) translateY(10px);
+    }
+
+    /* Left Aligned Vertical Thumbnail Slider Pill */
+    .hacienda-pill-slider {
+      position: absolute;
+      left: 2.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 9999px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .slider-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      border: 2px solid transparent;
+      opacity: 0.6;
+      transition: transform 0.35s ease, border-color 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .slider-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slider-thumb:hover {
+      opacity: 0.95;
+      transform: scale(1.08);
+    }
+
+    .slider-thumb.active {
+      opacity: 1;
+      border-color: #ffffff;
+      transform: scale(1.12);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 255, 255, 0.5);
+    }
+
     /* Responsive Breakpoints */
     @media (max-width: 1024px) {
       .hero-main { grid-template-columns: 1fr; gap: 3rem; }
@@ -844,6 +971,8 @@
       .peek-card { display: none; }
       .motion-section { padding: 4rem 2rem; }
       .motion-viewport-card { height: 400px; }
+      .hacienda-boxed-container { height: 560px; }
+      .hacienda-pill-slider { left: 1.5rem; }
     }
 
     @media (max-width: 768px) {
@@ -873,6 +1002,20 @@
       .card-image { height: 350px; }
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
       .eye-stage { transform: scale(0.85); }
+
+      /* Mobile adjustment for Boxed Hacienda Section */
+      .hacienda-section-wrapper { padding: 2rem 1rem 4rem; }
+      .hacienda-boxed-container { height: 480px; border-radius: 20px; }
+      .hacienda-pill-slider {
+        left: 50%;
+        top: auto;
+        bottom: 1.5rem;
+        transform: translateX(-50%);
+        flex-direction: row;
+        padding: 6px 8px;
+        gap: 6px;
+      }
+      .slider-thumb { width: 36px; height: 36px; border-radius: 8px; }
     }
   </style>
 </head>
@@ -1113,9 +1256,32 @@
     </div>
   </section>
 
+  <!-- SECTION 5: HACIENDA INTERACTIVE GALLERY (BOXED / LEFT SLIDER) -->
+  <section class="hacienda-section-wrapper">
+    <div class="hacienda-boxed-container" id="haciendaContainer">
+      
+      <!-- Background Main Image Layer -->
+      <div class="hacienda-bg-layer" id="haciendaBgLayer"></div>
+      
+      <!-- Contrast Overlay -->
+      <div class="hacienda-overlay"></div>
+
+      <!-- Center Title Display -->
+      <h2 class="hacienda-title-overlay" id="haciendaTitle">Hacienda</h2>
+
+      <!-- Left-Aligned Vertical Pill Slider UI -->
+      <div class="hacienda-pill-slider" id="haciendaPillSlider">
+        <!-- Thumbnails populated dynamically via JS -->
+      </div>
+
+    </div>
+  </section>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Eye Direction Animation Sequence Logic
+      // =========================================================================
+      // 1. EYE DIRECTION ANIMATION SEQUENCE LOGIC
+      // =========================================================================
       const pupilL = document.getElementById('pupilLeft');
       const pupilR = document.getElementById('pupilRight');
 
@@ -1127,41 +1293,26 @@
       const introLoader = document.getElementById('intro-loader');
 
       function setEyeDirection(dir) {
+        if (!pupilL || !pupilR) return;
         pupilL.className = `pupil ${dir}`;
         pupilR.className = `pupil ${dir}`;
       }
 
-      // Step 1 (1.5s): Look Right -> Popup "Stressing"
-      setTimeout(() => {
-        setEyeDirection('look-right');
-        tagRight.classList.add('active');
-      }, 1500);
+      setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 1500);
+      setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 3000);
+      setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 4500);
+      setTimeout(() => { setEyeDirection('look-up'); tagUp?.classList.add('active'); }, 6000);
 
-      // Step 2 (3.0s): Look Left -> Popup "Expensive"
       setTimeout(() => {
-        setEyeDirection('look-left');
-        tagLeft.classList.add('active');
-      }, 3000);
-
-      // Step 3 (4.5s): Look Down -> Popup "Protracted"
-      setTimeout(() => {
-        setEyeDirection('look-down');
-        tagDown.classList.add('active');
-      }, 4500);
-
-      // Step 4 (6.0s): Look Up -> Popup "NOT WITH US"
-      setTimeout(() => {
-        setEyeDirection('look-up');
-        tagUp.classList.add('active');
-      }, 6000);
-
-      // Fade out Loader screen after complete sequence (~8.0s)
-      setTimeout(() => {
-        introLoader.classList.add('fade-out');
-        document.body.classList.remove('loading');
+        if (introLoader) {
+          introLoader.classList.add('fade-out');
+          document.body.classList.remove('loading');
+        }
       }, 8000);
 
-      // 2. Feature Roller & Navigation Script
+      // =========================================================================
+      // 2. FEATURE ROLLER & NAVIGATION SCRIPT
+      // =========================================================================
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
       const track = document.getElementById('featureTrack');
@@ -1192,6 +1343,133 @@
         currentFeatureIndex = (currentFeatureIndex + 1) % featureItems.length;
         updateFeatureRoll();
       }, 2000);
+
+      // =========================================================================
+      // 3. HACIENDA INTERACTIVE GALLERY SLIDER LOGIC
+      // =========================================================================
+      const galleryData = [
+        {
+          title: "Hacienda",
+          image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Aura",
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Cyan",
+          image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Vogue",
+          image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Solace",
+          image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Elysium",
+          image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Obsidian",
+          image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=200&auto=format&fit=crop"
+        },
+        {
+          title: "Kroma",
+          image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=1600&auto=format&fit=crop",
+          thumb: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=200&auto=format&fit=crop"
+        }
+      ];
+
+      const haciendaContainer = document.getElementById('haciendaContainer');
+      const bgLayer = document.getElementById('haciendaBgLayer');
+      const titleElem = document.getElementById('haciendaTitle');
+      const pillSlider = document.getElementById('haciendaPillSlider');
+
+      let activeIndex = 0;
+      let isAnimating = false;
+
+      // Render thumbnails inside the left vertical pill slider
+      if (pillSlider) {
+        galleryData.forEach((item, idx) => {
+          const thumb = document.createElement('div');
+          thumb.className = `slider-thumb ${idx === 0 ? 'active' : ''}`;
+          thumb.setAttribute('data-index', idx);
+          thumb.innerHTML = `<img src="${item.thumb}" alt="${item.title}" loading="lazy">`;
+          
+          thumb.addEventListener('click', () => {
+            if (idx !== activeIndex && !isAnimating) {
+              setActiveSlide(idx);
+            }
+          });
+
+          pillSlider.appendChild(thumb);
+        });
+      }
+
+      // Initialize background image
+      if (bgLayer && galleryData.length > 0) {
+        bgLayer.style.backgroundImage = `url('${galleryData[0].image}')`;
+      }
+
+      // Transition & Smooth Zoom-Out animation function
+      function setActiveSlide(newIndex) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const thumbs = pillSlider.querySelectorAll('.slider-thumb');
+        thumbs.forEach(t => t.classList.remove('active'));
+        if (thumbs[newIndex]) thumbs[newIndex].classList.add('active');
+
+        // 1. Trigger zoom state on background layer
+        bgLayer.classList.add('zoom-effect');
+        titleElem.classList.add('changing');
+
+        setTimeout(() => {
+          // 2. Change Image & Title text mid-transition
+          activeIndex = newIndex;
+          bgLayer.style.backgroundImage = `url('${galleryData[activeIndex].image}')`;
+          titleElem.textContent = galleryData[activeIndex].title;
+
+          // 3. Perform smooth zoom out back to scale(1)
+          requestAnimationFrame(() => {
+            bgLayer.classList.remove('zoom-effect');
+            titleElem.classList.remove('changing');
+          });
+
+          setTimeout(() => {
+            isAnimating = false;
+          }, 800);
+        }, 300);
+      }
+
+      // Wheel/Scroll Trigger when user scrolls over the Hacienda container
+      if (haciendaContainer) {
+        haciendaContainer.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          if (isAnimating) return;
+
+          if (e.deltaY > 0) {
+            // Scroll down -> Next image
+            const nextIdx = (activeIndex + 1) % galleryData.length;
+            setActiveSlide(nextIdx);
+          } else if (e.deltaY < 0) {
+            // Scroll up -> Previous image
+            const prevIdx = (activeIndex - 1 + galleryData.length) % galleryData.length;
+            setActiveSlide(prevIdx);
+          }
+        }, { passive: false });
+      }
+
     });
   </script>
 </body>
