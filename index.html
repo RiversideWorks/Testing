@@ -61,21 +61,22 @@
 
     .eye-stage {
       position: relative;
-      width: 420px;
-      height: 320px;
+      width: 460px;
+      height: 340px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
+    /* Requirement 6: Eye pill made bigger */
     .eye-pill {
       background: #000000;
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 9999px;
-      padding: 10px 14px;
+      padding: 20px 32px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 14px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.05);
       z-index: 2;
       transition: all 0.4s ease;
@@ -83,7 +84,7 @@
 
     .eyes-wrapper {
       display: flex;
-      gap: 6px;
+      gap: 10px;
       align-items: center;
     }
 
@@ -115,10 +116,21 @@
       96% { transform: scaleY(0.1); }
     }
 
+    /* Requirement 5: Wink animation */
+    .eye.wink {
+      animation: singleWink 0.4s ease forwards;
+    }
+
+    @keyframes singleWink {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.1); }
+    }
+
     .pupil.look-right { transform: translate(11px, 0); }
     .pupil.look-left { transform: translate(-11px, 0); }
     .pupil.look-down { transform: translate(0, 11px); }
     .pupil.look-up { transform: translate(0, -11px); }
+    .pupil.look-center { transform: translate(0, 0); }
 
     .popup-tag {
       position: absolute;
@@ -151,13 +163,13 @@
     }
 
     .popup-tag.down {
-      bottom: 45px;
+      bottom: 35px;
       left: 50%;
       transform: translateX(-50%) translateY(20px) scale(0.85);
     }
 
     .popup-tag.up {
-      top: 45px;
+      top: 35px;
       left: 50%;
       background: var(--secondary);
       color: var(--primary);
@@ -174,7 +186,7 @@
     .popup-tag.up.active { transform: translateX(-50%) translateY(0) scale(1); }
 
     /* ==========================================================================
-       SECTION 1: HERO SECTION
+       SECTION 1: HERO SECTION (Requirement 1: Plain color #101010, no image)
        ========================================================================== */
     .hero-container {
       position: relative;
@@ -183,8 +195,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: linear-gradient(180deg, rgba(16, 16, 16, 0.6) 0%, rgba(16, 16, 16, 0.85) 100%), 
-                  url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+      background-color: var(--primary);
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
       padding: 2rem 4rem 3rem;
     }
 
@@ -288,9 +301,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 0.4rem 1rem;
       border-radius: 9999px;
       font-size: 0.85rem;
@@ -1034,18 +1047,9 @@
       will-change: transform;
     }
 
-    .stack-line.top-slice {
-      clip-path: inset(0 0 48% 0);
-    }
-
-    .stack-line.bottom-slice {
-      clip-path: inset(48% 0 0 0);
-    }
-
-    .stack-line.main-line {
-      clip-path: none;
-      z-index: 2;
-    }
+    .stack-line.top-slice { clip-path: inset(0 0 48% 0); }
+    .stack-line.bottom-slice { clip-path: inset(48% 0 0 0); }
+    .stack-line.main-line { clip-path: none; z-index: 2; }
 
     /* ==========================================================================
        SECTION 7: REVEAL TEXT ON SCROLL (SWISS STYLE BOLD TYPOGRAPHY)
@@ -1118,16 +1122,12 @@
       position: relative;
     }
 
-    .word-muted,
-    .word-active {
+    .word-muted, .word-active {
       grid-area: layer;
       white-space: pre;
     }
 
-    .word-muted {
-      color: #e2e8f0;
-    }
-
+    .word-muted { color: #e2e8f0; }
     .word-active {
       color: var(--primary);
       overflow: hidden;
@@ -1160,9 +1160,7 @@
       will-change: transform;
     }
 
-    .ticker-track:hover {
-      animation-play-state: paused;
-    }
+    .ticker-track:hover { animation-play-state: paused; }
 
     .ticker-group {
       display: flex;
@@ -1200,9 +1198,7 @@
       transition: transform 0.5s ease;
     }
 
-    .ticker-group:hover .ticker-img-box img {
-      transform: scale(1.08);
-    }
+    .ticker-group:hover .ticker-img-box img { transform: scale(1.08); }
 
     @keyframes tickerMarquee {
       0% { transform: translateX(0); }
@@ -1210,7 +1206,7 @@
     }
 
     /* ==========================================================================
-       SECTION 9: PRIXA DIGITAL FOOTER
+       SECTION 9: PRIXA DIGITAL FOOTER (Requirement 4: Same footer)
        ========================================================================== */
     .footer-section {
       background-color: var(--primary);
@@ -1229,7 +1225,6 @@
       gap: 3.5rem;
     }
 
-    /* Row 1: PRIXA + GIF + Nav */
     .footer-row-top {
       display: flex;
       align-items: center;
@@ -1283,11 +1278,8 @@
       transition: opacity 0.25s ease;
     }
 
-    .footer-nav-list a:hover {
-      opacity: 0.6;
-    }
+    .footer-nav-list a:hover { opacity: 0.6; }
 
-    /* Sub-meta bar between giant rows */
     .footer-submeta-row {
       display: grid;
       grid-template-columns: 1.2fr 1fr 1fr;
@@ -1298,11 +1290,7 @@
       color: rgba(255, 255, 255, 0.75);
     }
 
-    .footer-submeta-col.center {
-      text-align: center;
-      line-height: 1.4;
-    }
-
+    .footer-submeta-col.center { text-align: center; line-height: 1.4; }
     .footer-submeta-col.right {
       display: flex;
       justify-content: flex-end;
@@ -1317,7 +1305,6 @@
 
     .footer-submeta-col.right a:hover { color: #ffffff; }
 
-    /* Row 2: CTA Block + DIGITAL */
     .footer-row-bottom {
       display: flex;
       align-items: center;
@@ -1359,7 +1346,6 @@
       flex-grow: 1;
     }
 
-    /* Bottom Copyright Bar */
     .footer-copyright-bar {
       display: flex;
       align-items: center;
@@ -1378,167 +1364,14 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    .footer-copyright-bar .legal-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
+    .footer-copyright-bar .legal-links { display: flex; gap: 1.5rem; }
     .footer-copyright-bar .legal-links a {
       color: rgba(255, 255, 255, 0.5);
       text-decoration: none;
       transition: color 0.2s;
     }
-
     .footer-copyright-bar .legal-links a:hover { color: #ffffff; }
 
-    /* ==========================================================================
-       SLIDING SIDE-DRAWER CONTACT FORM
-       ========================================================================== */
-    .drawer-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 99900;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    .drawer-backdrop.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .contact-drawer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      max-width: 480px;
-      height: 100vh;
-      background-color: #141011;
-      border-right: 1px solid rgba(255, 255, 255, 0.15);
-      z-index: 99990;
-      transform: translateX(-100%);
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 3rem 2.5rem;
-      box-shadow: 20px 0 50px rgba(0, 0, 0, 0.8);
-    }
-
-    .contact-drawer.active {
-      transform: translateX(0);
-    }
-
-    .drawer-close-btn {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: background 0.25s ease;
-    }
-
-    .drawer-close-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .drawer-header {
-      margin-bottom: 2rem;
-    }
-
-    .drawer-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-    }
-
-    .drawer-subtitle {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.6);
-      line-height: 1.5;
-    }
-
-    .drawer-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .form-label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .form-input, .form-textarea {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
-      color: #ffffff;
-      font-family: var(--font-sans);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.25s, background 0.25s;
-    }
-
-    .form-input:focus, .form-textarea:focus {
-      border-color: var(--secondary);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 110px;
-    }
-
-    .btn-submit-drawer {
-      background: var(--secondary);
-      color: var(--primary);
-      border: none;
-      padding: 1rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      transition: background 0.25s ease, transform 0.2s ease;
-      font-family: var(--font-sans);
-    }
-
-    .btn-submit-drawer:hover {
-      background: #e03b2f;
-      transform: translateY(-2px);
-    }
-
-    /* ==========================================================================
-       RESPONSIVE BREAKPOINTS
-       ========================================================================== */
     @media (max-width: 1200px) {
       .hacienda-slider-dock { left: 2rem; }
       .hacienda-pill-slider { width: 76px; padding: 10px 8px; border-radius: 24px; }
@@ -1625,17 +1458,13 @@
 
       .text-reveal-sticky { padding: 2rem 1.5rem; }
       .reveal-word { margin-right: 0.28em; margin-bottom: 0.12em; }
-
       .ticker-section { padding: 3.5rem 0; }
-
       .footer-section { padding: 4rem 1.5rem 2rem; }
       .footer-row-top, .footer-row-bottom { flex-direction: column; align-items: flex-start; }
       .footer-gif-box { width: 100%; max-width: none; }
       .footer-nav-list { text-align: left; flex-direction: row; flex-wrap: wrap; gap: 1.5rem; }
       .footer-cta-box { width: 100%; }
       .footer-copyright-bar { flex-direction: column; gap: 1rem; text-align: center; }
-
-      .contact-drawer { max-width: 100%; padding: 2rem 1.5rem; }
     }
 
     @media (max-width: 480px) {
@@ -1652,7 +1481,7 @@
       <div class="eye-pill">
         <div class="eyes-wrapper">
           <div class="eye"><div class="pupil" id="pupilLeft"></div></div>
-          <div class="eye"><div class="pupil" id="pupilRight"></div></div>
+          <div class="eye" id="rightEyeContainer"><div class="pupil" id="pupilRight"></div></div>
         </div>
       </div>
 
@@ -1666,7 +1495,7 @@
   <!-- SECTION 1: HERO -->
   <div class="hero-container">
     <nav class="navbar">
-      <a href="#" class="brand-logo">Magnific</a>
+      <a href="index.html" class="brand-logo">Magnific</a>
       <ul class="nav-links" id="navLinks">
         <li class="nav-item"><a href="#" class="nav-link"><span>About us</span><span>About us</span></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><span>Services</span><span>Services</span></a></li>
@@ -1826,24 +1655,15 @@
           <div class="tool-panel">
             <div class="tool-item">
               <div class="tool-icon">🖼️</div>
-              <div class="tool-info">
-                <div class="name">Image generator</div>
-                <div class="sub">Create images from text prompts</div>
-              </div>
+              <div class="tool-info"><div class="name">Image generator</div><div class="sub">Create images from text prompts</div></div>
             </div>
             <div class="tool-item">
               <div class="tool-icon">✏️</div>
-              <div class="tool-info">
-                <div class="name">Image editor</div>
-                <div class="sub">Edit and modify existing images</div>
-              </div>
+              <div class="tool-info"><div class="name">Image editor</div><div class="sub">Edit and modify existing images</div></div>
             </div>
             <div class="tool-item">
               <div class="tool-icon">🔍</div>
-              <div class="tool-info">
-                <div class="name">Image Upscaler</div>
-                <div class="sub">Enhance resolution and detail</div>
-              </div>
+              <div class="tool-info"><div class="name">Image Upscaler</div><div class="sub">Enhance resolution and detail</div></div>
             </div>
           </div>
 
@@ -1869,7 +1689,6 @@
           <source src="text-match-cut.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
-
         <div class="motion-card-overlay">
           <div class="motion-overlay-tag">Live Stream</div>
           <h3 class="motion-overlay-title">4K Dynamic Motion Output</h3>
@@ -1883,24 +1702,18 @@
   <section class="hacienda-section-wrapper" id="haciendaScrollWrapper">
     <div class="hacienda-sticky-pin">
       <div class="hacienda-boxed-container" id="haciendaContainer">
-        
         <div class="hacienda-bg-layer" id="haciendaBgLayer"></div>
         <div class="hacienda-overlay"></div>
-
         <h2 class="hacienda-title-overlay" id="haciendaTitle">Hacienda</h2>
-
         <div class="hacienda-slider-dock">
           <div class="slider-handle-bar"></div>
-          <div class="hacienda-pill-slider" id="haciendaPillSlider">
-            <!-- Thumbnails populated dynamically via JS -->
-          </div>
+          <div class="hacienda-pill-slider" id="haciendaPillSlider"></div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- SECTION 6: STACK TEXT REVEAL ("MORRISON AWNINGS") -->
+  <!-- SECTION 6: STACK TEXT REVEAL -->
   <section class="stack-text-section" id="stackTextSection">
     <div class="stack-text-sticky">
       <div class="stack-text-container" id="stackTextContainer">
@@ -1915,22 +1728,19 @@
     </div>
   </section>
 
-  <!-- SECTION 7: REVEAL TEXT ON SCROLL (SWISS TYPOGRAPHY - FIXED GRID) -->
+  <!-- SECTION 7: REVEAL TEXT ON SCROLL -->
   <section class="text-reveal-section" id="textRevealSection">
     <div class="text-reveal-sticky">
       <div class="text-reveal-container">
         <div class="text-reveal-label">Heritage &amp; Craftsmanship</div>
-        <p class="text-reveal-paragraph" id="revealParagraph">
-          <!-- Populated dynamically via JS -->
-        </p>
+        <p class="text-reveal-paragraph" id="revealParagraph"></p>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 8: MARQUEE / TICKER TAPE -->
+  <!-- SECTION 8: MARQUEE -->
   <section class="ticker-section">
     <div class="ticker-track">
-      <!-- First track group -->
       <div class="ticker-group">
         <span class="ticker-text">Awning</span>
         <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Awning Architecture" loading="lazy"></div>
@@ -1941,7 +1751,6 @@
         <span class="ticker-text">Furniture</span>
         <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Bespoke Furniture" loading="lazy"></div>
       </div>
-      <!-- Duplicated track group for continuous loop -->
       <div class="ticker-group" aria-hidden="true">
         <span class="ticker-text">Awning</span>
         <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Awning Architecture" loading="lazy"></div>
@@ -1958,29 +1767,21 @@
   <!-- SECTION 9: FOOTER -->
   <footer class="footer-section">
     <div class="footer-container">
-      
-      <!-- Top Row: PRIXA + GIF + Nav -->
       <div class="footer-row-top">
         <h2 class="footer-title-prixa">PRIXA</h2>
         <div class="footer-gif-box">
           <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZuaGFkMzg3MGxmMmprZHpqN2Z4OHR5ZHZodnA5bDN2aDZreWJpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlTy9x899pAptpC/giphy.gif" alt="Prixa Dynamic Visual Element" loading="lazy">
         </div>
         <ul class="footer-nav-list">
-          <li><a href="#">Home</a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="#">Work</a></li>
           <li><a href="#">About Us</a></li>
         </ul>
       </div>
 
-      <!-- Middle Submeta Row -->
       <div class="footer-submeta-row">
-        <div class="footer-submeta-col left">
-          <strong>Let's elevate</strong> your brand's digital presence
-        </div>
-        <div class="footer-submeta-col center">
-          <div>digital@prixa.org</div>
-          <strong>+977-9708050686</strong>
-        </div>
+        <div class="footer-submeta-col left"><strong>Let's elevate</strong> your brand's digital presence</div>
+        <div class="footer-submeta-col center"><div>digital@prixa.org</div><strong>+977-9708050686</strong></div>
         <div class="footer-submeta-col right">
           <a href="#">Instagram</a>
           <a href="#">LinkedIn</a>
@@ -1988,15 +1789,11 @@
         </div>
       </div>
 
-      <!-- Bottom Row: CTA Box + DIGITAL -->
       <div class="footer-row-bottom">
-        <button class="footer-cta-box" id="openContactCTA">
-          Get in Touch ↗
-        </button>
+        <a href="contact.html" class="footer-cta-box">Get in Touch ↗</a>
         <h2 class="footer-title-digital">DIGITAL</h2>
       </div>
 
-      <!-- Copyright Bar -->
       <div class="footer-copyright-bar">
         <div>@2026 Prixa Digital. All rights reserved</div>
         <div class="brand-statement">A PRIXA Company</div>
@@ -2005,80 +1802,62 @@
           <a href="#">Terms &amp; Conditions</a>
         </div>
       </div>
-
     </div>
   </footer>
-
-  <!-- SLIDING SIDE-DRAWER CONTACT FORM -->
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <div class="contact-drawer" id="contactDrawer">
-    <button class="drawer-close-btn" id="closeContactDrawer" aria-label="Close Contact Form">&times;</button>
-    
-    <div class="drawer-header">
-      <h3 class="drawer-title">Contact Form</h3>
-      <p class="drawer-subtitle">Fill out the details below and we will get back to you shortly.</p>
-    </div>
-
-    <form class="drawer-form" id="contactForm" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
-      <div class="form-group">
-        <label class="form-label" for="fullName">Full Name</label>
-        <input type="text" id="fullName" class="form-input" placeholder="e.g. John Doe" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="email">Email</label>
-        <input type="email" id="email" class="form-input" placeholder="e.g. john@example.com" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="contactNumber">Contact</label>
-        <input type="tel" id="contactNumber" class="form-input" placeholder="e.g. +1 (555) 000-0000" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="message">Message</label>
-        <textarea id="message" class="form-textarea" placeholder="Tell us about your project..." required></textarea>
-      </div>
-
-      <button type="submit" class="btn-submit-drawer">Send Message</button>
-    </form>
-  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // =========================================================================
-      // 1. EYE DIRECTION ANIMATION SEQUENCE LOGIC
+      // 3 & 5. SESSION STORAGE LOADER WITH 1.5s SIDE INTERVALS & WINK
       // =========================================================================
+      const introLoader = document.getElementById('intro-loader');
       const pupilL = document.getElementById('pupilLeft');
       const pupilR = document.getElementById('pupilRight');
+      const rightEyeElem = document.getElementById('rightEyeContainer');
 
       const tagRight = document.getElementById('tagRight');
       const tagLeft = document.getElementById('tagLeft');
       const tagDown = document.getElementById('tagDown');
       const tagUp = document.getElementById('tagUp');
 
-      const introLoader = document.getElementById('intro-loader');
+      if (sessionStorage.getItem('loaderShown')) {
+        if (introLoader) introLoader.remove();
+        document.body.classList.remove('loading');
+      } else {
+        sessionStorage.setItem('loaderShown', 'true');
 
-      function setEyeDirection(dir) {
-        if (!pupilL || !pupilR) return;
-        pupilL.className = `pupil ${dir}`;
-        pupilR.className = `pupil ${dir}`;
+        function setEyeDirection(dir) {
+          if (!pupilL || !pupilR) return;
+          pupilL.className = `pupil ${dir}`;
+          pupilR.className = `pupil ${dir}`;
+        }
+
+        // 1.5s per side interval as requested
+        setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 1500);
+        setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 3000);
+        setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 4500);
+        setTimeout(() => { 
+          setEyeDirection('look-up'); 
+          tagUp?.classList.add('active'); 
+        }, 6000);
+
+        // After up, look at user and wink at 7.5s
+        setTimeout(() => {
+          setEyeDirection('look-center');
+          rightEyeElem?.classList.add('wink');
+        }, 7500);
+
+        // Fade out loader
+        setTimeout(() => {
+          if (introLoader) {
+            introLoader.classList.add('fade-out');
+            document.body.classList.remove('loading');
+          }
+        }, 9000);
       }
 
-      setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 1500);
-      setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 3000);
-      setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 4500);
-      setTimeout(() => { setEyeDirection('look-up'); tagUp?.classList.add('active'); }, 6000);
-
-      setTimeout(() => {
-        if (introLoader) {
-          introLoader.classList.add('fade-out');
-          document.body.classList.remove('loading');
-        }
-      }, 8000);
-
       // =========================================================================
-      // 2. FEATURE ROLLER & NAVIGATION SCRIPT
+      // NAVIGATION & FEATURE ROLLER
       // =========================================================================
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
@@ -2112,49 +1891,17 @@
       }, 2000);
 
       // =========================================================================
-      // 3. HACIENDA INTERACTIVE GALLERY SLIDER
+      // HACIENDA INTERACTIVE GALLERY SLIDER
       // =========================================================================
       const galleryData = [
-        {
-          title: "Hacienda",
-          image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Aura",
-          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Cyan",
-          image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Vogue",
-          image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Solace",
-          image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Elysium",
-          image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Obsidian",
-          image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=200&auto=format&fit=crop"
-        },
-        {
-          title: "Kroma",
-          image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=1600&auto=format&fit=crop",
-          thumb: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=200&auto=format&fit=crop"
-        }
+        { title: "Hacienda", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" },
+        { title: "Aura", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" },
+        { title: "Cyan", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop" },
+        { title: "Vogue", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop" },
+        { title: "Solace", image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop" },
+        { title: "Elysium", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop" },
+        { title: "Obsidian", image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=200&auto=format&fit=crop" },
+        { title: "Kroma", image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=200&auto=format&fit=crop" }
       ];
 
       const scrollWrapper = document.getElementById('haciendaScrollWrapper');
@@ -2163,21 +1910,15 @@
       const pillSlider = document.getElementById('haciendaPillSlider');
 
       let activeIndex = 0;
-      let isAnimating = false;
 
       if (pillSlider) {
         galleryData.forEach((item, idx) => {
           const thumb = document.createElement('div');
           thumb.className = `slider-thumb ${idx === 0 ? 'active' : ''}`;
-          thumb.setAttribute('data-index', idx);
           thumb.innerHTML = `<img src="${item.thumb}" alt="${item.title}" loading="lazy">`;
-          
           thumb.addEventListener('click', () => {
-            if (idx !== activeIndex) {
-              setActiveSlide(idx);
-            }
+            if (idx !== activeIndex) setActiveSlide(idx);
           });
-
           pillSlider.appendChild(thumb);
         });
       }
@@ -2187,16 +1928,12 @@
       }
 
       function setActiveSlide(newIndex) {
-        if (newIndex === activeIndex && !isAnimating) return;
-        
         const thumbs = pillSlider.querySelectorAll('.slider-thumb');
         thumbs.forEach(t => t.classList.remove('active'));
-        
         if (thumbs[newIndex]) {
           thumbs[newIndex].classList.add('active');
           thumbs[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
         }
-
         bgLayer.classList.add('zoom-effect');
         titleElem.classList.add('changing');
 
@@ -2204,7 +1941,6 @@
           activeIndex = newIndex;
           bgLayer.style.backgroundImage = `url('${galleryData[activeIndex].image}')`;
           titleElem.textContent = galleryData[activeIndex].title;
-
           requestAnimationFrame(() => {
             bgLayer.classList.remove('zoom-effect');
             titleElem.classList.remove('changing');
@@ -2214,58 +1950,43 @@
 
       function handleScrollDrivenGallery() {
         if (!scrollWrapper) return;
-
         const rect = scrollWrapper.getBoundingClientRect();
-        const totalScrollableHeight = rect.height - window.innerHeight;
-
-        if (totalScrollableHeight <= 0) return;
-
+        const totalHeight = rect.height - window.innerHeight;
+        if (totalHeight <= 0) return;
         const scrollOffset = -rect.top;
-        if (scrollOffset >= 0 && scrollOffset <= totalScrollableHeight) {
-          const progress = scrollOffset / totalScrollableHeight;
-          const targetIndex = Math.min(
-            galleryData.length - 1,
-            Math.max(0, Math.floor(progress * galleryData.length))
-          );
-
-          if (targetIndex !== activeIndex) {
-            setActiveSlide(targetIndex);
-          }
+        if (scrollOffset >= 0 && scrollOffset <= totalHeight) {
+          const progress = scrollOffset / totalHeight;
+          const targetIndex = Math.min(galleryData.length - 1, Math.max(0, Math.floor(progress * galleryData.length)));
+          if (targetIndex !== activeIndex) setActiveSlide(targetIndex);
         }
       }
 
       // =========================================================================
-      // 4. ACCURATE STACK TEXT REVEAL SPROUT LOGIC
+      // STACK TEXT REVEAL
       // =========================================================================
       const stackSection = document.getElementById('stackTextSection');
       const stackLines = document.querySelectorAll('.stack-line');
 
       function updateStackTextReveal() {
         if (!stackSection || !stackLines.length) return;
-
         const rect = stackSection.getBoundingClientRect();
         const totalHeight = rect.height - window.innerHeight;
-
         if (totalHeight <= 0) return;
-
         const scrollOffset = -rect.top;
         const progress = Math.min(1, Math.max(0, scrollOffset / totalHeight));
-
         const mainLine = document.querySelector('.stack-line.main-line');
         const fontPx = parseFloat(window.getComputedStyle(mainLine).fontSize);
-        
         const step = fontPx * 0.42;
 
         stackLines.forEach((line) => {
           const idx = parseInt(line.getAttribute('data-index'), 10);
           const y = idx * step * progress;
-
           line.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
         });
       }
 
       // =========================================================================
-      // 5. REVEAL TEXT ON SCROLL BUILDER & FLUID FILL ENGINE
+      // REVEAL TEXT ON SCROLL
       // =========================================================================
       const rawText = "For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism and our awnings can be seen in iconic shops, restaurants, hotels, flagship stores, bars and pubs across the UK.";
       const revealParagraph = document.getElementById('revealParagraph');
@@ -2285,21 +2006,16 @@
 
       function updateTextRevealOnScroll() {
         if (!textRevealSection || !activeWordElements.length) return;
-
         const rect = textRevealSection.getBoundingClientRect();
-        const totalScrollHeight = rect.height - window.innerHeight;
-
-        if (totalScrollHeight <= 0) return;
-
+        const totalHeight = rect.height - window.innerHeight;
+        if (totalHeight <= 0) return;
         const scrollOffset = -rect.top;
-        const totalProgress = Math.min(1, Math.max(0, scrollOffset / totalScrollHeight));
-
+        const totalProgress = Math.min(1, Math.max(0, scrollOffset / totalHeight));
         const totalWords = activeWordElements.length;
 
         activeWordElements.forEach((el, index) => {
           const wordStart = index / totalWords;
           const wordEnd = (index + 1) / totalWords;
-
           if (totalProgress >= wordEnd) {
             el.style.width = '100%';
           } else if (totalProgress <= wordStart) {
@@ -2311,44 +2027,12 @@
         });
       }
 
-      // =========================================================================
-      // 6. SLIDING CONTACT DRAWER LOGIC
-      // =========================================================================
-      const openCtaBtn = document.getElementById('openContactCTA');
-      const closeDrawerBtn = document.getElementById('closeContactDrawer');
-      const drawerBackdrop = document.getElementById('drawerBackdrop');
-      const contactDrawer = document.getElementById('contactDrawer');
-
-      function openDrawer() {
-        contactDrawer?.classList.add('active');
-        drawerBackdrop?.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeDrawer() {
-        contactDrawer?.classList.remove('active');
-        drawerBackdrop?.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-
-      openCtaBtn?.addEventListener('click', openDrawer);
-      closeDrawerBtn?.addEventListener('click', closeDrawer);
-      drawerBackdrop?.addEventListener('click', closeDrawer);
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && contactDrawer?.classList.contains('active')) {
-          closeDrawer();
-        }
-      });
-
-      // Master Scroll Event Listener
       window.addEventListener('scroll', () => {
         handleScrollDrivenGallery();
         updateStackTextReveal();
         updateTextRevealOnScroll();
       }, { passive: true });
 
-      // Initial Trigger
       updateStackTextReveal();
       updateTextRevealOnScroll();
     });
