@@ -1046,7 +1046,7 @@
     }
 
     /* ==========================================================================
-       SECTION 7: REVEAL TEXT ON SCROLL (SWISS STYLE BOLD TYPOGRAPHY)
+       SECTION 7: REVEAL TEXT ON SCROLL (SWISS STYLE BOLD TYPOGRAPHY - FIXED)
        ========================================================================== */
     .text-reveal-section {
       position: relative;
@@ -1101,39 +1101,115 @@
       font-family: var(--font-sans);
       font-size: clamp(2rem, 4.4vw, 4rem);
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.18;
       letter-spacing: -0.035em;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.32em 0.38em;
+      display: block;
       user-select: none;
     }
 
+    /* Inline Grid fixes line-height, text alignment & baseline drift */
     .reveal-word {
+      display: inline-grid;
+      grid-template-areas: "layer";
+      vertical-align: baseline;
+      margin-right: 0.32em;
+      margin-bottom: 0.15em;
       position: relative;
-      display: inline-block;
+    }
+
+    .word-muted,
+    .word-active {
+      grid-area: layer;
       white-space: pre;
     }
 
     .word-muted {
       color: #e2e8f0;
-      transition: color 0.2s ease;
     }
 
     .word-active {
-      position: absolute;
-      top: 0;
-      left: 0;
       color: #0a0a0c;
       overflow: hidden;
       width: 0%;
-      white-space: nowrap;
-      pointer-events: none;
       will-change: width;
+      z-index: 2;
+      pointer-events: none;
     }
 
     /* ==========================================================================
-       RESPONSIVE BREAKPOINTS (ALL DEVICES)
+       SECTION 8: MARQUEE / TICKER TAPE
+       ========================================================================== */
+    .ticker-section {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 5rem 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 30;
+      display: flex;
+      user-select: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: tickerMarquee 26s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-group {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding-right: 3rem;
+    }
+
+    .ticker-text {
+      font-family: var(--font-sans);
+      font-size: clamp(3.5rem, 7.5vw, 6.5rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .ticker-img-box {
+      width: clamp(140px, 16vw, 210px);
+      height: clamp(85px, 10vw, 130px);
+      border-radius: 12px;
+      overflow: hidden;
+      display: inline-flex;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ticker-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .ticker-group:hover .ticker-img-box img {
+      transform: scale(1.08);
+    }
+
+    @keyframes tickerMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
        ========================================================================== */
     @media (max-width: 1200px) {
       .hacienda-slider-dock { left: 2rem; }
@@ -1160,6 +1236,7 @@
       .slider-thumb { width: 52px; height: 52px; border-radius: 12px; }
 
       .text-reveal-paragraph { font-size: clamp(1.75rem, 4vw, 3rem); }
+      .ticker-group { gap: 2rem; padding-right: 2rem; }
     }
 
     @media (max-width: 768px) {
@@ -1216,7 +1293,9 @@
       .slider-thumb { width: 48px; height: 48px; border-radius: 12px; }
 
       .text-reveal-sticky { padding: 2rem 1.5rem; }
-      .text-reveal-paragraph { gap: 0.25em 0.3em; }
+      .reveal-word { margin-right: 0.28em; margin-bottom: 0.12em; }
+
+      .ticker-section { padding: 3.5rem 0; }
     }
 
     @media (max-width: 480px) {
@@ -1496,14 +1575,42 @@
     </div>
   </section>
 
-  <!-- SECTION 7: REVEAL TEXT ON SCROLL (SWISS TYPOGRAPHY) -->
+  <!-- SECTION 7: REVEAL TEXT ON SCROLL (SWISS TYPOGRAPHY - FIXED GRID) -->
   <section class="text-reveal-section" id="textRevealSection">
     <div class="text-reveal-sticky">
       <div class="text-reveal-container">
         <div class="text-reveal-label">Heritage &amp; Craftsmanship</div>
         <p class="text-reveal-paragraph" id="revealParagraph">
-          <!-- Populated dynamically via JS for exact word-by-word mid-character clip fill -->
+          <!-- Populated dynamically via JS -->
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: MARQUEE / TICKER TAPE -->
+  <section class="ticker-section">
+    <div class="ticker-track">
+      <!-- First track group -->
+      <div class="ticker-group">
+        <span class="ticker-text">Awning</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Awning Architecture" loading="lazy"></div>
+        <span class="ticker-text">Canopy</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Shaded Canopy" loading="lazy"></div>
+        <span class="ticker-text">Terrace</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Outdoor Terrace" loading="lazy"></div>
+        <span class="ticker-text">Furniture</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Bespoke Furniture" loading="lazy"></div>
+      </div>
+      <!-- Duplicated track group for continuous loop -->
+      <div class="ticker-group" aria-hidden="true">
+        <span class="ticker-text">Awning</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Awning Architecture" loading="lazy"></div>
+        <span class="ticker-text">Canopy</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Shaded Canopy" loading="lazy"></div>
+        <span class="ticker-text">Terrace</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Outdoor Terrace" loading="lazy"></div>
+        <span class="ticker-text">Furniture</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Bespoke Furniture" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -1769,7 +1876,6 @@
           } else if (totalProgress <= wordStart) {
             el.style.width = '0%';
           } else {
-            // Fluid partial percentage fill within the word
             const wordProgress = (totalProgress - wordStart) / (wordEnd - wordStart);
             el.style.width = `${(wordProgress * 100).toFixed(1)}%`;
           }
