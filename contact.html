@@ -3,298 +3,406 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us | Creative Platform &amp; Interiors</title>
+  <title>Contact Us — 10011.CO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-page: #0b0507;
-      --card-bg: #141011;
-      --text-main: #ffffff;
-      --text-sub: rgba(255, 255, 255, 0.6);
-      --accent: #ff3385;
+      --bg-color: #ffffff;
+      --text-main: #111111;
+      --text-muted: #888888;
+      --border-color: #e2e2e2;
+      --pill-bg: #ffffff;
+      --pill-active-bg: #111111;
+      --pill-active-text: #ffffff;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: var(--font-sans);
-      background-color: var(--bg-page);
+      background-color: var(--bg-color);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      padding: 2.5rem 4rem;
     }
 
-    /* Navbar / Header */
-    .contact-nav {
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2.5rem 4rem;
+    /* Top Navigation */
+    .nav-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto 5rem;
     }
 
     .brand-logo {
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: #fff;
-      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
       letter-spacing: -0.02em;
+      color: var(--text-main);
+      text-decoration: none;
     }
 
-    .back-home-link {
-      color: rgba(255, 255, 255, 0.7);
+    .nav-links-center {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-links-center a {
       text-decoration: none;
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links-center a:hover {
+      opacity: 0.6;
+    }
+
+    .nav-right-group {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .contact-nav-link {
+      text-decoration: none;
+      color: var(--text-main);
       font-weight: 600;
       font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: color 0.25s ease;
     }
 
-    .back-home-link:hover {
-      color: #ffffff;
+    .clock-display {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
     }
 
-    /* Main Contact Layout */
-    .contact-main {
+    /* Main Form Container */
+    .contact-container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 2rem 2rem 5rem;
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 5rem;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      padding-bottom: 6rem;
     }
 
-    .contact-intro {
+    /* Section: Interested In */
+    .section-title {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.75rem;
+      color: var(--text-main);
+    }
+
+    .pills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .pill-btn {
+      background: var(--pill-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.85rem 1.6rem;
+      border-radius: 9999px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .pill-btn:hover {
+      border-color: var(--text-main);
+    }
+
+    .pill-btn.active {
+      background: var(--pill-active-bg);
+      color: var(--pill-active-text);
+      border-color: var(--pill-active-bg);
+    }
+
+    /* Form Fields */
+    .form-fields-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .minimal-input, .minimal-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 0;
+      font-family: var(--font-sans);
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .minimal-input::placeholder, .minimal-textarea::placeholder {
+      color: #d0d0d0;
+    }
+
+    .minimal-input:focus, .minimal-textarea:focus {
+      border-color: var(--text-main);
+    }
+
+    .minimal-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Budget Section */
+    .budget-section {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .contact-badge {
-      display: inline-block;
-      background: rgba(255, 51, 133, 0.15);
-      border: 1px solid rgba(255, 51, 133, 0.3);
-      color: var(--accent);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      width: fit-content;
-    }
-
-    .contact-title {
-      font-size: clamp(2.5rem, 4.5vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.08;
+    .budget-label {
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-weight: 500;
       letter-spacing: -0.03em;
+      color: #d0d0d0;
     }
 
-    .contact-desc {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: var(--text-sub);
-      max-width: 440px;
-    }
-
-    .contact-details {
-      margin-top: 1rem;
+    /* Direct Contact Info Block */
+    .direct-contact-block {
+      margin-top: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.8);
+      gap: 1.5rem;
     }
 
-    .contact-details span {
-      color: var(--accent);
-      font-weight: 600;
+    .block-headline {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
     }
 
-    /* Form Card Container */
-    .contact-form-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      padding: 3rem;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    .block-headline a {
+      color: var(--text-main);
+      text-decoration: underline;
+      text-underline-offset: 8px;
     }
 
-    .form-group-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
-
-    .form-group {
+    .contact-methods {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
     }
 
-    .form-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .form-input, .form-textarea {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      padding: 0.9rem 1.1rem;
-      color: #ffffff;
-      font-family: var(--font-sans);
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.25s, background 0.25s;
-    }
-
-    .form-input:focus, .form-textarea:focus {
-      border-color: var(--accent);
-      background: rgba(255, 255, 255, 0.07);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 130px;
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: #ffffff;
-      color: #000000;
-      border: none;
-      padding: 1rem;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.25s ease, transform 0.2s ease;
-      font-family: var(--font-sans);
-      margin-top: 0.5rem;
-    }
-
-    .btn-submit:hover {
-      background: #e6e6e6;
-      transform: translateY(-2px);
+    .contact-methods a {
+      color: var(--text-main);
+      text-decoration: underline;
+      text-underline-offset: 4px;
     }
 
     /* Footer */
-    .contact-footer {
+    .footer-wrapper {
       width: 100%;
       max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem 4rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 4rem auto 0;
       display: flex;
       justify-content: space-between;
+      align-items: flex-end;
       font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--text-main);
+      font-weight: 500;
     }
 
-    /* Responsive Breakpoints */
-    @media (max-width: 992px) {
-      .contact-main {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        padding: 1rem 1.5rem 4rem;
-      }
-      .contact-nav, .contact-footer {
-        padding: 2rem 1.5rem;
-      }
+    .footer-left-links, .footer-right-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
     }
 
-    @media (max-width: 576px) {
-      .form-group-grid {
-        grid-template-columns: 1fr;
-      }
-      .contact-form-card {
-        padding: 2rem 1.5rem;
-      }
+    .footer-right-links {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.3rem;
+    }
+
+    .footer-left-links a, .footer-right-links a {
+      text-decoration: none;
+      color: var(--text-main);
+      transition: opacity 0.2s;
+    }
+
+    .footer-left-links a:hover, .footer-right-links a:hover {
+      opacity: 0.5;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body { padding: 1.5rem; }
+      .nav-links-center { display: none; }
+      .footer-wrapper { flex-direction: column; gap: 2rem; align-items: flex-start; }
+      .footer-right-links { align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <header class="contact-nav">
-    <a href="index.html" class="brand-logo">CREATIVE.</a>
-    <a href="index.html" class="back-home-link">← Back to Home</a>
+  <!-- Top Navigation Header -->
+  <header class="nav-header">
+    <a href="index.html" class="brand-logo">10011.CO</a>
+    <ul class="nav-links-center">
+      <li><a href="index.html#services">SERVICES</a></li>
+      <li><a href="index.html#projects">PROJECTS</a></li>
+    </ul>
+    <div class="nav-right-group">
+      <a href="contact.html" class="contact-nav-link">CONTACT US</a>
+      <div class="clock-display" id="liveClock">12:12:40</div>
+    </div>
   </header>
 
-  <!-- Main Content Section -->
-  <main class="contact-main">
-    <div class="contact-intro">
-      <span class="contact-badge">Get in Touch</span>
-      <h1 class="contact-title">Let's build something exceptional together.</h1>
-      <p class="contact-desc">Have a project in mind, looking to elevate your brand presence, or want to explore our bespoke interior solutions? Fill out the form and our team will get back to you shortly.</p>
+  <!-- Main Contact Content -->
+  <main class="contact-container">
+    <form id="contactForm" onsubmit="event.preventDefault();">
       
-      <div class="contact-details">
-        <p>Direct Inquiries: <span>digital@prixa.org</span></p>
-        <p>Phone Support: <span>+977-9708050686</span></p>
+      <!-- Interested In Section -->
+      <div style="margin-bottom: 4rem;">
+        <h2 class="section-title">I'm interested in...</h2>
+        <div class="pills-grid" id="interestPills">
+          <button type="button" class="pill-btn" data-value="Branding">Branding</button>
+          <button type="button" class="pill-btn" data-value="Web design">Web design</button>
+          <button type="button" class="pill-btn" data-value="App design">App design</button>
+          <button type="button" class="pill-btn" data-value="Web development">Web development</button>
+          <button type="button" class="pill-btn" data-value="iOS app development">iOS app development</button>
+          <button type="button" class="pill-btn" data-value="HTML/CSS coding">HTML/CSS coding</button>
+          <button type="button" class="pill-btn" data-value="Vue/UI">Vue/UI</button>
+          <button type="button" class="pill-btn" data-value="Logo design">Logo design</button>
+          <button type="button" class="pill-btn" data-value="Site from scratch">Site from scratch</button>
+          <button type="button" class="pill-btn" data-value="App from scratch">App from scratch</button>
+          <button type="button" class="pill-btn" data-value="Shopify">Shopify</button>
+          <button type="button" class="pill-btn" data-value="WordPress">WordPress</button>
+          <button type="button" class="pill-btn" data-value="Graphic design">Graphic design</button>
+          <button type="button" class="pill-btn" data-value="Creative direction">Creative direction</button>
+          <button type="button" class="pill-btn" data-value="Photography">Photography</button>
+          <button type="button" class="pill-btn" data-value="Advertise with us">Advertise with us</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Interactive Form Card -->
-    <div class="contact-form-card">
-      <form id="standaloneContactForm" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully.');">
+      <!-- Text Inputs Group -->
+      <div class="form-fields-group">
+        <div class="input-row">
+          <input type="text" class="minimal-input" placeholder="Your name" required>
+        </div>
         
-        <div class="form-group-grid">
-          <div class="form-group">
-            <label class="form-label" for="firstName">First Name</label>
-            <input type="text" id="firstName" class="form-input" placeholder="John" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="lastName">Last Name</label>
-            <input type="text" id="lastName" class="form-input" placeholder="Doe" required>
-          </div>
+        <div class="input-row">
+          <input type="email" class="minimal-input" placeholder="Your email" required>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="email">Email Address</label>
-          <input type="email" id="email" class="form-input" placeholder="john@example.com" required>
+        <div class="input-row">
+          <textarea class="minimal-textarea" placeholder="Tell us about your project" required></textarea>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label" for="projectType">Service Interested In</label>
-          <input type="text" id="projectType" class="form-input" placeholder="e.g. Interior Design / Branding / Awnings" required>
+      <!-- Budget Section -->
+      <div class="budget-section" style="margin-top: 4rem;">
+        <div class="budget-label">Project budget (USD)</div>
+        <div class="pills-grid" id="budgetPills">
+          <button type="button" class="pill-btn" data-budget="2-5k">2-5k</button>
+          <button type="button" class="pill-btn" data-budget="5-10k">5-10k</button>
+          <button type="button" class="pill-btn" data-budget="10-20k">10-20k</button>
+          <button type="button" class="pill-btn" data-budget="20-40k">20-40k</button>
+          <button type="button" class="pill-btn" data-budget="> 40k">> 40k</button>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label" for="message">Project Details</label>
-          <textarea id="message" class="form-textarea" placeholder="Tell us about your timeline, scope, and vision..." required></textarea>
+      <!-- Direct CTA Section -->
+      <div class="direct-contact-block" style="margin-top: 5rem;">
+        <h2 class="block-headline">Have a project idea?<br><a href="#start">Start here.</a></h2>
+        <div class="contact-methods">
+          <div>email us <a href="mailto:info@10011.co">info@10011.co</a></div>
+          <div>schedule a call <a href="https://calendly.com" target="_blank">calendly</a></div>
         </div>
+      </div>
 
-        <button type="submit" class="btn-submit">Send Message</button>
-      </form>
-    </div>
+    </form>
   </main>
 
-  <!-- Footer Bar -->
-  <footer class="contact-footer">
-    <div>&copy; 2026 Creative Platform. All rights reserved.</div>
-    <div>A PRIXA Company</div>
+  <!-- Footer -->
+  <footer class="footer-wrapper">
+    <ul class="footer-left-links">
+      <li><a href="#magazine">MAGAZINE</a></li>
+      <li><a href="#jobs">JOBS</a></li>
+    </ul>
+    <ul class="footer-right-links">
+      <li><a href="#instagram" target="_blank">INSTAGRAM</a></li>
+      <li><a href="#tiktok" target="_blank">TIKTOK</a></li>
+      <li><a href="#twitter" target="_blank">TWITTER</a></li>
+      <li><a href="#github" target="_blank">GITHUB</a></li>
+    </ul>
   </footer>
 
+  <script>
+    // Live Clock functionality
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const clockElement = document.getElementById('liveClock');
+      if (clockElement) {
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Toggle pill buttons behavior (multi-select for interests, single/multi for budget)
+    const interestPills = document.querySelectorAll('#interestPills .pill-btn');
+    interestPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pill.classList.toggle('active');
+      });
+    });
+
+    const budgetPills = document.querySelectorAll('#budgetPills .pill-btn');
+    budgetPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        budgetPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
