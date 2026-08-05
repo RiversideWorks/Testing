@@ -66,7 +66,6 @@
       justify-content: center;
     }
 
-    /* Central Capsule Badge */
     .eye-pill {
       background: #000000;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -109,19 +108,16 @@
       transform: translate(0, 0);
     }
 
-    /* Natural Blinking Animation */
     @keyframes blink {
       0%, 92%, 100% { transform: scaleY(1); }
       96% { transform: scaleY(0.1); }
     }
 
-    /* Directional Pupil Movements */
     .pupil.look-right { transform: translate(11px, 0); }
     .pupil.look-left { transform: translate(-11px, 0); }
     .pupil.look-down { transform: translate(0, 11px); }
     .pupil.look-up { transform: translate(0, -11px); }
 
-    /* Pop-up Text Tags */
     .popup-tag {
       position: absolute;
       background: rgba(255, 255, 255, 0.08);
@@ -140,7 +136,6 @@
       white-space: nowrap;
     }
 
-    /* Positioning Popups Around Capsule */
     .popup-tag.right {
       right: 15px;
       top: 50%;
@@ -170,11 +165,7 @@
       transform: translateX(-50%) translateY(-20px) scale(0.85);
     }
 
-    /* Active Popup State */
-    .popup-tag.active {
-      opacity: 1;
-    }
-
+    .popup-tag.active { opacity: 1; }
     .popup-tag.right.active { transform: translateY(-50%) translateX(0) scale(1); }
     .popup-tag.left.active { transform: translateY(-50%) translateX(0) scale(1); }
     .popup-tag.down.active { transform: translateX(-50%) translateY(0) scale(1); }
@@ -965,9 +956,7 @@
       scrollbar-width: none;
     }
 
-    .hacienda-pill-slider::-webkit-scrollbar {
-      display: none;
-    }
+    .hacienda-pill-slider::-webkit-scrollbar { display: none; }
 
     .slider-thumb {
       width: 64px;
@@ -989,10 +978,7 @@
       display: block;
     }
 
-    .slider-thumb:hover {
-      opacity: 0.9;
-      transform: scale(1.05);
-    }
+    .slider-thumb:hover { opacity: 0.9; transform: scale(1.05); }
 
     .slider-thumb.active {
       opacity: 1;
@@ -1002,7 +988,7 @@
     }
 
     /* ==========================================================================
-       SECTION 6: STACK TEXT REVEAL (AWWWARDS STYLE EFFECT)
+       SECTION 6: STACK TEXT REVEAL (REFINED HORIZONTAL SLICE GRID)
        ========================================================================== */
     .stack-text-section {
       position: relative;
@@ -1034,9 +1020,9 @@
 
     .stack-line {
       position: absolute;
-      font-size: clamp(3.2rem, 10.5vw, 9.5rem);
+      font-size: clamp(3.2rem, 11vw, 9.5rem);
       font-weight: 900;
-      letter-spacing: -0.035em;
+      letter-spacing: -0.04em;
       line-height: 1;
       white-space: nowrap;
       text-transform: uppercase;
@@ -1044,17 +1030,6 @@
       color: #ffffff;
       user-select: none;
       will-change: transform, clip-path;
-      transform-origin: center center;
-    }
-
-    /* Outer lines start completely collapsed into the center line */
-    .stack-line[data-index="-3"],
-    .stack-line[data-index="-2"],
-    .stack-line[data-index="-1"],
-    .stack-line[data-index="1"],
-    .stack-line[data-index="2"],
-    .stack-line[data-index="3"] {
-      pointer-events: none;
     }
 
     /* ==========================================================================
@@ -1401,7 +1376,7 @@
     </div>
   </section>
 
-  <!-- SECTION 6: STACK TEXT REVEAL (AWWWARDS-STYLE REVEAL) -->
+  <!-- SECTION 6: STACK TEXT REVEAL (EXACT HORIZONTAL SLICE REVEAL) -->
   <section class="stack-text-section" id="stackTextSection">
     <div class="stack-text-sticky">
       <div class="stack-text-container" id="stackTextContainer">
@@ -1607,7 +1582,7 @@
       }
 
       // =========================================================================
-      // 4. STACK TEXT REVEAL LOGIC (AWWWARDS SCROLL-BASED UNPACKING)
+      // 4. STACK TEXT REVEAL LOGIC (PRECISION HORIZONTAL SLICE MASKING)
       // =========================================================================
       const stackSection = document.getElementById('stackTextSection');
       const stackLines = document.querySelectorAll('.stack-line');
@@ -1620,46 +1595,43 @@
 
         if (totalHeight <= 0) return;
 
-        // Calculate progress from 0 (entry) to 1 (full expansion)
-        const scrollProgress = Math.min(1, Math.max(0, -rect.top / totalHeight));
+        // Normalize scroll progress (0.0 at entry to 1.0 fully expanded)
+        const progress = Math.min(1, Math.max(0, -rect.top / totalHeight));
 
-        // Max vertical distance gap between lines when fully expanded
-        const maxGap = Math.min(window.innerHeight * 0.13, 110);
+        // Get computed font size to scale vertical step dynamically
+        const fontPx = parseFloat(window.getComputedStyle(stackLines[3]).fontSize);
+        const targetStep = fontPx * 0.58; // Tight graphic vertical stack spacing
 
         stackLines.forEach(line => {
           const idx = parseInt(line.getAttribute('data-index'), 10);
           
+          // Current translation displacement
+          const currentY = idx * targetStep * progress;
+
           if (idx === 0) {
-            // Center line stays stable in exact center
+            // Center main line: Complete full text
             line.style.transform = `translate3d(0, 0, 0)`;
             line.style.clipPath = `inset(0% 0% 0% 0%)`;
+          } else if (idx < 0) {
+            // Top 3 lines: Smoothly transition clip mask to expose ONLY TOP HALF
+            const bottomCut = progress * 50; 
+            line.style.clipPath = `inset(0% 0% ${bottomCut}% 0%)`;
+            line.style.transform = `translate3d(0, ${currentY}px, 0)`;
           } else {
-            // Calculate proportional target Y position
-            const currentY = idx * maxGap * scrollProgress;
-            
-            // Dynamic slice clipping effect during middle stage
-            const sliceInset = Math.max(0, (1 - scrollProgress) * 42); 
-            
-            if (idx < 0) {
-              // Top lines slice upwards
-              line.style.clipPath = `inset(0% 0% ${sliceInset}% 0%)`;
-            } else {
-              // Bottom lines slice downwards
-              line.style.clipPath = `inset(${sliceInset}% 0% 0% 0%)`;
-            }
-
+            // Bottom 3 lines: Smoothly transition clip mask to expose ONLY BOTTOM HALF
+            const topCut = progress * 50;
+            line.style.clipPath = `inset(${topCut}% 0% 0% 0%)`;
             line.style.transform = `translate3d(0, ${currentY}px, 0)`;
           }
         });
       }
 
-      // Single Unified Scroll Handler for both pin sections
+      // Single Scroll Handler
       window.addEventListener('scroll', () => {
         handleScrollDrivenGallery();
         updateStackTextReveal();
       }, { passive: true });
 
-      // Initial execution
       updateStackTextReveal();
     });
   </script>
