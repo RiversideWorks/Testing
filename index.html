@@ -2153,3 +2153,205 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can Do More - Editorial Section</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e8e6e1; /* Off-white editorial paper background */
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        /* Section Layout */
+        .editorial-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        /* Top Bar Info */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #555;
+            z-index: 20;
+        }
+
+        /* Massive 3D Overlapping Typography Container */
+        .hero-typography {
+            position: relative;
+            width: 100%;
+            height: 45vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        /* Base Typography Styling */
+        .huge-text {
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.8;
+            letter-spacing: -0.04em;
+            position: absolute;
+            user-select: none;
+        }
+
+        /* "CAN" - Huge background layer with depth blur */
+        .text-can {
+            font-size: clamp(9rem, 24vw, 24rem);
+            color: #111;
+            left: -1%;
+            top: 0%;
+            z-index: 1;
+        }
+
+        /* "DO" - Medium layer overlapping behind MORE */
+        .text-do {
+            font-size: clamp(5rem, 14vw, 14rem);
+            color: #111;
+            left: 56%;
+            top: -5%;
+            z-index: 2;
+            filter: blur(3px); /* Replicates the optical depth-of-field blur from reference */
+        }
+
+        /* "MORE" - Dominant foreground skewed/slanted layer */
+        .text-more {
+            font-size: clamp(8rem, 22vw, 22rem);
+            color: #111;
+            left: 35%;
+            top: 18%;
+            z-index: 4;
+            transform: rotate(-12deg);
+            transform-origin: bottom left;
+        }
+
+        /* Subtitle: "RESULTS WILL COME" */
+        .results-subtitle {
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            position: absolute;
+            left: 12%;
+            bottom: 35%;
+            z-index: 5;
+        }
+
+        /* Bottom Content Area (Columns matching editorial spread) */
+        .editorial-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: flex-end;
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 20px;
+        }
+
+        .editorial-text {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: #333;
+            max-width: 480px;
+        }
+
+        /* Barcode element from reference */
+        .barcode-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .barcode {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.2rem;
+            letter-spacing: -2px;
+            font-weight: bold;
+            transform: scaleY(2.2);
+            transform-origin: bottom left;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive Layout Adjustments */
+        @media (max-width: 968px) {
+            .editorial-section {
+                padding: 20px;
+            }
+            .editorial-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .text-do {
+                left: 50%;
+                top: 5%;
+            }
+            .text-more {
+                left: 20%;
+                top: 25%;
+            }
+            .results-subtitle {
+                left: 5%;
+                bottom: 28%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="editorial-section">
+        <!-- Top Metadata Header -->
+        <div class="top-bar">
+            <span>2025 DESIGN PORTFOLIO</span>
+        </div>
+
+        <!-- 3D Overlapping Typography -->
+        <div class="hero-typography">
+            <h1 class="huge-text text-can">CAN</h1>
+            <h1 class="huge-text text-do">DO</h1>
+            <div class="results-subtitle">
+                RESULTS<br>WILL<br>COME
+            </div>
+            <h1 class="huge-text text-more">MORE</h1>
+        </div>
+
+        <!-- Bottom Editorial Columns & Barcode -->
+        <div class="editorial-content">
+            <p class="editorial-text">
+                Pushing boundaries requires persistent effort, sharp focus, and the willingness to look beyond standard templates. People who embrace structural design understand that exceptional outcomes rarely happen overnight—they are built systematically through precise execution. Whether in branding, layout architecture, or interactive engineering, deliberate workflow forms the foundation of lasting value.
+            </p>
+            
+            <div class="barcode-container">
+                <div class="barcode">||||||||||||||||||||</div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
