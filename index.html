@@ -2153,3 +2153,362 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Accordion Cards</title>
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #FF473A;
+            --secondary-color: #101010;
+            --bg-color: #EDEDED;
+            --card-bg: #FFFFFF;
+            --text-primary: #101010;
+            --text-secondary: #666666;
+            --transition-speed: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Background Gradient Effect --- */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120vmax;
+            height: 120vmax;
+            background: radial-gradient(circle, rgba(147, 112, 219, 0.12) 0%, rgba(237, 237, 237, 0) 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* --- Accordion Container --- */
+        .accordion-container {
+            display: flex;
+            gap: 16px;
+            width: 92%;
+            max-width: 1150px;
+            height: 600px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 36px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+        }
+
+        /* --- Card Base Styles --- */
+        .card {
+            position: relative;
+            border-radius: 28px;
+            background: var(--card-bg);
+            cursor: pointer;
+            overflow: hidden;
+            transition: flex var(--transition-speed);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Flex distribution for open vs closed states */
+        .card.open {
+            flex: 4.5;
+            cursor: default;
+        }
+
+        .card.closed {
+            flex: 1;
+        }
+
+        /* --- Open Card Content Layout --- */
+        .card-content {
+            position: absolute;
+            inset: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .card.open .card-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .card-number {
+            font-size: 14rem;
+            line-height: 1;
+            font-weight: 200;
+            color: #E8E8E8;
+            position: absolute;
+            top: -20px;
+            left: 24px;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .card-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            max-width: 320px;
+            margin-bottom: 32px;
+        }
+
+        .card-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            color: var(--card-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .card-button:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .card-button svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2.5;
+        }
+
+        /* --- Closed Card State (Stripe) Layout --- */
+        .closed-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 0;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .card.open .closed-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .closed-number {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .closed-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .closed-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #F4F4F4;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #EAEAEA;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .card.closed:hover .closed-button {
+            background-color: var(--secondary-color);
+            color: #FFFFFF;
+            transform: scale(1.05);
+        }
+
+        .closed-button svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.5;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 900px) {
+            .accordion-container {
+                flex-direction: column;
+                height: auto;
+                width: 95%;
+                padding: 16px;
+            }
+
+            .card {
+                width: 100%;
+                height: 80px;
+            }
+
+            .card.open {
+                height: 400px;
+            }
+
+            .closed-content {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 0 24px;
+            }
+
+            .closed-title {
+                writing-mode: horizontal-tb;
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="accordion-container" id="accordion">
+        <!-- Card 01 -->
+        <div class="card open" id="card1" onclick="handleCardClick('card1')">
+            <div class="card-content">
+                <h2 class="card-number">01</h2>
+                <div class="card-info">
+                    <h3 class="card-title">Add Your Content</h3>
+                    <p class="card-description">Customize the title and description for each card to fit your content, story, or process.</p>
+                    <button class="card-button" aria-label="Toggle Card">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="closed-content">
+                <span class="closed-number">01</span>
+                <span class="closed-title">Add Your Content</span>
+                <div class="closed-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 02 -->
+        <div class="card closed" id="card2" onclick="handleCardClick('card2')">
+            <div class="card-content">
+                <h2 class="card-number">02</h2>
+                <div class="card-info">
+                    <h3 class="card-title">Style the Colors</h3>
+                    <p class="card-description">Modify the color palette, background effects, and typography to match your brand identity.</p>
+                    <button class="card-button" aria-label="Toggle Card">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="closed-content">
+                <span class="closed-number">02</span>
+                <span class="closed-title">Style the Colors</span>
+                <div class="closed-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 03 -->
+        <div class="card closed" id="card3" onclick="handleCardClick('card3')">
+            <div class="card-content">
+                <h2 class="card-number">03</h2>
+                <div class="card-info">
+                    <h3 class="card-title">Adjust the Layout</h3>
+                    <p class="card-description">Reorganize elements, change spacing, or switch between grid and flex layouts with ease.</p>
+                    <button class="card-button" aria-label="Toggle Card">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="closed-content">
+                <span class="closed-number">03</span>
+                <span class="closed-title">Adjust the Layout</span>
+                <div class="closed-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 04 -->
+        <div class="card closed" id="card4" onclick="handleCardClick('card4')">
+            <div class="card-content">
+                <h2 class="card-number">04</h2>
+                <div class="card-info">
+                    <h3 class="card-title">Refine the Details</h3>
+                    <p class="card-description">Fine-tune transitions, add subtle animations, and ensure perfect responsiveness across devices.</p>
+                    <button class="card-button" aria-label="Toggle Card">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="closed-content">
+                <span class="closed-number">04</span>
+                <span class="closed-title">Refine the Details</span>
+                <div class="closed-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleCardClick(selectedCardId) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (card.id === selectedCardId) {
+                    card.classList.remove('closed');
+                    card.classList.add('open');
+                } else {
+                    card.classList.remove('open');
+                    card.classList.add('closed');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
