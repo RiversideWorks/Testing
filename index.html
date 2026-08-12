@@ -2158,7 +2158,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steps Stack Section - Improvised</title>
+    <title>Steps Stack Section - Fixed Layout</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -2169,7 +2169,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0e131f; /* Consistent dark theme */
+            background-color: #0e131f;
             color: #ffffff;
             overflow-x: hidden;
         }
@@ -2202,9 +2202,9 @@
             background: #161d2d;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 28px;
-            width: 100px; /* Wider collapsed state matching reference proportions */
-            height: 560px; /* Taller card height */
-            padding: 36px 20px;
+            width: 80px; /* Collapsed width */
+            height: 520px; /* Fixed height for consistency */
+            padding: 32px 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -2221,45 +2221,46 @@
             width: 420px; /* Expanded card width matching reference */
             background: #1c263b;
             border-color: rgba(255, 255, 255, 0.18);
+            padding: 40px 36px;
         }
 
-        /* Card Header */
-        .card-header {
+        /* Card Top Header Area */
+        .card-top {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             position: relative;
             width: 100%;
+            height: 100px; /* Allocated safe zone for numbers */
         }
 
         .step-number {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: #8c93a0;
             letter-spacing: -0.03em;
             line-height: 1;
-            transition: color 0.3s ease, font-size 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .step-card.active .step-number {
-            font-size: 6rem; /* Large background-style number when open */
+            font-size: 5.5rem; /* Large number when open */
             color: #ffffff;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
-        /* Collapsed Vertical Title (Fixed Overlap by positioning correctly) */
+        /* Collapsed Vertical Title (Completely isolated to prevent overlap) */
         .collapsed-title {
             position: absolute;
-            top: 130px; /* Pushed down to completely prevent overlap with number */
-            left: -2px;
+            top: 110px; /* Placed safely below the number container */
+            left: 2px;
             white-space: nowrap;
             transform: rotate(-90deg);
             transform-origin: left top;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: #9ca3af;
             letter-spacing: 0.04em;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.2s ease;
         }
 
         .step-card.active .collapsed-title {
@@ -2268,17 +2269,15 @@
             pointer-events: none;
         }
 
-        /* Expanded Content Area (Fixed Overlap with button) */
+        /* Expanded Content Body */
         .card-body {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
             pointer-events: none;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            margin-top: auto;
-            margin-bottom: 10px;
+            gap: 12px;
         }
 
         .step-card.active .card-body {
@@ -2288,10 +2287,9 @@
         }
 
         .content-title {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 12px;
         }
 
         .content-desc {
@@ -2300,7 +2298,7 @@
             line-height: 1.6;
         }
 
-        /* Interactive Arrow Button */
+        /* Bottom Action Button (Cleanly separated from text) */
         .card-action {
             width: 44px;
             height: 44px;
@@ -2313,7 +2311,7 @@
             color: #ffffff;
             transition: background 0.2s ease, transform 0.2s ease;
             align-self: flex-start;
-            margin-top: auto;
+            flex-shrink: 0;
         }
 
         .step-card:hover .card-action {
@@ -2327,47 +2325,7 @@
         }
 
         .step-card.active .card-action svg {
-            transform: rotate(180deg); /* Points left/back or custom direction when open */
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .steps-container {
-                flex-direction: column;
-                align-items: center;
-                padding: 40px 20px;
-            }
-            .step-card {
-                width: 100% !important;
-                height: 90px;
-                flex-direction: row;
-                align-items: center;
-                padding: 20px 24px;
-            }
-            .step-card.active {
-                height: 240px;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .collapsed-title {
-                position: static;
-                transform: none;
-                margin-left: 20px;
-                top: auto;
-                left: auto;
-            }
-            .card-header {
-                flex-direction: row;
-                align-items: center;
-                width: 100%;
-            }
-            .step-card.active .card-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .step-card.active .collapsed-title {
-                display: none;
-            }
+            transform: rotate(180deg);
         }
     </style>
 </head>
@@ -2378,7 +2336,7 @@
             
             <!-- Card 1 (Default Active) -->
             <div class="step-card active" onclick="expandCard(this)">
-                <div class="card-header">
+                <div class="card-top">
                     <span class="step-number">01</span>
                     <span class="collapsed-title">Add Your Content</span>
                 </div>
@@ -2393,7 +2351,7 @@
 
             <!-- Card 2 -->
             <div class="step-card" onclick="expandCard(this)">
-                <div class="card-header">
+                <div class="card-top">
                     <span class="step-number">02</span>
                     <span class="collapsed-title">Style the Colors</span>
                 </div>
@@ -2408,7 +2366,7 @@
 
             <!-- Card 3 -->
             <div class="step-card" onclick="expandCard(this)">
-                <div class="card-header">
+                <div class="card-top">
                     <span class="step-number">03</span>
                     <span class="collapsed-title">Adjust the Layout</span>
                 </div>
@@ -2423,7 +2381,7 @@
 
             <!-- Card 4 -->
             <div class="step-card" onclick="expandCard(this)">
-                <div class="card-header">
+                <div class="card-top">
                     <span class="step-number">04</span>
                     <span class="collapsed-title">Refine the Details</span>
                 </div>
@@ -2443,7 +2401,6 @@
         function expandCard(selectedCard) {
             const allCards = document.querySelectorAll('.step-card');
             
-            // Toggle active state smoothly
             allCards.forEach(card => {
                 if (card === selectedCard) {
                     card.classList.toggle('active');
