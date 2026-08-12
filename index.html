@@ -2153,3 +2153,302 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps Stack Section</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0e131f; /* Matches your website's dark theme */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Section Container */
+        .steps-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1b2438 0%, #0e131f 70%);
+        }
+
+        /* Cards Wrapper */
+        .steps-container {
+            display: flex;
+            gap: 16px;
+            max-width: 950px;
+            width: 100%;
+            padding: 0 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Individual Step Card */
+        .step-card {
+            background: #161d2d;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            width: 85px; /* Collapsed width */
+            height: 480px;
+            padding: 30px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            will-change: width;
+        }
+
+        /* Active / Expanded Card State */
+        .step-card.active {
+            width: 360px; /* Expanded width */
+            background: #1c263b;
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        /* Card Header (Number + Rotated Title for Collapsed State) */
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            height: 100%;
+        }
+
+        .step-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            transition: color 0.3s ease, font-size 0.3s ease;
+        }
+
+        .step-card.active .step-number {
+            font-size: 5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        /* Collapsed Vertical Title */
+        .collapsed-title {
+            position: absolute;
+            top: 140px;
+            left: 0;
+            white-space: nowrap;
+            transform: rotate(-90deg);
+            transform-origin: left top;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #9ca3af;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .step-card.active .collapsed-title {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Expanded Content Area */
+        .card-body {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+            pointer-events: none;
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+        }
+
+        .step-card.active .card-body {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .content-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .content-desc {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        /* Interactive Arrow Button */
+        .card-action {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            transition: background 0.2s ease, transform 0.2s ease;
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        .step-card:hover .card-action {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-action svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card.active .card-action svg {
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .steps-container {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+                padding: 40px 0;
+            }
+            .step-card {
+                width: 100% !important;
+                height: 90px;
+                flex-direction: row;
+                align-items: center;
+                padding: 20px 24px;
+            }
+            .step-card.active {
+                height: 220px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .collapsed-title {
+                position: static;
+                transform: none;
+                margin-left: 20px;
+            }
+            .card-header {
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+            }
+            .step-card.active .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .step-card.active .collapsed-title {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="steps-section">
+        <div class="steps-container">
+            
+            <!-- Card 1 (Default Active) -->
+            <div class="step-card active" onclick="expandCard(this)">
+                <div class="card-header">
+                    <span class="step-number">01</span>
+                    <span class="collapsed-title">Add Your Content</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="content-title">Add Your Content</h3>
+                    <p class="content-desc">Customize the title and description for each card to fit your content, story, or brand process seamlessly.</p>
+                </div>
+                <div class="card-action">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="step-card" onclick="expandCard(this)">
+                <div class="card-header">
+                    <span class="step-number">02</span>
+                    <span class="collapsed-title">Style the Colors</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="content-title">Style the Colors</h3>
+                    <p class="content-desc">Adapt the dark mode palette, card borders, and accents to match your exact UI requirements and identity.</p>
+                </div>
+                <div class="card-action">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="step-card" onclick="expandCard(this)">
+                <div class="card-header">
+                    <span class="step-number">03</span>
+                    <span class="collapsed-title">Adjust the Layout</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="content-title">Adjust the Layout</h3>
+                    <p class="content-desc">Configure grid alignment, spacing, and responsive breakpoints for perfect viewing on mobile and desktop.</p>
+                </div>
+                <div class="card-action">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="step-card" onclick="expandCard(this)">
+                <div class="card-header">
+                    <span class="step-number">04</span>
+                    <span class="collapsed-title">Refine the Details</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="content-title">Refine the Details</h3>
+                    <p class="content-desc">Polished micro-interactions, smooth CSS transitions, and crisp typography ensure high-end production quality.</p>
+                </div>
+                <div class="card-action">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        function expandCard(selectedCard) {
+            const allCards = document.querySelectorAll('.step-card');
+            
+            // Toggle active state across all cards smoothly
+            allCards.forEach(card => {
+                if (card === selectedCard) {
+                    card.classList.toggle('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
