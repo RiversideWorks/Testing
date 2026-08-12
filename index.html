@@ -2158,121 +2158,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steps Stack Section - Fixed Layout</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Accordion Service Section</title>
+    <!-- Tailwind CSS CDN for quick utility classes if needed, though we rely heavily on custom CSS for exact accordions -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #FF473A;
+            --secondary: #101010;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0e131f;
-            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #eef0f6;
+            color: var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Section Container */
-        .steps-section {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
+        .services-section {
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 20px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            overflow: hidden;
-            background: radial-gradient(circle at center, #1b2438 0%, #0e131f 75%);
+            align-items: center;
         }
 
-        /* Cards Wrapper */
-        .steps-container {
+        .accordion-container {
             display: flex;
             gap: 16px;
-            max-width: 1100px;
             width: 100%;
-            padding: 0 30px;
-            justify-content: center;
-            align-items: center;
+            height: 520px;
+            max-width: 1000px;
         }
 
-        /* Individual Step Card */
-        .step-card {
-            background: #161d2d;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 28px;
-            width: 80px; /* Collapsed width */
-            height: 520px; /* Fixed height for consistency */
-            padding: 32px 18px;
+        .accordion-card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 32px 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
             cursor: pointer;
-            position: relative;
             overflow: hidden;
-            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            will-change: width;
+            flex: 1; /* Default flex value when closed */
+            transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        /* Active / Expanded Card State */
-        .step-card.active {
-            width: 420px; /* Expanded card width matching reference */
-            background: #1c263b;
-            border-color: rgba(255, 255, 255, 0.18);
-            padding: 40px 36px;
+        .accordion-card.active {
+            flex: 3.2; /* Expanded state */
+            background-color: #ffffff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
-        /* Card Top Header Area */
-        .card-top {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            width: 100%;
-            height: 100px; /* Allocated safe zone for numbers */
-        }
-
-        .step-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #8c93a0;
-            letter-spacing: -0.03em;
+        /* Top elements inside card */
+        .card-number {
+            font-size: 5rem;
+            font-weight: 300;
             line-height: 1;
-            transition: all 0.4s ease;
+            color: #b0b0b0;
+            transition: color 0.4s ease, font-size 0.4s ease;
+            letter-spacing: -2px;
         }
 
-        .step-card.active .step-number {
-            font-size: 5.5rem; /* Large number when open */
-            color: #ffffff;
-            margin-bottom: 0;
+        .accordion-card.active .card-number {
+            color: #202020;
+            font-size: 6rem;
         }
 
-        /* Collapsed Vertical Title (Completely isolated to prevent overlap) */
-        .collapsed-title {
+        /* Closed card vertical title layout */
+        .closed-content {
             position: absolute;
-            top: 110px; /* Placed safely below the number container */
-            left: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
             white-space: nowrap;
-            transform: rotate(-90deg);
-            transform-origin: left top;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            color: #9ca3af;
-            letter-spacing: 0.04em;
-            transition: opacity 0.2s ease;
-        }
-
-        .step-card.active .collapsed-title {
-            opacity: 0;
-            visibility: hidden;
+            color: #666666;
+            opacity: 1;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             pointer-events: none;
         }
 
-        /* Expanded Content Body */
-        .card-body {
+        .accordion-card.active .closed-content {
             opacity: 0;
-            transform: translateY(15px);
+            transform: translate(-50%, -50%) rotate(90deg) scale(0.9);
+            pointer-events: none;
+        }
+
+        /* Opened card body content */
+        .open-content {
+            opacity: 0;
+            transform: translateY(20px);
             transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
             pointer-events: none;
             display: flex;
@@ -2280,134 +2266,196 @@
             gap: 12px;
         }
 
-        .step-card.active .card-body {
+        .accordion-card.active .open-content {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
 
-        .content-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ffffff;
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin: 0;
         }
 
-        .content-desc {
+        .card-description {
             font-size: 0.95rem;
-            color: #9ca3af;
-            line-height: 1.6;
+            color: #666666;
+            line-height: 1.5;
+            margin: 0;
+            max-width: 380px;
         }
 
-        /* Bottom Action Button (Cleanly separated from text) */
-        .card-action {
+        /* Action Button */
+        .card-action-btn {
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background-color: #f2f2f5;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            transition: background 0.2s ease, transform 0.2s ease;
-            align-self: flex-start;
-            flex-shrink: 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+            align-self: flex-end; /* Default for active card */
+            position: relative;
+            z-index: 2;
         }
 
-        .step-card:hover .card-action {
-            background: rgba(255, 255, 255, 0.16);
+        /* When card is inactive, button centers horizontally at the bottom */
+        .accordion-card:not(.active) .card-action-btn {
+            align-self: center;
+            margin-bottom: 8px;
         }
 
-        .card-action svg {
-            width: 18px;
-            height: 18px;
-            transition: transform 0.3s ease;
+        .card-action-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--secondary);
+            transition: stroke 0.3s ease, transform 0.3s ease;
         }
 
-        .step-card.active .card-action svg {
-            transform: rotate(180deg);
+        .card-action-btn:hover {
+            background-color: var(--primary);
+        }
+
+        .card-action-btn:hover svg {
+            stroke: #ffffff;
+            transform: translateX(2px);
+        }
+
+        .accordion-card.active .card-action-btn:hover {
+            background-color: var(--primary);
+        }
+
+        /* Responsive design for tablets and mobile */
+        @media (max-width: 768px) {
+            .accordion-container {
+                flex-direction: column;
+                height: auto;
+            }
+            .accordion-card {
+                height: 120px;
+                flex: none !important;
+            }
+            .accordion-card.active {
+                height: 360px;
+            }
+            .closed-content {
+                transform: none;
+                top: 32px;
+                left: 100px;
+            }
+            .accordion-card.active .closed-content {
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
 
-    <section class="steps-section">
-        <div class="steps-container">
+    <section class="services-section">
+        <div class="accordion-container">
             
-            <!-- Card 1 (Default Active) -->
-            <div class="step-card active" onclick="expandCard(this)">
-                <div class="card-top">
-                    <span class="step-number">01</span>
-                    <span class="collapsed-title">Add Your Content</span>
+            <!-- Card 01 (Active by default) -->
+            <div class="accordion-card active" onclick="handleCardClick(this)">
+                <div class="card-number">01</div>
+                
+                <div class="closed-content">
+                    <span>Add Your Content</span>
                 </div>
-                <div class="card-body">
-                    <h3 class="content-title">Add Your Content</h3>
-                    <p class="content-desc">Customize the title and description for each card to fit your content, story, or brand process seamlessly.</p>
+
+                <div class="open-content">
+                    <h3 class="card-title">Add Your Content</h3>
+                    <p class="card-description">Customize the title and description for each card to fit your content, story, or process seamlessly.</p>
                 </div>
-                <div class="card-action">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
+
+                <button class="card-action-btn" aria-label="View details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
 
-            <!-- Card 2 -->
-            <div class="step-card" onclick="expandCard(this)">
-                <div class="card-top">
-                    <span class="step-number">02</span>
-                    <span class="collapsed-title">Style the Colors</span>
+            <!-- Card 02 -->
+            <div class="accordion-card" onclick="handleCardClick(this)">
+                <div class="card-number">02</div>
+                
+                <div class="closed-content">
+                    <span>Style the Colors</span>
                 </div>
-                <div class="card-body">
-                    <h3 class="content-title">Style the Colors</h3>
-                    <p class="content-desc">Change the text and fill colors to match your website's visual style and brand guidelines.</p>
+
+                <div class="open-content">
+                    <h3 class="card-title">Style the Colors</h3>
+                    <p class="card-description">Adapt your palette easily using CSS variables to match your distinctive brand identity and mood.</p>
                 </div>
-                <div class="card-action">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
+
+                <button class="card-action-btn" aria-label="View details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
 
-            <!-- Card 3 -->
-            <div class="step-card" onclick="expandCard(this)">
-                <div class="card-top">
-                    <span class="step-number">03</span>
-                    <span class="collapsed-title">Adjust the Layout</span>
+            <!-- Card 03 -->
+            <div class="accordion-card" onclick="handleCardClick(this)">
+                <div class="card-number">03</div>
+                
+                <div class="closed-content">
+                    <span>Adjust the Layout</span>
                 </div>
-                <div class="card-body">
-                    <h3 class="content-title">Adjust the Layout</h3>
-                    <p class="content-desc">Configure grid alignment, padding, and spacing dimensions for optimal visual harmony.</p>
+
+                <div class="open-content">
+                    <h3 class="card-title">Adjust the Layout</h3>
+                    <p class="card-description">Fine-tune spacing, paddings, and alignment structures effortlessly for absolute responsive harmony.</p>
                 </div>
-                <div class="card-action">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
+
+                <button class="card-action-btn" aria-label="View details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
 
-            <!-- Card 4 -->
-            <div class="step-card" onclick="expandCard(this)">
-                <div class="card-top">
-                    <span class="step-number">04</span>
-                    <span class="collapsed-title">Refine the Details</span>
+            <!-- Card 04 -->
+            <div class="accordion-card" onclick="handleCardClick(this)">
+                <div class="card-number">04</div>
+                
+                <div class="closed-content">
+                    <span>Refine the Details</span>
                 </div>
-                <div class="card-body">
-                    <h3 class="content-title">Refine the Details</h3>
-                    <p class="content-desc">Polished micro-interactions, smooth CSS transitions, and crisp typography ensure top-tier production quality.</p>
+
+                <div class="open-content">
+                    <h3 class="card-title">Refine the Details</h3>
+                    <p class="card-description">Polish micro-interactions, typography pairings, and smooth physics transitions for optimal UX.</p>
                 </div>
-                <div class="card-action">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
-                </div>
+
+                <button class="card-action-btn" aria-label="View details">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
 
         </div>
     </section>
 
     <script>
-        function expandCard(selectedCard) {
-            const allCards = document.querySelectorAll('.step-card');
+        function handleCardClick(selectedCard) {
+            const cards = document.querySelectorAll('.accordion-card');
             
-            allCards.forEach(card => {
-                if (card === selectedCard) {
-                    card.classList.toggle('active');
-                } else {
-                    card.classList.remove('active');
-                }
+            // If already active, do nothing
+            if (selectedCard.classList.contains('active')) return;
+
+            // Remove active class from all cards
+            cards.forEach(card => {
+                card.classList.remove('active');
             });
+
+            // Add active class to the clicked card
+            selectedCard.classList.add('active');
         }
     </script>
 </body>
