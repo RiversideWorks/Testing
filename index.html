@@ -2381,9 +2381,19 @@ NEWNEW
   <section class="image-tunnel-section" id="imageTunnelSection">
     <div class="tunnel-sticky-container">
       <div class="tunnel-viewport" id="tunnelViewport">
-        <div class="tunnel-inner" id="tunnelInner">
-          <!-- Tunnel items will be dynamically generated via JavaScript -->
+        <div class="tunnel-world" id="tunnelWorld">
+          <!-- 3D Tunnel Walls with Wireframe Grid -->
+          <div class="tunnel-tube" id="tunnelTube">
+            <div class="wall wall-left"></div>
+            <div class="wall wall-right"></div>
+            <div class="wall wall-top"></div>
+            <div class="wall wall-bottom"></div>
+            
+            <!-- Dynamic Image Items mapped onto the tunnel structure -->
+            <div id="tunnelItemsContainer"></div>
+          </div>
         </div>
+
         <div class="tunnel-center-overlay" id="tunnelOverlay">
           <h2 class="tunnel-title">Welcome to the<br>Image Tunnel</h2>
           <p class="tunnel-instructions">Click to pause, press &amp; hold to run.</p>
@@ -2394,7 +2404,7 @@ NEWNEW
 
   <style>
     /* ==========================================================================
-       SECTION NEW: INFINITE IMAGE TUNNEL
+       SECTION NEW: INFINITE IMAGE TUNNEL (100% REPLICA SPEC)
        ========================================================================== */
     .image-tunnel-section {
       position: relative;
@@ -2413,44 +2423,106 @@ NEWNEW
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 1000px;
       overflow: hidden;
     }
 
     .tunnel-viewport {
       position: relative;
-      width: 90vw;
-      max-width: 1360px;
-      height: 85vh;
-      max-height: 780px;
+      width: 92vw;
+      max-width: 1400px;
+      height: 86vh;
+      max-height: 800px;
       background-color: #000000;
       border-radius: 28px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
       overflow: hidden;
       cursor: pointer;
-      transform-style: preserve-3d;
+      perspective: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .tunnel-inner {
+    .tunnel-world {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tunnel-tube {
+      position: relative;
+      width: 800px;
+      height: 600px;
       transform-style: preserve-3d;
       will-change: transform;
     }
 
-    .tunnel-item {
+    /* Tunnel Structural Walls with Wireframe Grid Lines */
+    .wall {
+      position: absolute;
+      background-color: #000000;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 120px 120px;
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .wall-left {
+      width: 3000px;
+      height: 600px;
+      left: -1500px;
+      top: 0;
+      transform: rotateY(90deg);
+      transform-origin: right center;
+    }
+
+    .wall-right {
+      width: 3000px;
+      height: 600px;
+      left: 0;
+      top: 0;
+      transform: rotateY(-90deg);
+      transform-origin: left center;
+    }
+
+    .wall-top {
+      width: 800px;
+      height: 3000px;
+      left: 0;
+      top: -1500px;
+      transform: rotateX(-90deg);
+      transform-origin: center bottom;
+    }
+
+    .wall-bottom {
+      width: 800px;
+      height: 3000px;
+      left: 0;
+      top: 600px;
+      transform: rotateX(90deg);
+      transform-origin: center top;
+    }
+
+    /* Tunnel Image Cards */
+    .tunnel-card {
       position: absolute;
       transform-style: preserve-3d;
       will-change: transform, opacity;
-      background: #111;
-      border-radius: 8px;
+      border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #111;
     }
 
-    .tunnel-item img {
+    .tunnel-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -2458,25 +2530,26 @@ NEWNEW
       pointer-events: none;
     }
 
+    /* Center Glass Overlay Card */
     .tunnel-center-overlay {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      z-index: 10;
+      z-index: 50;
       pointer-events: none;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 2.5rem 3.5rem;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      background: rgba(12, 12, 12, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 2.8rem 4rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
     }
 
     .tunnel-title {
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.03em;
@@ -2493,23 +2566,24 @@ NEWNEW
 
     @media (max-width: 768px) {
       .tunnel-viewport {
-        width: 95vw;
-        height: 75vh;
+        width: 96vw;
+        height: 78vh;
         border-radius: 18px;
       }
       .tunnel-center-overlay {
-        padding: 1.5rem 2rem;
-        width: 85%;
+        padding: 1.8rem 2.2rem;
+        width: 88%;
       }
     }
   </style>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const tunnelInner = document.getElementById('tunnelInner');
+      const tunnelTube = document.getElementById('tunnelTube');
       const tunnelViewport = document.getElementById('tunnelViewport');
+      const itemsContainer = document.getElementById('tunnelItemsContainer');
       
-      if (!tunnelInner || !tunnelViewport) return;
+      if (!tunnelTube || !itemsContainer || !tunnelViewport) return;
 
       const imageUrls = [
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
@@ -2522,50 +2596,49 @@ NEWNEW
         "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=600&auto=format&fit=crop"
       ];
 
-      const totalElements = 36;
-      const elements = [];
-      const tunnelDepth = 2500;
+      const totalItems = 40;
+      const tunnelLength = 3000;
+      const items = [];
 
-      for (let i = 0; i < totalElements; i++) {
-        const el = document.createElement('div');
-        el.className = 'tunnel-item';
+      for (let i = 0; i < totalItems; i++) {
+        const card = document.createElement('div');
+        card.className = 'tunnel-card';
         const img = document.createElement('img');
         img.src = imageUrls[i % imageUrls.length];
         img.loading = 'lazy';
-        el.appendChild(img);
-        tunnelInner.appendChild(el);
+        card.appendChild(img);
+        itemsContainer.appendChild(card);
 
-        // Distribute items across walls (left, right, top, bottom)
-        const wallIndex = i % 4; 
-        const zDepth = -((i * (tunnelDepth / totalElements)) + 200);
-        
-        let x = 0, y = 0, w = 180, h = 240;
-        if (wallIndex === 0) { // Left wall
-          x = -450;
-          y = (Math.random() - 0.5) * 300;
-          w = 160; h = 220;
-        } else if (wallIndex === 1) { // Right wall
-          x = 450;
-          y = (Math.random() - 0.5) * 300;
-          w = 160; h = 220;
-        } else if (wallIndex === 2) { // Top ceiling
-          x = (Math.random() - 0.5) * 600;
-          y = -320;
-          w = 240; h = 140;
-        } else { // Bottom floor
-          x = (Math.random() - 0.5) * 600;
-          y = 320;
-          w = 260; h = 150;
+        // Distribute precisely across 4 directions matching the reference grid layout
+        const wallType = i % 4; // 0: left, 1: right, 2: top, 3: bottom
+        const baseZ = -((i * (tunnelLength / totalItems)) + 150);
+
+        let x = 0, y = 0, w = 140, h = 190;
+
+        if (wallType === 0) {
+          x = -380;
+          y = ((i % 5) - 2) * 110;
+          w = 130; h = 180;
+        } else if (wallType === 1) {
+          x = 380;
+          y = ((i % 5) - 2) * 110;
+          w = 130; h = 180;
+        } else if (wallType === 2) {
+          x = ((i % 5) - 2) * 140;
+          y = -260;
+          w = 190; h = 120;
+        } else {
+          x = ((i % 5) - 2) * 140;
+          y = 260;
+          w = 200; h = 120;
         }
 
-        elements.translateZ = 0;
-        elements.push({ dom: el, x, y, baseZ: zDepth, w, h, wallIndex });
+        items.push({ dom: card, x, y, baseZ, w, h, wallType });
       }
 
       let cameraZ = 0;
       let isPaused = false;
       let isRunningFast = false;
-      let animationId = null;
 
       tunnelViewport.addEventListener('click', () => {
         isPaused = !isPaused;
@@ -2573,43 +2646,41 @@ NEWNEW
 
       tunnelViewport.addEventListener('mousedown', () => { isRunningFast = true; });
       window.addEventListener('mouseup', () => { isRunningFast = false; });
-      tunnelViewport.addEventListener('touchstart', () => { isRunningFast = true; }, {passive: true});
+      tunnelViewport.addEventListener('touchstart', () => { isRunningFast = true; }, { passive: true });
       window.addEventListener('touchend', () => { isRunningFast = false; });
 
-      function animateTunnel() {
+      function renderTunnel() {
         if (!isPaused) {
-          const speed = isRunningFast ? 12 : 3.5;
+          const speed = isRunningFast ? 10 : 2.8;
           cameraZ += speed;
         }
 
-        elements.forEach(item => {
-          let currentZ = (item.baseZ + cameraZ) % tunnelDepth;
-          if (currentZ > 100) {
-            currentZ -= tunnelDepth;
+        items.forEach(item => {
+          let currentZ = (item.baseZ + cameraZ) % tunnelLength;
+          if (currentZ > 200) {
+            currentZ -= tunnelLength;
           }
 
-          // Calculate opacity and scale based on depth perspective
-          let progress = (currentZ + tunnelDepth) / tunnelDepth;
-          let scale = Math.max(0.05, progress * 1.8);
-          let opacity = progress < 0.1 ? progress * 10 : (progress > 0.85 ? (1 - progress) * 6.6 : 1);
+          let progress = (currentZ + tunnelLength) / tunnelLength;
+          let opacity = progress < 0.08 ? progress * 12.5 : (progress > 0.82 ? (1 - progress) * 5.5 : 1);
 
           item.dom.style.width = `${item.w}px`;
           item.dom.style.height = `${item.h}px`;
-          
-          let rotX = 0, rotY = 0;
-          if (item.wallIndex === 0) rotY = 45;
-          else if (item.wallIndex === 1) rotY = -45;
-          else if (item.wallIndex === 2) rotX = 45;
-          else if (item.wallIndex === 3) rotX = -45;
 
-          item.dom.style.transform = `translate(-50%, -50%) translate3d(${item.x}px, ${item.y}px, ${currentZ}px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${scale})`;
+          let transformStr = `translate3d(${item.x}px, ${item.y}px, ${currentZ}px)`;
+          if (item.wallType === 0) transformStr += ` rotateY(90deg)`;
+          else if (item.wallType === 1) transformStr += ` rotateY(-90deg)`;
+          else if (item.wallType === 2) transformStr += ` rotateX(90deg)`;
+          else if (item.wallType === 3) transformStr += ` rotateX(-90deg)`;
+
+          item.dom.style.transform = transformStr;
           item.dom.style.opacity = Math.max(0, Math.min(1, opacity));
-          item.dom.style.zIndex = Math.floor(progress * 1000);
+          item.dom.style.zIndex = Math.floor(progress * 500);
         });
 
-        animationId = requestAnimationFrame(animateTunnel);
+        requestAnimationFrame(renderTunnel);
       }
 
-      animationId = requestAnimationFrame(animateTunnel);
+      requestAnimationFrame(renderTunnel);
     });
   </script>
