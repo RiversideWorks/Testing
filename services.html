@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <!-- Block 2: Website Design (Identical structure & styling) -->
+      <!-- Block 2: Website Design -->
       <div class="service-detail-block" id="service-web-design" data-service-index="1" style="margin-top: 12rem;">
         <h2 class="service-main-title">Website Design</h2>
         <p class="service-main-desc">We craft distinctive, human-centered digital aesthetics that capture brand essence, build immediate trust, and guide visitors smoothly toward meaningful action.</p>
@@ -177,16 +177,27 @@
 <style>
   /* ==========================================================================
      SERVICES INNER PAGE STYLES (Primary: #101010, Secondary: #FF473A)
+     Explicitly targeting font family and removing all container borders/outlines.
      ========================================================================== */
   .services-inner-section {
-    background-color: #101010;
+    background-color: #101010 !important;
     color: #ffffff;
     padding: 7rem 4rem;
-    font-family: inherit; /* Inherits the exact font family from your base file */
+    font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     position: relative;
     width: 100%;
     box-sizing: border-box;
     margin: 0;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* Reset layout box-sizing to eliminate rogue structural borders/lines */
+  .services-inner-section *, 
+  .services-inner-section *::before, 
+  .services-inner-section *::after {
+    box-sizing: border-box;
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   .services-inner-container {
@@ -196,6 +207,7 @@
     grid-template-columns: 460px 1fr;
     gap: 5rem;
     align-items: start;
+    border: none !important;
   }
 
   .services-inner-left {
@@ -242,6 +254,7 @@
     letter-spacing: 0.08em;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
+    font-family: inherit;
   }
 
   .services-overlay-title {
@@ -250,6 +263,7 @@
     line-height: 1.1;
     letter-spacing: -0.03em;
     color: #ffffff;
+    font-family: inherit;
   }
 
   .services-inner-right {
@@ -269,6 +283,7 @@
     letter-spacing: -0.03em;
     color: #ffffff;
     margin-bottom: 1.5rem;
+    font-family: inherit;
   }
 
   .service-main-desc {
@@ -277,6 +292,7 @@
     color: rgba(255, 255, 255, 0.75);
     max-width: 720px;
     margin-bottom: 3rem;
+    font-family: inherit;
   }
 
   .service-sub-section {
@@ -290,6 +306,7 @@
     letter-spacing: 0.12em;
     color: #FF473A;
     margin-bottom: 1.25rem;
+    font-family: inherit;
   }
 
   /* Benefits Grid */
@@ -306,6 +323,7 @@
     font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.5;
+    font-family: inherit;
   }
 
   .check-icon {
@@ -341,6 +359,7 @@
     color: rgba(255, 255, 255, 0.4);
     display: block;
     margin-bottom: 0.75rem;
+    font-family: inherit;
   }
 
   .process-title {
@@ -349,12 +368,14 @@
     color: #ffffff;
     margin-bottom: 0.4rem;
     letter-spacing: -0.01em;
+    font-family: inherit;
   }
 
   .process-desc {
     font-size: 0.88rem;
     color: rgba(255, 255, 255, 0.65);
     line-height: 1.5;
+    font-family: inherit;
   }
 
   /* Deliverables Tags */
@@ -372,6 +393,7 @@
     border-radius: 9999px;
     font-size: 0.9rem;
     font-weight: 500;
+    font-family: inherit;
   }
 
   /* CTA Button */
@@ -391,6 +413,7 @@
     font-size: 1rem;
     text-decoration: none;
     transition: transform 0.25s ease, background-color 0.25s ease;
+    font-family: inherit;
   }
 
   .btn-service-cta:hover {
@@ -433,7 +456,6 @@
 </style>
 
 <script>
-  // Simple intersection observer to switch the sticky image card based on which service block is currently in view
   document.addEventListener("DOMContentLoaded", function() {
     const serviceBlocks = document.querySelectorAll(".service-detail-block");
     const card1 = document.getElementById("serviceMediaCard1");
@@ -450,7 +472,7 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const index = entry.target.getAttribute("data-service-index");
+          const index = entry.getAttribute("data-service-index");
           if (index === "0") {
             card1.style.display = "block";
             card2.style.display = "none";
