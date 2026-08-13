@@ -5,11 +5,18 @@
     <!-- Left Column: Sticky Image & Title Overlay -->
     <div class="services-inner-left">
       <div class="services-sticky-wrapper">
-        <div class="services-media-card">
+        <div class="services-media-card" id="serviceMediaCard1">
           <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop" alt="Website Development" loading="lazy">
           <div class="services-overlay-content">
             <span class="services-overlay-num">01 / SERVICE</span>
             <h3 class="services-overlay-title">Website Development</h3>
+          </div>
+        </div>
+        <div class="services-media-card" id="serviceMediaCard2" style="display: none;">
+          <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop" alt="Website Design" loading="lazy">
+          <div class="services-overlay-content">
+            <span class="services-overlay-num">02 / SERVICE</span>
+            <h3 class="services-overlay-title">Website Design</h3>
           </div>
         </div>
       </div>
@@ -19,7 +26,7 @@
     <div class="services-inner-right">
       
       <!-- Block 1: Website Development -->
-      <div class="service-detail-block" id="service-web-development">
+      <div class="service-detail-block" id="service-web-development" data-service-index="0">
         <h2 class="service-main-title">Website Development</h2>
         <p class="service-main-desc">We design and build high-performance websites that load instantly, rank well, and convert. Every build is bespoke — no bloated templates — with clean code, accessible markup, and a CMS your team can actually use.</p>
 
@@ -90,8 +97,8 @@
         </div>
       </div>
 
-      <!-- Block 2: Website Design (Ready for future expansion) -->
-      <div class="service-detail-block" id="service-web-design" style="margin-top: 6rem;">
+      <!-- Block 2: Website Design (Identical structure & styling) -->
+      <div class="service-detail-block" id="service-web-design" data-service-index="1" style="margin-top: 12rem;">
         <h2 class="service-main-title">Website Design</h2>
         <p class="service-main-desc">We craft distinctive, human-centered digital aesthetics that capture brand essence, build immediate trust, and guide visitors smoothly toward meaningful action.</p>
 
@@ -175,9 +182,11 @@
     background-color: #101010;
     color: #ffffff;
     padding: 7rem 4rem;
-    font-family: var(--font-sans);
+    font-family: inherit; /* Inherits the exact font family from your base file */
     position: relative;
-    z-index: 15;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
   }
 
   .services-inner-container {
@@ -422,3 +431,37 @@
     }
   }
 </style>
+
+<script>
+  // Simple intersection observer to switch the sticky image card based on which service block is currently in view
+  document.addEventListener("DOMContentLoaded", function() {
+    const serviceBlocks = document.querySelectorAll(".service-detail-block");
+    const card1 = document.getElementById("serviceMediaCard1");
+    const card2 = document.getElementById("serviceMediaCard2");
+
+    if (!card1 || !card2 || serviceBlocks.length === 0) return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -50% 0px",
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = entry.target.getAttribute("data-service-index");
+          if (index === "0") {
+            card1.style.display = "block";
+            card2.style.display = "none";
+          } else if (index === "1") {
+            card1.style.display = "none";
+            card2.style.display = "block";
+          }
+        }
+      });
+    }, observerOptions);
+
+    serviceBlocks.forEach(block => observer.observe(block));
+  });
+</script>
