@@ -2376,3 +2376,240 @@
   </script>
 </body>
 </html>
+NEWNEW
+<!-- SECTION NEW: INFINITE IMAGE TUNNEL -->
+  <section class="image-tunnel-section" id="imageTunnelSection">
+    <div class="tunnel-sticky-container">
+      <div class="tunnel-viewport" id="tunnelViewport">
+        <div class="tunnel-inner" id="tunnelInner">
+          <!-- Tunnel items will be dynamically generated via JavaScript -->
+        </div>
+        <div class="tunnel-center-overlay" id="tunnelOverlay">
+          <h2 class="tunnel-title">Welcome to the<br>Image Tunnel</h2>
+          <p class="tunnel-instructions">Click to pause, press &amp; hold to run.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* ==========================================================================
+       SECTION NEW: INFINITE IMAGE TUNNEL
+       ========================================================================== */
+    .image-tunnel-section {
+      position: relative;
+      height: 300vh;
+      background-color: var(--primary);
+      z-index: 28;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .tunnel-sticky-container {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+      overflow: hidden;
+    }
+
+    .tunnel-viewport {
+      position: relative;
+      width: 90vw;
+      max-width: 1360px;
+      height: 85vh;
+      max-height: 780px;
+      background-color: #000000;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+      cursor: pointer;
+      transform-style: preserve-3d;
+    }
+
+    .tunnel-inner {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .tunnel-item {
+      position: absolute;
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+      background: #111;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .tunnel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .tunnel-center-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 2.5rem 3.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .tunnel-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+
+    .tunnel-instructions {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 768px) {
+      .tunnel-viewport {
+        width: 95vw;
+        height: 75vh;
+        border-radius: 18px;
+      }
+      .tunnel-center-overlay {
+        padding: 1.5rem 2rem;
+        width: 85%;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tunnelInner = document.getElementById('tunnelInner');
+      const tunnelViewport = document.getElementById('tunnelViewport');
+      
+      if (!tunnelInner || !tunnelViewport) return;
+
+      const imageUrls = [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=600&auto=format&fit=crop"
+      ];
+
+      const totalElements = 36;
+      const elements = [];
+      const tunnelDepth = 2500;
+
+      for (let i = 0; i < totalElements; i++) {
+        const el = document.createElement('div');
+        el.className = 'tunnel-item';
+        const img = document.createElement('img');
+        img.src = imageUrls[i % imageUrls.length];
+        img.loading = 'lazy';
+        el.appendChild(img);
+        tunnelInner.appendChild(el);
+
+        // Distribute items across walls (left, right, top, bottom)
+        const wallIndex = i % 4; 
+        const zDepth = -((i * (tunnelDepth / totalElements)) + 200);
+        
+        let x = 0, y = 0, w = 180, h = 240;
+        if (wallIndex === 0) { // Left wall
+          x = -450;
+          y = (Math.random() - 0.5) * 300;
+          w = 160; h = 220;
+        } else if (wallIndex === 1) { // Right wall
+          x = 450;
+          y = (Math.random() - 0.5) * 300;
+          w = 160; h = 220;
+        } else if (wallIndex === 2) { // Top ceiling
+          x = (Math.random() - 0.5) * 600;
+          y = -320;
+          w = 240; h = 140;
+        } else { // Bottom floor
+          x = (Math.random() - 0.5) * 600;
+          y = 320;
+          w = 260; h = 150;
+        }
+
+        elements.translateZ = 0;
+        elements.push({ dom: el, x, y, baseZ: zDepth, w, h, wallIndex });
+      }
+
+      let cameraZ = 0;
+      let isPaused = false;
+      let isRunningFast = false;
+      let animationId = null;
+
+      tunnelViewport.addEventListener('click', () => {
+        isPaused = !isPaused;
+      });
+
+      tunnelViewport.addEventListener('mousedown', () => { isRunningFast = true; });
+      window.addEventListener('mouseup', () => { isRunningFast = false; });
+      tunnelViewport.addEventListener('touchstart', () => { isRunningFast = true; }, {passive: true});
+      window.addEventListener('touchend', () => { isRunningFast = false; });
+
+      function animateTunnel() {
+        if (!isPaused) {
+          const speed = isRunningFast ? 12 : 3.5;
+          cameraZ += speed;
+        }
+
+        elements.forEach(item => {
+          let currentZ = (item.baseZ + cameraZ) % tunnelDepth;
+          if (currentZ > 100) {
+            currentZ -= tunnelDepth;
+          }
+
+          // Calculate opacity and scale based on depth perspective
+          let progress = (currentZ + tunnelDepth) / tunnelDepth;
+          let scale = Math.max(0.05, progress * 1.8);
+          let opacity = progress < 0.1 ? progress * 10 : (progress > 0.85 ? (1 - progress) * 6.6 : 1);
+
+          item.dom.style.width = `${item.w}px`;
+          item.dom.style.height = `${item.h}px`;
+          
+          let rotX = 0, rotY = 0;
+          if (item.wallIndex === 0) rotY = 45;
+          else if (item.wallIndex === 1) rotY = -45;
+          else if (item.wallIndex === 2) rotX = 45;
+          else if (item.wallIndex === 3) rotX = -45;
+
+          item.dom.style.transform = `translate(-50%, -50%) translate3d(${item.x}px, ${item.y}px, ${currentZ}px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${scale})`;
+          item.dom.style.opacity = Math.max(0, Math.min(1, opacity));
+          item.dom.style.zIndex = Math.floor(progress * 1000);
+        });
+
+        animationId = requestAnimationFrame(animateTunnel);
+      }
+
+      animationId = requestAnimationFrame(animateTunnel);
+    });
+  </script>
