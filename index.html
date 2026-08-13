@@ -2381,19 +2381,7 @@ NEWNEW
   <section class="image-tunnel-section" id="imageTunnelSection">
     <div class="tunnel-sticky-container">
       <div class="tunnel-viewport" id="tunnelViewport">
-        <div class="tunnel-world" id="tunnelWorld">
-          <!-- 3D Tunnel Walls with Wireframe Grid -->
-          <div class="tunnel-tube" id="tunnelTube">
-            <div class="wall wall-left"></div>
-            <div class="wall wall-right"></div>
-            <div class="wall wall-top"></div>
-            <div class="wall wall-bottom"></div>
-            
-            <!-- Dynamic Image Items mapped onto the tunnel structure -->
-            <div id="tunnelItemsContainer"></div>
-          </div>
-        </div>
-
+        <canvas id="tunnelCanvas"></canvas>
         <div class="tunnel-center-overlay" id="tunnelOverlay">
           <h2 class="tunnel-title">Welcome to the<br>Image Tunnel</h2>
           <p class="tunnel-instructions">Click to pause, press &amp; hold to run.</p>
@@ -2404,7 +2392,7 @@ NEWNEW
 
   <style>
     /* ==========================================================================
-       SECTION NEW: INFINITE IMAGE TUNNEL (100% REPLICA SPEC)
+       SECTION NEW: INFINITE IMAGE TUNNEL (CANVAS-POWERED 100% REPLICA)
        ========================================================================== */
     .image-tunnel-section {
       position: relative;
@@ -2438,99 +2426,14 @@ NEWNEW
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
       overflow: hidden;
       cursor: pointer;
-      perspective: 1000px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .tunnel-world {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .tunnel-tube {
-      position: relative;
-      width: 800px;
-      height: 600px;
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
-
-    /* Tunnel Structural Walls with Wireframe Grid Lines */
-    .wall {
-      position: absolute;
-      background-color: #000000;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-      background-size: 120px 120px;
-      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
-    }
-
-    .wall-left {
-      width: 3000px;
-      height: 600px;
-      left: -1500px;
-      top: 0;
-      transform: rotateY(90deg);
-      transform-origin: right center;
-    }
-
-    .wall-right {
-      width: 3000px;
-      height: 600px;
-      left: 0;
-      top: 0;
-      transform: rotateY(-90deg);
-      transform-origin: left center;
-    }
-
-    .wall-top {
-      width: 800px;
-      height: 3000px;
-      left: 0;
-      top: -1500px;
-      transform: rotateX(-90deg);
-      transform-origin: center bottom;
-    }
-
-    .wall-bottom {
-      width: 800px;
-      height: 3000px;
-      left: 0;
-      top: 600px;
-      transform: rotateX(90deg);
-      transform-origin: center top;
-    }
-
-    /* Tunnel Image Cards */
-    .tunnel-card {
-      position: absolute;
-      transform-style: preserve-3d;
-      will-change: transform, opacity;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: #111;
-    }
-
-    .tunnel-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .tunnel-viewport canvas {
       display: block;
-      pointer-events: none;
+      width: 100%;
+      height: 100%;
     }
 
-    /* Center Glass Overlay Card */
     .tunnel-center-overlay {
       position: absolute;
       top: 50%;
@@ -2539,7 +2442,7 @@ NEWNEW
       text-align: center;
       z-index: 50;
       pointer-events: none;
-      background: rgba(12, 12, 12, 0.75);
+      background: rgba(10, 10, 10, 0.65);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       padding: 2.8rem 4rem;
@@ -2579,12 +2482,25 @@ NEWNEW
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const tunnelTube = document.getElementById('tunnelTube');
+      const canvas = document.getElementById('tunnelCanvas');
       const tunnelViewport = document.getElementById('tunnelViewport');
-      const itemsContainer = document.getElementById('tunnelItemsContainer');
       
-      if (!tunnelTube || !itemsContainer || !tunnelViewport) return;
+      if (!canvas || !tunnelViewport) return;
 
+      const ctx = canvas.getContext('2d');
+
+      // High-DPI Scaling for Crisp Rendering
+      function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = tunnelViewport.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Load Images
       const imageUrls = [
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
@@ -2596,91 +2512,177 @@ NEWNEW
         "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=600&auto=format&fit=crop"
       ];
 
-      const totalItems = 40;
-      const tunnelLength = 3000;
+      const loadedImages = imageUrls.map(url => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = url;
+        return img;
+      });
+
+      // Tunnel Configuration
+      const tunnelLength = 2000;
+      const totalItems = 44;
       const items = [];
 
       for (let i = 0; i < totalItems; i++) {
-        const card = document.createElement('div');
-        card.className = 'tunnel-card';
-        const img = document.createElement('img');
-        img.src = imageUrls[i % imageUrls.length];
-        img.loading = 'lazy';
-        card.appendChild(img);
-        itemsContainer.appendChild(card);
-
-        // Distribute precisely across 4 directions matching the reference grid layout
-        const wallType = i % 4; // 0: left, 1: right, 2: top, 3: bottom
-        const baseZ = -((i * (tunnelLength / totalItems)) + 150);
-
-        let x = 0, y = 0, w = 140, h = 190;
-
-        if (wallType === 0) {
-          x = -380;
-          y = ((i % 5) - 2) * 110;
+        const wall = i % 4; // 0: left, 1: right, 2: top, 3: bottom
+        const baseZ = -((i * (tunnelLength / totalItems)) + 100);
+        
+        let x = 0, y = 0, w = 120, h = 160;
+        if (wall === 0) {
+          x = -520;
+          y = ((i % 5) - 2) * 130;
           w = 130; h = 180;
-        } else if (wallType === 1) {
-          x = 380;
-          y = ((i % 5) - 2) * 110;
+        } else if (wall === 1) {
+          x = 520;
+          y = ((i % 5) - 2) * 130;
           w = 130; h = 180;
-        } else if (wallType === 2) {
-          x = ((i % 5) - 2) * 140;
-          y = -260;
-          w = 190; h = 120;
-        } else {
-          x = ((i % 5) - 2) * 140;
-          y = 260;
+        } else if (wall === 2) {
+          x = ((i % 5) - 2) * 160;
+          y = -330;
           w = 200; h = 120;
+        } else {
+          x = ((i % 5) - 2) * 160;
+          y = 330;
+          w = 210; h = 130;
         }
 
-        items.push({ dom: card, x, y, baseZ, w, h, wallType });
+        items.push({
+          wall,
+          baseZ,
+          x, y, w, h,
+          imgIndex: i % loadedImages.length
+        });
       }
 
       let cameraZ = 0;
       let isPaused = false;
       let isRunningFast = false;
 
-      tunnelViewport.addEventListener('click', () => {
-        isPaused = !isPaused;
-      });
-
+      tunnelViewport.addEventListener('click', () => { isPaused = !isPaused; });
       tunnelViewport.addEventListener('mousedown', () => { isRunningFast = true; });
       window.addEventListener('mouseup', () => { isRunningFast = false; });
       tunnelViewport.addEventListener('touchstart', () => { isRunningFast = true; }, { passive: true });
       window.addEventListener('touchend', () => { isRunningFast = false; });
 
-      function renderTunnel() {
-        if (!isPaused) {
-          const speed = isRunningFast ? 10 : 2.8;
-          cameraZ += speed;
-        }
+      function drawGrid(cx, cy, width, height) {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
+        ctx.lineWidth = 1;
 
-        items.forEach(item => {
-          let currentZ = (item.baseZ + cameraZ) % tunnelLength;
-          if (currentZ > 200) {
-            currentZ -= tunnelLength;
-          }
+        // Tunnel box dimensions in 3D
+        const halfW = 420;
+        const halfH = 280;
+        const depths = [200, 500, 800, 1200, 1600, 2000];
 
-          let progress = (currentZ + tunnelLength) / tunnelLength;
-          let opacity = progress < 0.08 ? progress * 12.5 : (progress > 0.82 ? (1 - progress) * 5.5 : 1);
+        depths.forEach(d => {
+          let z = (d - cameraZ) % tunnelLength;
+          if (z < 10) z += tunnelLength;
+          const f = 400 / (400 + z);
+          if (f <= 0) return;
 
-          item.dom.style.width = `${item.w}px`;
-          item.dom.style.height = `${item.h}px`;
+          const wBox = (halfW * 2) * f;
+          const hBox = (halfH * 2) * f;
+          const left = cx - wBox / 2;
+          const top = cy - hBox / 2;
 
-          let transformStr = `translate3d(${item.x}px, ${item.y}px, ${currentZ}px)`;
-          if (item.wallType === 0) transformStr += ` rotateY(90deg)`;
-          else if (item.wallType === 1) transformStr += ` rotateY(-90deg)`;
-          else if (item.wallType === 2) transformStr += ` rotateX(90deg)`;
-          else if (item.wallType === 3) transformStr += ` rotateX(-90deg)`;
-
-          item.dom.style.transform = transformStr;
-          item.dom.style.opacity = Math.max(0, Math.min(1, opacity));
-          item.dom.style.zIndex = Math.floor(progress * 500);
+          ctx.strokeRect(left, top, wBox, hBox);
         });
 
-        requestAnimationFrame(renderTunnel);
+        // Converging perspective lines from corners
+        const corners = [
+          { x: -halfW, y: -halfH },
+          { x: halfW, y: -halfH },
+          { x: halfW, y: halfH },
+          { x: -halfW, y: halfH }
+        ];
+
+        corners.forEach(c => {
+          let zStart = 50;
+          let zEnd = tunnelLength;
+          
+          const f1 = 400 / (400 + ((zStart - cameraZ) % tunnelLength + tunnelLength) % tunnelLength);
+          const f2 = 400 / (400 + ((zEnd - cameraZ) % tunnelLength + tunnelLength) % tunnelLength);
+
+          const x1 = cx + c.x * f1;
+          const y1 = cy + c.y * f1;
+          const x2 = cx + c.x * 0.1;
+          const y2 = cy + c.y * 0.1;
+
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+        });
       }
 
-      requestAnimationFrame(renderTunnel);
+      function animate() {
+        const rect = tunnelViewport.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const cx = width / 2;
+        const cy = height / 2;
+
+        ctx.clearRect(0, 0, width, height);
+
+        if (!isPaused) {
+          const speed = isRunningFast ? 8 : 2.2;
+          cameraZ += speed;
+          if (cameraZ > tunnelLength) cameraZ -= tunnelLength;
+        }
+
+        // Draw 3D Wireframe Grid Tunnel Structure
+        drawGrid(cx, cy, width, height);
+
+        // Sort items by depth (painter's algorithm)
+        const renderList = items.map(item => {
+          let z = (item.baseZ + cameraZ) % tunnelLength;
+          if (z > 150) z -= tunnelLength;
+          return { ...item, currentZ: z };
+        }).sort((a, b) => a.currentZ - b.currentZ);
+
+        // Render Image Cards
+        renderList.forEach(item => {
+          const focalLength = 400;
+          const scale = focalLength / (focalLength + item.currentZ + tunnelLength);
+          if (scale <= 0) return;
+
+          const screenX = cx + item.x * scale;
+          const screenY = cy + item.y * scale;
+          const sW = item.w * scale;
+          const sH = item.h * scale;
+
+          const imgObj = loadedImages[item.imgIndex];
+
+          ctx.save();
+          ctx.translate(screenX, screenY);
+
+          // Opacity fade near camera and vanishing point
+          let alpha = 1;
+          const depthNorm = item.currentZ + tunnelLength;
+          if (depthNorm < 200) alpha = depthNorm / 200;
+          if (depthNorm > 1800) alpha = (2000 - depthNorm) / 200;
+          ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
+
+          // Draw Image Card with Border & Shadow
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+          ctx.shadowBlur = 15 * scale;
+          ctx.fillStyle = '#111';
+          ctx.fillRect(-sW / 2, -sH / 2, sW, sH);
+
+          if (imgObj && imgObj.complete) {
+            ctx.drawImage(imgObj, -sW / 2, -sH / 2, sW, sH);
+          }
+
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+          ctx.lineWidth = Math.max(1, 1.5 * scale);
+          ctx.strokeRect(-sW / 2, -sH / 2, sW, sH);
+
+          ctx.restore();
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
     });
   </script>
