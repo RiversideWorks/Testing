@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -526,7 +525,7 @@ HTML
     .btn-more-about:hover .icon-box { background: #fff; color: #111; }
 
     /* ==========================================================================
-       SECTION 3: SERVICES SHOWCASE SECTION
+       SECTION 3: SERVICES SHOWCASE
        ========================================================================== */
     .services-wrapper {
       background-color: var(--bg-page);
@@ -1017,7 +1016,7 @@ HTML
     }
 
     /* ==========================================================================
-       SECTION 6: STACK TEXT REVEAL ("PRIXA STUDIO")
+       SECTION 6: STACK TEXT REVEAL
        ========================================================================== */
     .stack-text-section {
       position: relative;
@@ -1217,6 +1216,211 @@ HTML
     @keyframes tickerMarquee {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    /* ==========================================================================
+       SECTION NEW: INTERACTIVE ACCORDION CARDS
+       ========================================================================== */
+    .custom-accordion-section {
+      background-color: var(--primary);
+      position: relative;
+      z-index: 32;
+      width: 100%;
+      padding: 7rem 2rem;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Ambient background gradient glow */
+    .custom-accordion-section::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50vw;
+      height: 35vh;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.18) 0%, rgba(16, 16, 16, 0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .custom-accordion-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      max-width: 1040px;
+      height: 460px;
+    }
+
+    .custom-accordion-card {
+      background-color: #ffffff;
+      color: #101010;
+      border-radius: 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      flex: 1;
+    }
+
+    .custom-accordion-card.active {
+      flex: 3.2;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+      cursor: default;
+    }
+
+    .custom-card-content-inner {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .custom-accordion-card.active .custom-card-content-inner {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease 0.15s;
+    }
+
+    .custom-collapsed-indicator {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .custom-accordion-card.active .custom-collapsed-indicator {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .custom-collapsed-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #101010;
+    }
+
+    .custom-collapsed-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #666666;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .custom-card-number {
+      font-size: clamp(4rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 1;
+      color: #999999;
+      letter-spacing: -0.03em;
+    }
+
+    .custom-card-text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .custom-card-title-main {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #101010;
+      letter-spacing: -0.01em;
+    }
+
+    .custom-card-desc {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #666666;
+      max-width: 320px;
+    }
+
+    .custom-action-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid #dcdcdc;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .custom-collapsed-indicator .custom-action-btn {
+      pointer-events: auto;
+    }
+
+    .custom-action-btn:hover {
+      background-color: #101010;
+      border-color: #101010;
+      color: #ffffff;
+    }
+
+    .custom-action-btn:hover svg {
+      stroke: #ffffff;
+    }
+
+    .custom-action-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #101010;
+      stroke-width: 2;
+      fill: none;
+      transition: stroke 0.25s ease;
+    }
+
+    @media (max-width: 768px) {
+      .custom-accordion-container {
+        flex-direction: column;
+        height: auto;
+        gap: 12px;
+      }
+      .custom-accordion-card {
+        height: 100px;
+        padding: 20px 24px;
+        flex: none !important;
+      }
+      .custom-accordion-card.active {
+        height: 280px;
+      }
+      .custom-collapsed-indicator {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+      }
+      .custom-collapsed-title {
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+      .custom-card-number {
+        font-size: 3rem;
+      }
     }
 
     /* ==========================================================================
@@ -1726,7 +1930,6 @@ HTML
       </header>
 
       <div class="motion-viewport-card">
-        <!-- Replaced local video path with a reliable public CDN sample video URL -->
         <video autoplay loop muted playsinline class="media-video">
           <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-code-31938-large.mp4" type="video/mp4">
           Your browser does not support the video tag.
@@ -1805,327 +2008,79 @@ HTML
       </div>
     </div>
   </section>
-<!-- SECTION 9: CARDS OPEN -->
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Accordion Section</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg-color: #ededed;
-      --card-bg: #ffffff;
-      --text-main: #101010;
-      --text-muted: #666666;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Ambient background gradient glow */
-    body::before {
-      content: '';
-      position: absolute;
-      top: -10vh;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60vw;
-      height: 40vh;
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, rgba(237, 237, 237, 0) 70%);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .accordion-section {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 1000px;
-      padding: 2rem 1.5rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    .accordion-container {
-      display: flex;
-      gap: 16px;
-      width: 100%;
-      height: 460px;
-    }
-
-    .accordion-card {
-      background-color: var(--card-bg);
-      border-radius: 28px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 32px 28px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
-      transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-      flex: 1; /* Collapsed state flex */
-    }
-
-    .accordion-card.active {
-      flex: 3.2; /* Expanded state flex */
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
-      cursor: default;
-    }
-
-    /* Content wrapper to handle fade & layout integrity during transition */
-    .card-content-inner {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-      width: 100%;
-    }
-
-    .accordion-card.active .card-content-inner {
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.4s ease 0.15s; /* Slight delay to sync with expansion */
-    }
-
-    /* Collapsed state title/number indicator */
-    .collapsed-indicator {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 32px 0;
-      opacity: 1;
-      transition: opacity 0.2s ease;
-      pointer-events: none;
-    }
-
-    .accordion-card.active .collapsed-indicator {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .collapsed-num {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .collapsed-title {
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-    }
-
-    /* Expanded card elements */
-    .card-number {
-      font-size: clamp(4rem, 7vw, 6rem);
-      font-weight: 700;
-      line-height: 1;
-      color: #999999;
-      letter-spacing: -0.03em;
-    }
-
-    .card-text-block {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .card-title-main {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
-      letter-spacing: -0.01em;
-    }
-
-    .card-desc {
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--text-muted);
-      max-width: 320px;
-    }
-
-    /* Action Circle Button */
-    .action-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1.5px solid #dcdcdc;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      flex-shrink: 0;
-    }
-
-    .collapsed-indicator .action-btn {
-      pointer-events: auto; /* Allow clicking the button even in collapsed state */
-    }
-
-    .action-btn:hover {
-      background-color: var(--text-main);
-      border-color: var(--text-main);
-      color: #ffffff;
-    }
-
-    .action-btn:hover svg {
-      stroke: #ffffff;
-    }
-
-    .action-btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--text-main);
-      stroke-width: 2;
-      fill: none;
-      transition: stroke 0.25s ease;
-    }
-
-    /* Responsive adjustments for mobile / smaller screens */
-    @media (max-width: 768px) {
-      .accordion-container {
-        flex-direction: column;
-        height: auto;
-        gap: 12px;
-      }
-
-      .accordion-card {
-        height: 100px;
-        padding: 20px 24px;
-        flex: none !important;
-      }
-
-      .accordion-card.active {
-        height: 280px;
-      }
-
-      .collapsed-indicator {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 24px;
-      }
-
-      .collapsed-title {
-        writing-mode: horizontal-tb;
-        transform: none;
-      }
-
-      .card-number {
-        font-size: 3rem;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <section class="accordion-section">
-    <div class="accordion-container" id="accordionContainer">
+  <!-- NEW SECTION: INTERACTIVE ACCORDION CARDS (PLACED BEFORE FOOTER) -->
+  <section class="custom-accordion-section">
+    <div class="custom-accordion-container" id="customAccordionContainer">
       
       <!-- Card 01 (Active by default) -->
-      <div class="accordion-card active" data-index="0">
-        <!-- Collapsed View Elements -->
-        <div class="collapsed-indicator">
-          <span class="collapsed-num">01</span>
-          <span class="collapsed-title">Add Your Content</span>
-          <button class="action-btn" aria-label="Expand Card">
+      <div class="custom-accordion-card active" data-index="0">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">01</span>
+          <span class="custom-collapsed-title">Add Your Content</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
             <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
-
-        <!-- Expanded View Elements -->
-        <div class="card-content-inner">
-          <div class="card-number">01</div>
-          <div class="card-text-block">
-            <h3 class="card-title-main">Add Your Content</h3>
-            <p class="card-desc">Customize the title and description for each card to fit your content, story, or process.</p>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">01</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Add Your Content</h3>
+            <p class="custom-card-desc">Customize the title and description for each card to fit your content, story, or process.</p>
           </div>
         </div>
       </div>
 
       <!-- Card 02 -->
-      <div class="accordion-card" data-index="1">
-        <div class="collapsed-indicator">
-          <span class="collapsed-num">02</span>
-          <span class="collapsed-title">Style the Colors</span>
-          <button class="action-btn" aria-label="Expand Card">
+      <div class="custom-accordion-card" data-index="1">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">02</span>
+          <span class="custom-collapsed-title">Style the Colors</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
             <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
-
-        <div class="card-content-inner">
-          <div class="card-number">02</div>
-          <div class="card-text-block">
-            <h3 class="card-title-main">Style the Colors</h3>
-            <p class="card-desc">Adapt the color palette, background tones, and highlights seamlessly to match your brand guidelines.</p>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">02</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Style the Colors</h3>
+            <p class="custom-card-desc">Adapt the color palette, background tones, and highlights seamlessly to match your brand guidelines.</p>
           </div>
         </div>
       </div>
 
       <!-- Card 03 -->
-      <div class="accordion-card" data-index="2">
-        <div class="collapsed-indicator">
-          <span class="collapsed-num">03</span>
-          <span class="collapsed-title">Adjust the Layout</span>
-          <button class="action-btn" aria-label="Expand Card">
+      <div class="custom-accordion-card" data-index="2">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">03</span>
+          <span class="custom-collapsed-title">Adjust the Layout</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
             <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
-
-        <div class="card-content-inner">
-          <div class="card-number">03</div>
-          <div class="card-text-block">
-            <h3 class="card-title-main">Adjust the Layout</h3>
-            <p class="card-desc">Fine-tune proportions, spacing, and grid arrangements for optimal visual flow across all viewports.</p>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">03</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Adjust the Layout</h3>
+            <p class="custom-card-desc">Fine-tune proportions, spacing, and grid arrangements for optimal visual flow across all viewports.</p>
           </div>
         </div>
       </div>
 
       <!-- Card 04 -->
-      <div class="accordion-card" data-index="3">
-        <div class="collapsed-indicator">
-          <span class="collapsed-num">04</span>
-          <span class="collapsed-title">Refine the Details</span>
-          <button class="action-btn" aria-label="Expand Card">
+      <div class="custom-accordion-card" data-index="3">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">04</span>
+          <span class="custom-collapsed-title">Refine the Details</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
             <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
-
-        <div class="card-content-inner">
-          <div class="card-number">04</div>
-          <div class="card-text-block">
-            <h3 class="card-title-main">Refine the Details</h3>
-            <p class="card-desc">Polish micro-interactions, typography hierarchy, and transitions for an exceptional user experience.</p>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">04</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Refine the Details</h3>
+            <p class="custom-card-desc">Polish micro-interactions, typography hierarchy, and transitions for an exceptional user experience.</p>
           </div>
         </div>
       </div>
@@ -2133,26 +2088,6 @@ HTML
     </div>
   </section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const cards = document.querySelectorAll('.accordion-card');
-
-      cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-          // Prevent triggering if already active
-          if (card.classList.contains('active')) return;
-
-          // Remove active class from all cards
-          cards.forEach(c => c.classList.remove('active'));
-
-          // Add active class to clicked card
-          card.classList.add('active');
-        });
-      });
-    });
-  </script>
-</body>
-</html>
   <!-- SECTION 9: FOOTER -->
   <footer class="footer-section">
     <div class="footer-container">
@@ -2196,6 +2131,7 @@ HTML
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // LOADER SCRIPT
       const introLoader = document.getElementById('intro-loader');
       const pupilL = document.getElementById('pupilLeft');
       const pupilR = document.getElementById('pupilRight');
@@ -2239,6 +2175,7 @@ HTML
         }, 4200);
       }
 
+      // NAVIGATION & FEATURE ROLLER
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
       const track = document.getElementById('featureTrack');
@@ -2270,6 +2207,7 @@ HTML
         updateFeatureRoll();
       }, 2000);
 
+      // TAB SWITCHING LOGIC
       const filterButtons = document.querySelectorAll('.filter-btn');
       const tabViews = document.querySelectorAll('.tab-content-view');
 
@@ -2288,6 +2226,17 @@ HTML
         });
       });
 
+      // INTERACTIVE ACCORDION CARDS SCRIPT
+      const accordionCards = document.querySelectorAll('.custom-accordion-card');
+      accordionCards.forEach(card => {
+        card.addEventListener('click', () => {
+          if (card.classList.contains('active')) return;
+          accordionCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+        });
+      });
+
+      // GALLERY DATA & SCROLL ANIMATIONS
       const galleryData = [
         { title: "Prixa", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" },
         { title: "Aura", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" },
