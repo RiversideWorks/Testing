@@ -525,7 +525,7 @@
     .btn-more-about:hover .icon-box { background: #fff; color: #111; }
 
     /* ==========================================================================
-       SECTION 3: SERVICES SHOWCASE (RESPONSIVE REDESIGN)
+       SECTION 3: SERVICES SHOWCASE (FULLY RESPONSIVE REWORK)
        ========================================================================== */
     .services-wrapper {
       background-color: var(--bg-page);
@@ -680,7 +680,7 @@
       align-items: center;
       position: relative;
       width: 100%;
-      min-width: 0;
+      min-width: 0; /* Prevents grid blowout */
     }
 
     .media-viewport {
@@ -1223,7 +1223,7 @@
     }
 
     /* ==========================================================================
-       INTERACTIVE ACCORDION CARDS (HORIZONTALLY RESPONSIVE ACROSS ALL DEVICES)
+       SECTION NEW: INTERACTIVE ACCORDION CARDS (SLIMMER CLOSED STATE)
        ========================================================================== */
     .custom-accordion-section {
       background-color: var(--primary);
@@ -1566,7 +1566,7 @@
     .footer-copyright-bar .legal-links a:hover { color: #ffffff; }
 
     /* ==========================================================================
-       MEDIA QUERIES & RESPONSIVE FIXES FOR MOBILE
+       MEDIA QUERIES (RESPONSIVE OVERHAUL FOR SECTION 3 & SECTION 9)
        ========================================================================== */
 
     @media (max-width: 1400px) {
@@ -1651,65 +1651,14 @@
       .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
       .eye-stage { transform: scale(0.85); }
 
-      /* SECTION 3 MOBILE STREAMLINED LAYOUT FIX */
-      .services-wrapper { padding: 3rem 1rem; }
-      .header { margin-bottom: 2rem; }
-      .header-title { font-size: 2.1rem; }
-      .header-subtitle { font-size: 0.95rem; }
-      .filter-tabs { width: 100%; overflow-x: auto; justify-content: flex-start; padding: 4px; margin-bottom: 2rem; }
-      .filter-btn { padding: 0.55rem 1.1rem; font-size: 0.82rem; flex-shrink: 0; }
-      .stage-card { padding: 1.25rem; border-radius: 20px; gap: 1.5rem; }
-      .sidebar { gap: 1.25rem; }
-      .sidebar-intro .title { font-size: 1.35rem; margin-bottom: 0.5rem; }
-      .sidebar-intro .desc { font-size: 0.85rem; margin-bottom: 1rem; }
-      .cat-menu { gap: 0.4rem; }
-      .cat-item { font-size: 0.95rem; padding: 0.6rem 0; }
-      .cat-subtext { font-size: 0.78rem; }
-      .media-viewport, .generic-tab-display { height: 260px; }
-      .generic-tab-display { padding: 1.25rem; }
-      .generic-tab-display h3 { font-size: 1.3rem; }
-      .generic-tab-display p { font-size: 0.9rem; }
-
-      /* ACCORDION CARDS MOBILE HORIZONTAL ROW FIX */
-      .custom-accordion-section { padding: 4rem 1rem; }
-      .custom-accordion-container {
-        height: 380px;
-        gap: 8px;
-        max-width: 100%;
-      }
-      .custom-accordion-card {
-        padding: 20px 10px;
-        border-radius: 20px;
-      }
-      .custom-accordion-card.active {
-        padding: 24px 16px;
-      }
-      .custom-collapsed-indicator {
-        padding: 20px 0;
-      }
-      .custom-collapsed-num {
-        font-size: 1rem;
-      }
-      .custom-collapsed-title {
-        font-size: 0.75rem;
-      }
-      .custom-card-number {
-        font-size: 3rem;
-      }
-      .custom-card-title-main {
-        font-size: 1.05rem;
-      }
-      .custom-card-desc {
-        font-size: 0.8rem;
-      }
-      .custom-action-btn {
-        width: 30px;
-        height: 30px;
-      }
-      .custom-action-btn svg {
-        width: 12px;
-        height: 12px;
-      }
+      /* SECTION 3 MOBILE SPECIFIC */
+      .services-wrapper { padding: 4rem 1rem; }
+      .stage-card { padding: 1.5rem; border-radius: 20px; }
+      .media-viewport, .generic-tab-display { height: 300px; }
+      .generic-tab-display { padding: 1.5rem; }
+      .generic-tab-display h3 { font-size: 1.5rem; }
+      .filter-tabs { width: 100%; overflow-x: auto; justify-content: flex-start; padding: 4px; }
+      .filter-btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; flex-shrink: 0; }
 
       .hacienda-sticky-pin { padding: 1rem; }
       .hacienda-boxed-container { height: 75vh; border-radius: 24px; }
@@ -1747,8 +1696,6 @@
     @media (max-width: 480px) {
       .hacienda-title-overlay { font-size: 3.2rem; }
       .slider-thumb { width: 42px; height: 42px; border-radius: 10px; }
-      .custom-accordion-container { height: 340px; }
-      .custom-collapsed-title { display: none; } /* Hide vertical text cleanly on very narrow screens if space is tight */
     }
   </style>
 </head>
@@ -2062,7 +2009,7 @@
     </div>
   </section>
 
-  <!-- INTERACTIVE ACCORDION CARDS (HORIZONTAL ROW MAINTAINED ON MOBILE) -->
+  <!-- INTERACTIVE ACCORDION CARDS -->
   <section class="custom-accordion-section">
     <div class="custom-accordion-container" id="customAccordionContainer">
       <div class="custom-accordion-card active" data-index="0">
@@ -2411,7 +2358,7 @@
 
       window.addEventListener('scroll', () => {
         handleScrollDrivenGallery();
-        updateStackTestReveal();
+        updateStackTextReveal();
         updateTextRevealOnScroll();
       }, { passive: true });
 
