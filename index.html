@@ -1188,13 +1188,514 @@
       font-weight: 800;
       letter-spacing: -0.035em;
       line-height: 1;
-      white-space: nowrap;
       color: #ffffff;
+      white-space: nowrap;
     }
+
+    .ticker-img-box {
+      width: clamp(140px, 16vw, 210px);
+      height: clamp(85px, 10vw, 130px);
+      border-radius: 12px;
+      overflow: hidden;
+      display: inline-flex;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ticker-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .ticker-group:hover .ticker-img-box img { transform: scale(1.08); }
 
     @keyframes tickerMarquee {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    /* ==========================================================================
+       SECTION NEW: INTERACTIVE ACCORDION CARDS
+       ========================================================================== */
+    .custom-accordion-section {
+      background-color: var(--primary);
+      position: relative;
+      z-index: 32;
+      width: 100%;
+      padding: 7rem 2rem;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Ambient background gradient glow */
+    .custom-accordion-section::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50vw;
+      height: 35vh;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.18) 0%, rgba(16, 16, 16, 0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .custom-accordion-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      max-width: 1040px;
+      height: 460px;
+    }
+
+    .custom-accordion-card {
+      background-color: #ffffff;
+      color: #101010;
+      border-radius: 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      flex: 1;
+    }
+
+    .custom-accordion-card.active {
+      flex: 3.2;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+      cursor: default;
+    }
+
+    .custom-card-content-inner {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+    }
+
+    .custom-accordion-card.active .custom-card-content-inner {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease 0.15s;
+    }
+
+    .custom-collapsed-indicator {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .custom-accordion-card.active .custom-collapsed-indicator {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .custom-collapsed-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #101010;
+    }
+
+    .custom-collapsed-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #666666;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .custom-card-number {
+      font-size: clamp(4rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 1;
+      color: #999999;
+      letter-spacing: -0.03em;
+    }
+
+    .custom-card-text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .custom-card-title-main {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #101010;
+      letter-spacing: -0.01em;
+    }
+
+    .custom-card-desc {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #666666;
+      max-width: 320px;
+    }
+
+    .custom-action-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid #dcdcdc;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .custom-collapsed-indicator .custom-action-btn {
+      pointer-events: auto;
+    }
+
+    .custom-action-btn:hover {
+      background-color: #101010;
+      border-color: #101010;
+      color: #ffffff;
+    }
+
+    .custom-action-btn:hover svg {
+      stroke: #ffffff;
+    }
+
+    .custom-action-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #101010;
+      stroke-width: 2;
+      fill: none;
+      transition: stroke 0.25s ease;
+    }
+
+    @media (max-width: 768px) {
+      .custom-accordion-container {
+        flex-direction: column;
+        height: auto;
+        gap: 12px;
+      }
+      .custom-accordion-card {
+        height: 100px;
+        padding: 20px 24px;
+        flex: none !important;
+      }
+      .custom-accordion-card.active {
+        height: 280px;
+      }
+      .custom-collapsed-indicator {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+      }
+      .custom-collapsed-title {
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+      .custom-card-number {
+        font-size: 3rem;
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 9: PRIXA DIGITAL FOOTER
+       ========================================================================== */
+    .footer-section {
+      background-color: var(--primary);
+      color: #ffffff;
+      padding: 6rem 4rem 2rem;
+      position: relative;
+      z-index: 35;
+      font-family: var(--font-sans);
+    }
+
+    .footer-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .footer-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .footer-title-prixa {
+      font-size: clamp(4.5rem, 13.5vw, 12rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      color: #ffffff;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .footer-gif-box {
+      flex: 1;
+      height: clamp(100px, 11vw, 190px);
+      max-width: 540px;
+      border-radius: 4px;
+      overflow: hidden;
+      background-color: #1a1a1a;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .footer-gif-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%) contrast(120%);
+    }
+
+    .footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      text-align: right;
+    }
+
+    .footer-nav-list a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: opacity 0.25s ease;
+    }
+
+    .footer-nav-list a:hover { opacity: 0.6; }
+
+    .footer-submeta-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem 0;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .footer-submeta-col.center { text-align: center; line-height: 1.4; }
+    .footer-submeta-col.right {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.5rem;
+    }
+
+    .footer-submeta-col.right a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-submeta-col.right a:hover { color: #ffffff; }
+
+    .footer-row-bottom {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .footer-cta-box {
+      background-color: var(--secondary);
+      color: var(--primary);
+      width: clamp(200px, 28vw, 380px);
+      height: clamp(80px, 9vw, 150px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+      flex-shrink: 0;
+      border: none;
+    }
+
+    .footer-cta-box:hover {
+      background-color: #e03b2f;
+      transform: scale(1.02);
+    }
+
+    .footer-title-digital {
+      font-size: clamp(4.5rem, 13.5vw, 12rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      color: #ffffff;
+      margin: 0;
+      text-transform: uppercase;
+      flex-grow: 1;
+    }
+
+    .footer-copyright-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 2rem;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .footer-copyright-bar .brand-statement {
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-copyright-bar .legal-links { display: flex; gap: 1.5rem; }
+    .footer-copyright-bar .legal-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-copyright-bar .legal-links a:hover { color: #ffffff; }
+
+    @media (max-width: 1400px) {
+      .services-wrapper { padding: 5rem 2rem; }
+      .stage-card { grid-template-columns: 320px 1fr; padding: 2.5rem; gap: 2rem; }
+      .showcase-area, .tab-content-view.active-tab-view { grid-template-columns: 1fr 280px 100px; }
+      .media-viewport, .peek-card, .generic-tab-display { height: 460px; }
+    }
+
+    @media (max-width: 1200px) {
+      .hacienda-slider-dock { left: 2rem; }
+      .hacienda-pill-slider { width: 76px; padding: 10px 8px; border-radius: 24px; }
+      .slider-thumb { width: 58px; height: 58px; border-radius: 14px; }
+    }
+
+    @media (max-width: 992px) {
+      .hero-main { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-container { padding: 1.5rem 2rem; }
+      .feature-roller-wrapper { margin-left: 0; }
+      .interiors-section { padding: 4rem 2rem 2rem; }
+      .interiors-container { grid-template-columns: 1fr; gap: 3rem; }
+      .sticky-left-content, .sticky-right-content { position: static; }
+      .card-item { position: static; margin-bottom: 2rem; }
+      .stage-card { grid-template-columns: 1fr; }
+      .showcase-area, .tab-content-view.active-tab-view { grid-template-columns: 1fr; }
+      .tool-panel, .peek-card { display: none; }
+      .media-viewport, .generic-tab-display { height: 380px; }
+      .motion-section { padding: 4rem 2rem; }
+      .motion-viewport-card { height: 420px; }
+      
+      .hacienda-slider-dock { left: 1.5rem; }
+      .hacienda-pill-slider { width: 70px; gap: 8px; border-radius: 22px; }
+      .slider-thumb { width: 52px; height: 52px; border-radius: 12px; }
+
+      .text-reveal-paragraph { font-size: clamp(1.75rem, 4vw, 3rem); }
+      .ticker-group { gap: 2rem; padding-right: 2rem; }
+
+      .footer-submeta-row { grid-template-columns: 1fr; text-align: center; gap: 1rem; }
+      .footer-submeta-col.right { justify-content: center; }
+    }
+
+    @media (max-width: 768px) {
+      .navbar { display: flex; justify-content: space-between; }
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(16, 16, 16, 0.96);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 90;
+      }
+      .nav-links.active { right: 0; }
+      .nav-item { height: auto; }
+      .nav-link { font-size: 1.75rem; font-weight: 700; }
+      .nav-link span:last-child { display: none; }
+      .hero-buttons { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+      .card-image { height: 350px; }
+      .motion-card-overlay { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
+      .eye-stage { transform: scale(0.85); }
+
+      .hacienda-sticky-pin { padding: 1rem; }
+      .hacienda-boxed-container { height: 75vh; border-radius: 24px; }
+      .hacienda-slider-dock {
+        left: 50%;
+        top: auto;
+        bottom: 1.5rem;
+        transform: translateX(-50%);
+        flex-direction: column;
+        width: 90%;
+        max-width: 360px;
+      }
+      .slider-handle-bar { width: 38px; height: 8px; margin-bottom: 6px; }
+      .slider-handle-bar::after { width: 14px; height: 2px; }
+      .hacienda-pill-slider {
+        width: 100%;
+        max-height: none;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 8px 10px;
+        border-radius: 20px;
+        gap: 8px;
+        justify-content: flex-start;
+      }
+      .slider-thumb { width: 48px; height: 48px; border-radius: 12px; }
+
+      .text-reveal-sticky { padding: 2rem 1.5rem; }
+      .reveal-word { margin-right: 0.28em; margin-bottom: 0.12em; }
+      .ticker-section { padding: 3.5rem 0; }
+      .footer-section { padding: 4rem 1.5rem 2rem; }
+      .footer-row-top, .footer-row-bottom { flex-direction: column; align-items: flex-start; }
+      .footer-gif-box { width: 100%; max-width: none; }
+      .footer-nav-list { text-align: left; flex-direction: row; flex-wrap: wrap; gap: 1.5rem; }
+      .footer-cta-box { width: 100%; }
+      .footer-copyright-bar { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hacienda-title-overlay { font-size: 3.2rem; }
+      .slider-thumb { width: 42px; height: 42px; border-radius: 10px; }
     }
   </style>
 </head>
@@ -1203,141 +1704,672 @@
   <!-- INTRO LOADER -->
   <div id="intro-loader">
     <div class="eye-stage">
-      <div class="popup-tag up active">PRIXA DIGITAL</div>
       <div class="eye-pill">
         <div class="eyes-wrapper">
-          <div class="eye"><div class="pupil"></div></div>
-          <div class="eye"><div class="pupil"></div></div>
+          <div class="eye" id="leftEyeContainer"><div class="pupil" id="pupilLeft"></div></div>
+          <div class="eye" id="rightEyeContainer"><div class="pupil" id="pupilRight"></div></div>
         </div>
       </div>
+
+      <div class="popup-tag right" id="tagRight">Stressing</div>
+      <div class="popup-tag left" id="tagLeft">Expensive</div>
+      <div class="popup-tag down" id="tagDown">Protracted</div>
+      <div class="popup-tag up" id="tagUp">NOT WITH US</div>
     </div>
   </div>
 
-  <!-- HERO CONTAINER -->
+  <!-- SECTION 1: HERO -->
   <div class="hero-container">
     <nav class="navbar">
-      <a href="#" class="brand-logo">PRIXA.</a>
-      <ul class="nav-links">
-        <li class="nav-item"><a href="#" class="nav-link"><span>Studio</span><span>Studio</span></a></li>
+      <a href="index.html" class="brand-logo">Prixa</a>
+      <ul class="nav-links" id="navLinks">
+        <li class="nav-item"><a href="#" class="nav-link"><span>About us</span><span>About us</span></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><span>Services</span><span>Services</span></a></li>
-        <li class="nav-item"><a href="#" class="nav-link"><span>Works</span><span>Works</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>Contact</span><span>Contact</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>Why us</span><span>Why us</span></a></li>
       </ul>
       <div class="nav-actions">
-        <a href="#contact" class="btn-chat">Let's Talk</a>
+        <a href="#" class="btn-chat">Let's Chat</a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation"><span></span><span></span><span></span></button>
       </div>
     </nav>
 
-    <div class="hero-main">
-      <div>
+    <main class="hero-main">
+      <div class="hero-content">
         <div class="badge">
-          <span class="badge-arrow">✦</span> Digital &amp; Creative Studio
+          <span>Ranked #1 digital creative platform</span>
+          <span class="badge-arrow">Read report →</span>
         </div>
-        <h1 class="hero-title">Crafting exceptional digital experiences.</h1>
-        <p class="hero-description">We build cutting-edge web platforms, immersive 3D interactive interfaces, and high-performance applications for forward-thinking brands.</p>
+        <h1 class="hero-title">The creative platform to direct your best digital work</h1>
+        <p class="hero-description">Advanced workflows for professional control, immersive web experiences, and seamless client collaboration at any scale.</p>
         <div class="hero-buttons">
-          <a href="#services" class="btn-primary">Explore Services</a>
-          <a href="#works" class="btn-secondary">View Work →</a>
+          <a href="#" class="btn-primary">Start creating</a>
+          <a href="#" class="btn-secondary"><span>►</span> Why Prixa?</a>
         </div>
       </div>
 
       <div class="feature-roller-wrapper">
         <div class="fixed-arrow">▶</div>
-        <div class="feature-track">
-          <div class="feature-item active">Immersive 3D</div>
-          <div class="feature-item">Scroll Animation</div>
-          <div class="feature-item">Digital Branding</div>
-          <div class="feature-item">Web Development</div>
+        <div class="feature-track" id="featureTrack">
+          <div class="feature-item">Bespoke Design</div>
+          <div class="feature-item">Interactive Web</div>
+          <div class="feature-item">Expert Engineering</div>
+          <div class="feature-item">Motion Graphics</div>
+          <div class="feature-item">Premium Quality</div>
         </div>
       </div>
-    </div>
+    </main>
 
-    <div class="logos-wrapper">
-      <div class="logos-label">Trusted by innovative companies worldwide</div>
-      <div class="logos-track">
-        <div class="logo-item">ustwo</div>
-        <div class="logo-item">Anomaly</div>
-        <div class="logo-item">Pentagram</div>
-        <div class="logo-item">Monolith</div>
-        <div class="logo-item">ustwo</div>
-        <div class="logo-item">Anomaly</div>
+    <div>
+      <p class="logos-label">Trusted by 1M+ subscribers—creatives, enterprises, agencies and studios</p>
+      <div class="logos-wrapper">
+        <div class="logos-track">
+          <span class="logo-item">Coca-Cola</span><span class="logo-item">Ogilvy</span><span class="logo-item">R/GA</span><span class="logo-item">Wonder</span><span class="logo-item">GUESS</span><span class="logo-item">Delivery Hero</span>
+          <span class="logo-item">Coca-Cola</span><span class="logo-item">Ogilvy</span><span class="logo-item">R/GA</span><span class="logo-item">Wonder</span><span class="logo-item">GUESS</span><span class="logo-item">Delivery Hero</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- TICKER SECTION -->
-  <section class="ticker-section">
-    <div class="ticker-track">
-      <div class="ticker-group">
-        <span class="ticker-text">DESIGN</span>
-        <span class="ticker-text">✦</span>
-        <span class="ticker-text">DEVELOPMENT</span>
-        <span class="ticker-text">✦</span>
-        <span class="ticker-text">MOTION</span>
-        <span class="ticker-text">✦</span>
+  <!-- SECTION 2: STICKY STACK -->
+  <section class="interiors-section">
+    <div class="interiors-container">
+      <div class="sticky-left-content">
+        <h2 class="section-headline">We craft digital spaces that reflect your brand personality &amp; enhance user engagement.</h2>
       </div>
-      <div class="ticker-group">
-        <span class="ticker-text">DESIGN</span>
-        <span class="ticker-text">✦</span>
-        <span class="ticker-text">DEVELOPMENT</span>
-        <span class="ticker-text">✦</span>
-        <span class="ticker-text">MOTION</span>
-        <span class="ticker-text">✦</span>
+
+      <div class="cards-stack-wrapper">
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop" alt="Personalized Approach" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">Personalized Approach</h3>
+            <p class="card-description">Tailored web solutions built for beauty, performance, and everyday flow.</p>
+          </div>
+        </article>
+
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="Space Optimization" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">Layout Optimization</h3>
+            <p class="card-description">Maximizing interface functionality without sacrificing aesthetic elegance.</p>
+          </div>
+        </article>
+
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1000&auto=format&fit=crop" alt="Material Selection" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">Asset Selection</h3>
+            <p class="card-description">Handpicked typography, textures, and modern assets that elevate experience.</p>
+          </div>
+        </article>
+
+        <article class="card-item">
+          <img class="card-image" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" alt="End-to-End Execution" loading="lazy">
+          <div class="card-info">
+            <h3 class="card-title">End-to-End Execution</h3>
+            <p class="card-description">Seamless transition from concept rendering to final production deployment.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="sticky-right-content">
+        <p class="right-description">We believe your web presence should be a true reflection of your vision and business goals.</p>
+        <a href="#" class="btn-more-about">MORE ABOUT <span class="icon-box">↗</span></a>
       </div>
     </div>
   </section>
 
-  <!-- JAVASCRIPT LAYER -->
+  <!-- SECTION 3: SERVICES SHOWCASE -->
+  <section class="services-wrapper">
+    <div class="services-container">
+      <header class="header">
+        <h2 class="header-title">One place to create anything</h2>
+        <p class="header-subtitle">Pick your starting point. Every tool, every model, every format.</p>
+      </header>
+
+      <nav class="filter-tabs" id="filterTabs">
+        <button class="filter-btn active" data-tab="creative">Creative Suite</button>
+        <button class="filter-btn" data-tab="mcp">MCP &amp; API <span class="badge-new">New</span></button>
+        <button class="filter-btn" data-tab="agents">Agents <span class="badge-new">New</span></button>
+        <button class="filter-btn" data-tab="plugins">Plugins <span class="badge-new">New</span></button>
+        <button class="filter-btn" data-tab="stock">Stock</button>
+      </nav>
+
+      <div class="stage-card">
+        <div class="tab-content-view active-tab-view" id="tab-creative">
+          <aside class="sidebar">
+            <div class="sidebar-intro">
+              <h3 class="title">Pro-level production, end to end</h3>
+              <p class="desc">Start with an idea. Direct the shots. Add sound. Explore variations. Connect in Spaces with your team.</p>
+              <a href="#" class="tour-link">Take a tour &rarr;</a>
+            </div>
+
+            <div class="cat-menu">
+              <button class="cat-item active">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                  Image
+                </div>
+                <p class="cat-subtext">Generate, edit, resize, upscale assets with brand consistency.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+
+              <button class="cat-item">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                  Video
+                </div>
+                <p class="cat-subtext">Turn prompts into cinematic 4K video clips.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+
+              <button class="cat-item">
+                <div class="cat-item-header">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                  Audio
+                </div>
+                <p class="cat-subtext">Synthesize voices and generate soundtracks.</p>
+                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
+              </button>
+            </div>
+          </aside>
+
+          <main class="showcase-area">
+            <div class="media-viewport">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop" alt="Visual Rendering">
+            </div>
+
+            <div class="tool-panel">
+              <div class="tool-item">
+                <div class="tool-icon">🖼️</div>
+                <div class="tool-info"><div class="name">Image generator</div><div class="sub">Create visuals from text</div></div>
+              </div>
+            </div>
+
+            <div class="peek-card">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Peek Asset">
+            </div>
+          </main>
+        </div>
+
+        <div class="tab-content-view" id="tab-mcp">
+          <div class="generic-tab-display">
+            <h3>Model Context Protocol &amp; APIs</h3>
+            <p>Integrate Prixa directly into custom pipelines and automated creative tools.</p>
+          </div>
+        </div>
+        <div class="tab-content-view" id="tab-agents">
+          <div class="generic-tab-display">
+            <h3>Autonomous Creative Agents</h3>
+            <p>Deploy specialized AI agents for multi-step campaigns.</p>
+          </div>
+        </div>
+        <div class="tab-content-view" id="tab-plugins">
+          <div class="generic-tab-display">
+            <h3>Ecosystem Plugins</h3>
+            <p>Connect seamlessly with your favorite professional software.</p>
+          </div>
+        </div>
+        <div class="tab-content-view" id="tab-stock">
+          <div class="generic-tab-display">
+            <h3>Curated Stock Library</h3>
+            <p>Explore high-resolution assets ready for instant licensing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: MOTION SHOWCASE -->
+  <section class="motion-section">
+    <div class="motion-container">
+      <header class="motion-header">
+        <span class="motion-badge">High Performance Motion</span>
+        <h2 class="motion-title">Cinematic generation with real-time feedback</h2>
+        <p class="motion-subtitle">Render broadcast-quality motion assets instantly with direct hardware acceleration.</p>
+      </header>
+
+      <div class="motion-viewport-card">
+        <video autoplay loop muted playsinline class="media-video">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-code-31938-large.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="motion-card-overlay">
+          <div class="motion-overlay-tag">Live Stream</div>
+          <h3 class="motion-overlay-title">4K Dynamic Motion Output</h3>
+          <p class="motion-overlay-desc">Seamless looping execution designed for fluid performance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: PRIXA INTERACTIVE GALLERY -->
+  <section class="hacienda-section-wrapper" id="haciendaScrollWrapper">
+    <div class="hacienda-sticky-pin">
+      <div class="hacienda-boxed-container" id="haciendaContainer">
+        <div class="hacienda-bg-layer" id="haciendaBgLayer"></div>
+        <div class="hacienda-overlay"></div>
+        <h2 class="hacienda-title-overlay" id="haciendaTitle">Prixa</h2>
+        <div class="hacienda-slider-dock">
+          <div class="slider-handle-bar"></div>
+          <div class="hacienda-pill-slider" id="haciendaPillSlider"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: STACK TEXT REVEAL -->
+  <section class="stack-text-section" id="stackTextSection">
+    <div class="stack-text-sticky">
+      <div class="stack-text-container" id="stackTextContainer">
+        <div class="stack-line top-slice" data-index="-3">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line top-slice" data-index="-2">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line top-slice" data-index="-1">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line main-line" data-index="0">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line bottom-slice" data-index="1">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line bottom-slice" data-index="2">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line bottom-slice" data-index="3">PRIXA DIGITAL STUDIO</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: REVEAL TEXT ON SCROLL -->
+  <section class="text-reveal-section" id="textRevealSection">
+    <div class="text-reveal-sticky">
+      <div class="text-reveal-container">
+        <div class="text-reveal-label">Heritage &amp; Craftsmanship</div>
+        <p class="text-reveal-paragraph" id="revealParagraph"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: MARQUEE -->
+  <section class="ticker-section">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span class="ticker-text">Digital</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Architecture" loading="lazy"></div>
+        <span class="ticker-text">Design</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Canopy" loading="lazy"></div>
+        <span class="ticker-text">Platform</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Terrace" loading="lazy"></div>
+        <span class="ticker-text">Studio</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Furniture" loading="lazy"></div>
+      </div>
+      <div class="ticker-group" aria-hidden="true">
+        <span class="ticker-text">Digital</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Architecture" loading="lazy"></div>
+        <span class="ticker-text">Design</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Canopy" loading="lazy"></div>
+        <span class="ticker-text">Platform</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Terrace" loading="lazy"></div>
+        <span class="ticker-text">Studio</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Furniture" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW SECTION: INTERACTIVE ACCORDION CARDS (PLACED BEFORE FOOTER) -->
+  <section class="custom-accordion-section">
+    <div class="custom-accordion-container" id="customAccordionContainer">
+      
+      <!-- Card 01 (Active by default) -->
+      <div class="custom-accordion-card active" data-index="0">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">01</span>
+          <span class="custom-collapsed-title">Add Your Content</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">01</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Add Your Content</h3>
+            <p class="custom-card-desc">Customize the title and description for each card to fit your content, story, or process.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 02 -->
+      <div class="custom-accordion-card" data-index="1">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">02</span>
+          <span class="custom-collapsed-title">Style the Colors</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">02</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Style the Colors</h3>
+            <p class="custom-card-desc">Adapt the color palette, background tones, and highlights seamlessly to match your brand guidelines.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 03 -->
+      <div class="custom-accordion-card" data-index="2">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">03</span>
+          <span class="custom-collapsed-title">Adjust the Layout</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">03</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Adjust the Layout</h3>
+            <p class="custom-card-desc">Fine-tune proportions, spacing, and grid arrangements for optimal visual flow across all viewports.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 04 -->
+      <div class="custom-accordion-card" data-index="3">
+        <div class="custom-collapsed-indicator">
+          <span class="custom-collapsed-num">04</span>
+          <span class="custom-collapsed-title">Refine the Details</span>
+          <button class="custom-action-btn" aria-label="Expand Card">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="custom-card-content-inner">
+          <div class="custom-card-number">04</div>
+          <div class="custom-card-text-block">
+            <h3 class="custom-card-title-main">Refine the Details</h3>
+            <p class="custom-card-desc">Polish micro-interactions, typography hierarchy, and transitions for an exceptional user experience.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 9: FOOTER -->
+  <footer class="footer-section">
+    <div class="footer-container">
+      <div class="footer-row-top">
+        <h2 class="footer-title-prixa">PRIXA</h2>
+        <div class="footer-gif-box">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZuaGFkMzg3MGxmMmprZHpqN2Z4OHR5ZHZodnA5bDN2aDZreWJpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlTy9x899pAptpC/giphy.gif" alt="Dynamic Visual Element" loading="lazy">
+        </div>
+        <ul class="footer-nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Work</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-submeta-row">
+        <div class="footer-submeta-col left"><strong>Let's elevate</strong> your brand's digital presence</div>
+        <div class="footer-submeta-col center"><div>digital@prixa.org</div><strong>+977-9708050686</strong></div>
+        <div class="footer-submeta-col right">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Dribbble</a>
+        </div>
+      </div>
+
+      <div class="footer-row-bottom">
+        <a href="#" class="footer-cta-box">Get in Touch ↗</a>
+        <h2 class="footer-title-digital">DIGITAL</h2>
+      </div>
+
+      <div class="footer-copyright-bar">
+        <div>@2026 Prixa Digital. All rights reserved</div>
+        <div class="brand-statement">A PRIXA Company</div>
+        <div class="legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 1. INTRO LOADER & DIRECTIONAL EYES INTERACTION
-      const loader = document.getElementById("intro-loader");
-      const pupils = document.querySelectorAll(".pupil");
+    document.addEventListener('DOMContentLoaded', () => {
+      // LOADER SCRIPT
+      const introLoader = document.getElementById('intro-loader');
+      const pupilL = document.getElementById('pupilLeft');
+      const pupilR = document.getElementById('pupilRight');
+      const rightEyeElem = document.getElementById('rightEyeContainer');
 
-      window.addEventListener("mousemove", (e) => {
-        const { clientX, clientY } = e;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
+      const tagRight = document.getElementById('tagRight');
+      const tagLeft = document.getElementById('tagLeft');
+      const tagDown = document.getElementById('tagDown');
+      const tagUp = document.getElementById('tagUp');
 
-        const deltaX = clientX - centerX;
-        const deltaY = clientY - centerY;
-        const maxOffset = 11;
+      if (sessionStorage.getItem('loaderShown')) {
+        if (introLoader) introLoader.remove();
+        document.body.classList.remove('loading');
+      } else {
+        sessionStorage.setItem('loaderShown', 'true');
 
-        const moveX = Math.max(-maxOffset, Math.min(maxOffset, (deltaX / centerX) * maxOffset));
-        const moveY = Math.max(-maxOffset, Math.min(maxOffset, (deltaY / centerY) * maxOffset));
+        function setEyeDirection(dir) {
+          if (!pupilL || !pupilR) return;
+          pupilL.className = `pupil ${dir}`;
+          pupilR.className = `pupil ${dir}`;
+        }
 
-        pupils.forEach((pupil) => {
-          pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        setTimeout(() => { setEyeDirection('look-right'); tagRight?.classList.add('active'); }, 700);
+        setTimeout(() => { setEyeDirection('look-left'); tagLeft?.classList.add('active'); }, 1400);
+        setTimeout(() => { setEyeDirection('look-down'); tagDown?.classList.add('active'); }, 2100);
+        setTimeout(() => { 
+          setEyeDirection('look-up'); 
+          tagUp?.classList.add('active'); 
+        }, 2800);
+
+        setTimeout(() => {
+          setEyeDirection('look-center');
+          rightEyeElem?.classList.add('wink');
+        }, 3500);
+
+        setTimeout(() => {
+          if (introLoader) {
+            introLoader.classList.add('fade-out');
+            document.body.classList.remove('loading');
+          }
+        }, 4200);
+      }
+
+      // NAVIGATION & FEATURE ROLLER
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const navLinks = document.getElementById('navLinks');
+      const track = document.getElementById('featureTrack');
+      const featureItems = document.querySelectorAll('.feature-item');
+      
+      const itemHeight = 48;
+      const viewportHeight = 240;
+      const centerOffset = (viewportHeight / 2) - (itemHeight / 2);
+      let currentFeatureIndex = 0;
+
+      if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+          hamburgerBtn.classList.toggle('open');
+          navLinks.classList.toggle('active');
+        });
+      }
+
+      function updateFeatureRoll() {
+        if (!track || !featureItems.length) return;
+        featureItems.forEach((e, t) => e.classList.toggle('active', t === currentFeatureIndex));
+        const offset = centerOffset - currentFeatureIndex * itemHeight;
+        track.style.transform = `translateY(${offset}px)`;
+      }
+
+      updateFeatureRoll();
+      setInterval(() => {
+        if (!featureItems.length) return;
+        currentFeatureIndex = (currentFeatureIndex + 1) % featureItems.length;
+        updateFeatureRoll();
+      }, 2000);
+
+      // TAB SWITCHING LOGIC
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const tabViews = document.querySelectorAll('.tab-content-view');
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const targetTab = btn.getAttribute('data-tab');
+          tabViews.forEach(view => {
+            view.classList.remove('active-tab-view');
+            if (view.id === `tab-${targetTab}`) {
+              view.classList.add('active-tab-view');
+            }
+          });
         });
       });
 
-      setTimeout(() => {
-        if (loader) {
-          loader.classList.add("fade-out");
-          document.body.classList.remove("loading");
-        }
-      }, 2200);
+      // INTERACTIVE ACCORDION CARDS SCRIPT
+      const accordionCards = document.querySelectorAll('.custom-accordion-card');
+      accordionCards.forEach(card => {
+        card.addEventListener('click', () => {
+          if (card.classList.contains('active')) return;
+          accordionCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+        });
+      });
 
-      // 2. HERO FEATURE ROLLER
-      const featureTrack = document.querySelector(".feature-track");
-      const featureItems = document.querySelectorAll(".feature-item");
+      // GALLERY DATA & SCROLL ANIMATIONS
+      const galleryData = [
+        { title: "Prixa", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" },
+        { title: "Aura", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" },
+        { title: "Cyan", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop" },
+        { title: "Vogue", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop" },
+        { title: "Solace", image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop" }
+      ];
 
-      if (featureTrack && featureItems.length > 0) {
-        let currentFeatureIndex = 0;
-        const itemHeight = 48;
+      const scrollWrapper = document.getElementById('haciendaScrollWrapper');
+      const bgLayer = document.getElementById('haciendaBgLayer');
+      const titleElem = document.getElementById('haciendaTitle');
+      const pillSlider = document.getElementById('haciendaPillSlider');
 
-        setInterval(() => {
-          currentFeatureIndex = (currentFeatureIndex + 1) % featureItems.length;
-          featureTrack.style.transform = `translateY(-${currentFeatureIndex * itemHeight}px)`;
+      let activeIndex = 0;
 
-          featureItems.forEach((item, index) => {
-            if (index === currentFeatureIndex) {
-              item.classList.add("active");
-            } else {
-              item.classList.remove("active");
-            }
+      if (pillSlider) {
+        galleryData.forEach((item, idx) => {
+          const thumb = document.createElement('div');
+          thumb.className = `slider-thumb ${idx === 0 ? 'active' : ''}`;
+          thumb.innerHTML = `<img src="${item.thumb}" alt="${item.title}" loading="lazy">`;
+          thumb.addEventListener('click', () => {
+            if (idx !== activeIndex) setActiveSlide(idx);
           });
-        }, 2500);
+          pillSlider.appendChild(thumb);
+        });
       }
+
+      if (bgLayer && galleryData.length > 0) {
+        bgLayer.style.backgroundImage = `url('${galleryData[0].image}')`;
+      }
+
+      function setActiveSlide(newIndex) {
+        const thumbs = pillSlider.querySelectorAll('.slider-thumb');
+        thumbs.forEach(t => t.classList.remove('active'));
+        if (thumbs[newIndex]) {
+          thumbs[newIndex].classList.add('active');
+          thumbs[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        }
+        bgLayer.classList.add('zoom-effect');
+        titleElem.classList.add('changing');
+
+        setTimeout(() => {
+          activeIndex = newIndex;
+          bgLayer.style.backgroundImage = `url('${galleryData[activeIndex].image}')`;
+          titleElem.textContent = galleryData[activeIndex].title;
+          requestAnimationFrame(() => {
+            bgLayer.classList.remove('zoom-effect');
+            titleElem.classList.remove('changing');
+          });
+        }, 300);
+      }
+
+      function handleScrollDrivenGallery() {
+        if (!scrollWrapper) return;
+        const rect = scrollWrapper.getBoundingClientRect();
+        const totalHeight = rect.height - window.innerHeight;
+        if (totalHeight <= 0) return;
+        const scrollOffset = -rect.top;
+        if (scrollOffset >= 0 && scrollOffset <= totalHeight) {
+          const progress = scrollOffset / totalHeight;
+          const targetIndex = Math.min(galleryData.length - 1, Math.max(0, Math.floor(progress * galleryData.length)));
+          if (targetIndex !== activeIndex) setActiveSlide(targetIndex);
+        }
+      }
+
+      const stackSection = document.getElementById('stackTextSection');
+      const stackLines = document.querySelectorAll('.stack-line');
+
+      function updateStackTextReveal() {
+        if (!stackSection || !stackLines.length) return;
+        const rect = stackSection.getBoundingClientRect();
+        const totalHeight = rect.height - window.innerHeight;
+        if (totalHeight <= 0) return;
+        const scrollOffset = -rect.top;
+        const progress = Math.min(1, Math.max(0, scrollOffset / totalHeight));
+        const mainLine = document.querySelector('.stack-line.main-line');
+        const fontPx = parseFloat(window.getComputedStyle(mainLine).fontSize);
+        const step = fontPx * 0.42;
+
+        stackLines.forEach((line) => {
+          const idx = parseInt(line.getAttribute('data-index'), 10);
+          const y = idx * step * progress;
+          line.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
+        });
+      }
+
+      const rawText = "For over 60 years, we have manufactured hand-crafted bespoke digital solutions and immersive applications in our studio. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism across global markets.";
+      const revealParagraph = document.getElementById('revealParagraph');
+
+      if (revealParagraph) {
+        const words = rawText.split(' ');
+        revealParagraph.innerHTML = words.map((word, i) => `
+          <span class="reveal-word" data-word-index="${i}">
+            <span class="word-muted">${word}</span>
+            <span class="word-active">${word}</span>
+          </span>
+        `).join('');
+      }
+
+      const textRevealSection = document.getElementById('textRevealSection');
+      const activeWordElements = document.querySelectorAll('.text-reveal-paragraph .word-active');
+
+      function updateTextRevealOnScroll() {
+        if (!textRevealSection || !activeWordElements.length) return;
+        const rect = textRevealSection.getBoundingClientRect();
+        const totalHeight = rect.height - window.innerHeight;
+        if (totalHeight <= 0) return;
+        const scrollOffset = -rect.top;
+        const totalProgress = Math.min(1, Math.max(0, scrollOffset / totalHeight));
+        const totalWords = activeWordElements.length;
+
+        activeWordElements.forEach((el, index) => {
+          const wordStart = index / totalWords;
+          const wordEnd = (index + 1) / totalWords;
+          if (totalProgress >= wordEnd) {
+            el.style.width = '100%';
+          } else if (totalProgress <= wordStart) {
+            el.style.width = '0%';
+          } else {
+            const wordProgress = (totalProgress - wordStart) / (wordEnd - wordStart);
+            el.style.width = `${(wordProgress * 100).toFixed(1)}%`;
+          }
+        });
+      }
+
+      window.addEventListener('scroll', () => {
+        handleScrollDrivenGallery();
+        updateStackTextReveal();
+        updateTextRevealOnScroll();
+      }, { passive: true });
+
+      updateStackTextReveal();
+      updateTextRevealOnScroll();
     });
   </script>
 </body>
