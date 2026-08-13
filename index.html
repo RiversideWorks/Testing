@@ -1219,7 +1219,7 @@
     }
 
     /* ==========================================================================
-       SECTION NEW: INTERACTIVE ACCORDION CARDS
+       SECTION NEW: INTERACTIVE ACCORDION CARDS (SLIMMER CLOSED STATE)
        ========================================================================== */
     .custom-accordion-section {
       background-color: var(--primary);
@@ -1232,7 +1232,6 @@
       overflow: hidden;
     }
 
-    /* Ambient background gradient glow */
     .custom-accordion-section::before {
       content: '';
       position: absolute;
@@ -1252,8 +1251,8 @@
       display: flex;
       gap: 16px;
       width: 100%;
-      max-width: 1040px;
-      height: 460px;
+      max-width: 960px;
+      height: 440px;
     }
 
     .custom-accordion-card {
@@ -1266,16 +1265,17 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 32px 28px;
+      padding: 32px 20px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
       transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-      flex: 1;
+      flex: 0.65; /* Reduced from 1 to make closed cards significantly slimmer */
     }
 
     .custom-accordion-card.active {
-      flex: 3.2;
+      flex: 3.5; /* Expanded card expands further to maintain ideal proportions */
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
       cursor: default;
+      padding: 32px 28px;
     }
 
     .custom-card-content-inner {
@@ -1314,7 +1314,7 @@
     }
 
     .custom-collapsed-num {
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #101010;
     }
@@ -1322,7 +1322,7 @@
     .custom-collapsed-title {
       writing-mode: vertical-rl;
       transform: rotate(180deg);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: #666666;
       letter-spacing: 0.03em;
@@ -1358,8 +1358,8 @@
     }
 
     .custom-action-btn {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: 1.5px solid #dcdcdc;
       background: transparent;
@@ -1386,8 +1386,8 @@
     }
 
     .custom-action-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       stroke: #101010;
       stroke-width: 2;
       fill: none;
@@ -1407,6 +1407,7 @@
       }
       .custom-accordion-card.active {
         height: 280px;
+        padding: 32px 28px;
       }
       .custom-collapsed-indicator {
         flex-direction: row;
@@ -2009,7 +2010,7 @@
     </div>
   </section>
 
-  <!-- NEW SECTION: INTERACTIVE ACCORDION CARDS (PLACED BEFORE FOOTER) -->
+  <!-- NEW SECTION: INTERACTIVE ACCORDION CARDS (SLIMMED DOWN CLOSED STATE) -->
   <section class="custom-accordion-section">
     <div class="custom-accordion-container" id="customAccordionContainer">
       
