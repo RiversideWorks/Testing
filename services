@@ -1,0 +1,443 @@
+<!-- Services Inner Page (Save this file as: services.html) -->
+<div class="site-wrapper">
+  
+  <!-- Header Section -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="logo">
+        <a href="index.html">ustwo</a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html" class="active">Services</a></li>
+          <li><a href="#">Work</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <div class="header-action">
+        <a href="#contact" class="nav-btn">Let's Talk</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Services Inner Section -->
+  <main class="services-inner-main">
+    <div class="services-container">
+      
+      <!-- Top Grid: Image/Visual & Core Heading -->
+      <div class="services-grid-top">
+        <div class="services-image-wrapper">
+          <div class="service-image-card">
+            <span class="image-badge">01 / SERVICE</span>
+            <div class="code-preview-overlay">
+              <span class="overlay-title">Website Development</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="services-content-wrapper">
+          <h1 class="service-main-heading">Website Development</h1>
+          <p class="service-description">
+            We design and build high-performance websites that load instantly, rank well, and convert. Every build is bespoke — no bloated templates — with clean code, accessible markup, and a CMS your team can actually use.
+          </p>
+
+          <!-- Key Benefits -->
+          <div class="service-section-block">
+            <h3 class="block-title">Key Benefits</h3>
+            <ul class="benefits-list">
+              <li>
+                <span class="check-icon">✓</span> Sub-second load times & 95+ Lighthouse scores
+              </li>
+              <li>
+                <span class="check-icon">✓</span> Conversion-focused UX and clear calls to action
+              </li>
+              <li>
+                <span class="check-icon">✓</span> SEO foundations baked in from line one
+              </li>
+              <li>
+                <span class="check-icon">✓</span> Headless CMS so non-developers can publish
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Process Section -->
+      <div class="service-section-block process-block">
+        <h3 class="block-title">Process</h3>
+        <div class="process-grid">
+          <div class="process-card">
+            <span class="process-number">01</span>
+            <h4>Discovery</h4>
+            <p>Goals, audience, and a sitemap that earns its keep.</p>
+          </div>
+          <div class="process-card">
+            <span class="process-number">02</span>
+            <h4>Design</h4>
+            <p>High-fidelity, on-brand interfaces and prototypes.</p>
+          </div>
+          <div class="process-card">
+            <span class="process-number">03</span>
+            <h4>Build</h4>
+            <p>Next.js front-end, accessible and component-driven.</p>
+          </div>
+          <div class="process-card">
+            <span class="process-number">04</span>
+            <h4>Launch</h4>
+            <p>QA, analytics, and a fast, monitored go-live.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deliverables Section -->
+      <div class="service-section-block deliverables-block">
+        <h3 class="block-title">Deliverables</h3>
+        <div class="deliverables-tags">
+          <span class="tag">Custom responsive website</span>
+          <span class="tag">CMS integration</span>
+          <span class="tag">Analytics & tracking setup</span>
+          <span class="tag">Performance & SEO report</span>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="service-cta-wrapper">
+        <a href="#start" class="primary-cta-btn">
+          Start this project 
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.16666 12.8333L12.8333 1.16666M12.8333 1.16666H3.5M12.8333 1.16666V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <p>&copy; 2026 ustwo. All rights reserved.</p>
+      </div>
+      <div class="footer-right">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<style>
+  /* Global Layout Variables & Base Settings */
+  .site-wrapper {
+    background-color: #101010;
+    color: #ffffff;
+    font-family: inherit;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header Styles */
+  .site-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 40px;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: -0.03em;
+  }
+
+  .main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+  }
+
+  .main-nav a:hover, .main-nav a.active {
+    color: #FF473A;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-btn:hover {
+    border-color: #FF473A;
+    color: #FF473A;
+  }
+
+  /* Main Section Styles */
+  .services-inner-main {
+    padding: 80px 24px;
+    flex: 1;
+  }
+
+  .services-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .services-grid-top {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 60px;
+  }
+
+  /* Left Visual Image Card */
+  .service-image-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #111111 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    height: 450px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .image-badge {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+  }
+
+  .code-preview-overlay .overlay-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Right Text Content */
+  .service-main-heading {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    color: #ffffff;
+  }
+
+  .service-description {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 40px;
+  }
+
+  .block-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #FF473A;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  /* Key Benefits */
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 50px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .benefits-list li {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .check-icon {
+    color: #FF473A;
+    margin-right: 12px;
+    font-weight: bold;
+  }
+
+  /* Process Section */
+  .process-block {
+    margin-bottom: 50px;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .process-card {
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 28px;
+    transition: border-color 0.3s ease;
+  }
+
+  .process-card:hover {
+    border-color: rgba(255, 71, 58, 0.4);
+  }
+
+  .process-number {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .process-card h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+
+  .process-card p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Deliverables */
+  .deliverables-block {
+    margin-bottom: 50px;
+  }
+
+  .deliverables-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tag {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* CTA Button */
+  .service-cta-wrapper {
+    margin-top: 40px;
+  }
+
+  .primary-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #FF473A;
+    color: #101010;
+    font-weight: 600;
+    padding: 16px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .primary-cta-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  /* Footer Styles */
+  .site-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 40px;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-right a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-right a:hover {
+    color: #ffffff;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 900px) {
+    .services-grid-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-main-heading {
+      font-size: 2.8rem;
+    }
+
+    .site-header {
+      padding: 20px;
+    }
+
+    .main-nav {
+      display: none;
+    }
+  }
+</style>
