@@ -1,9 +1,10 @@
+HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creative Platform &amp; Interiors</title>
+  <title>Prixa Digital &amp; Creative Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -68,7 +69,6 @@
       justify-content: center;
     }
 
-    /* Proper rectangle shape with adjusted width and padding */
     .eye-pill {
       background: #000000;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -116,7 +116,6 @@
       96% { transform: scaleY(0.1); }
     }
 
-    /* Single eye wink animation */
     .eye.wink {
       animation: singleWink 0.4s ease forwards;
     }
@@ -150,24 +149,9 @@
       white-space: nowrap;
     }
 
-    .popup-tag.right {
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%) translateX(20px) scale(0.85);
-    }
-
-    .popup-tag.left {
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%) translateX(-20px) scale(0.85);
-    }
-
-    .popup-tag.down {
-      bottom: 35px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px) scale(0.85);
-    }
-
+    .popup-tag.right { right: 15px; top: 50%; transform: translateY(-50%) translateX(20px) scale(0.85); }
+    .popup-tag.left { left: 15px; top: 50%; transform: translateY(-50%) translateX(-20px) scale(0.85); }
+    .popup-tag.down { bottom: 35px; left: 50%; transform: translateX(-50%) translateY(20px) scale(0.85); }
     .popup-tag.up {
       top: 35px;
       left: 50%;
@@ -542,7 +526,7 @@
     .btn-more-about:hover .icon-box { background: #fff; color: #111; }
 
     /* ==========================================================================
-       SECTION 3: SERVICES SHOWCASE SECTION (Updated to match reference dimensions & interactive tabs)
+       SECTION 3: SERVICES SHOWCASE SECTION
        ========================================================================== */
     .services-wrapper {
       background-color: var(--bg-page);
@@ -557,7 +541,7 @@
 
     .services-container {
       width: 100%;
-      max-width: 1520px; /* Expanded max-width for broader layout */
+      max-width: 1520px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -757,7 +741,6 @@
 
     .peek-card img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Tab dynamic content container styles */
     .tab-content-view {
       display: none;
       width: 100%;
@@ -771,7 +754,6 @@
       width: 100%;
     }
 
-    /* Alternate tab views for dynamic interaction */
     .generic-tab-display {
       grid-column: 1 / -1;
       display: flex;
@@ -870,7 +852,7 @@
     .motion-overlay-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; }
 
     /* ==========================================================================
-       SECTION 5: HACIENDA SCROLL-PINNED GALLERY
+       SECTION 5: PRIXA SCROLL-PINNED GALLERY
        ========================================================================== */
     .hacienda-section-wrapper {
       position: relative;
@@ -940,7 +922,6 @@
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.04em;
-      text-transform: none;
       text-align: center;
       pointer-events: none;
       text-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
@@ -1036,7 +1017,7 @@
     }
 
     /* ==========================================================================
-       SECTION 6: STACK TEXT REVEAL ("MORRISON AWNINGS")
+       SECTION 6: STACK TEXT REVEAL ("PRIXA STUDIO")
        ========================================================================== */
     .stack-text-section {
       position: relative;
@@ -1085,7 +1066,7 @@
     .stack-line.main-line { clip-path: none; z-index: 2; }
 
     /* ==========================================================================
-       SECTION 7: REVEAL TEXT ON SCROLL (SWISS STYLE BOLD TYPOGRAPHY)
+       SECTION 7: REVEAL TEXT ON SCROLL
        ========================================================================== */
     .text-reveal-section {
       position: relative;
@@ -1516,7 +1497,7 @@
 </head>
 <body class="loading">
 
-  <!-- INTRO LOADER: DIRECTIONAL EYES -->
+  <!-- INTRO LOADER -->
   <div id="intro-loader">
     <div class="eye-stage">
       <div class="eye-pill">
@@ -1536,15 +1517,15 @@
   <!-- SECTION 1: HERO -->
   <div class="hero-container">
     <nav class="navbar">
-      <a href="index.html" class="brand-logo">Magnific</a>
+      <a href="index.html" class="brand-logo">Prixa</a>
       <ul class="nav-links" id="navLinks">
         <li class="nav-item"><a href="#" class="nav-link"><span>About us</span><span>About us</span></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><span>Services</span><span>Services</span></a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link"><span>Contact</span><span>Contact</span></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><span>Contact</span><span>Contact</span></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><span>Why us</span><span>Why us</span></a></li>
       </ul>
       <div class="nav-actions">
-        <a href="contact.html" class="btn-chat">Let's Chat</a>
+        <a href="#" class="btn-chat">Let's Chat</a>
         <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation"><span></span><span></span><span></span></button>
       </div>
     </nav>
@@ -1552,14 +1533,14 @@
     <main class="hero-main">
       <div class="hero-content">
         <div class="badge">
-          <span>Ranked #1 AI creative platform</span>
-          <span class="badge-arrow">Read a16z report →</span>
+          <span>Ranked #1 digital creative platform</span>
+          <span class="badge-arrow">Read report →</span>
         </div>
-        <h1 class="hero-title">The creative platform to direct your best work</h1>
-        <p class="hero-description">Every AI model for video, image, and audio. Intelligent workflows for professional control and collaboration. On-brand production at any scale.</p>
+        <h1 class="hero-title">The creative platform to direct your best digital work</h1>
+        <p class="hero-description">Advanced workflows for professional control, immersive web experiences, and seamless client collaboration at any scale.</p>
         <div class="hero-buttons">
           <a href="#" class="btn-primary">Start creating</a>
-          <a href="#" class="btn-secondary"><span>►</span> Why Magnific?</a>
+          <a href="#" class="btn-secondary"><span>►</span> Why Prixa?</a>
         </div>
       </div>
 
@@ -1567,9 +1548,9 @@
         <div class="fixed-arrow">▶</div>
         <div class="feature-track" id="featureTrack">
           <div class="feature-item">Bespoke Design</div>
-          <div class="feature-item">Commercial Awnings</div>
-          <div class="feature-item">100 Years Experience</div>
-          <div class="feature-item">Expert Installation</div>
+          <div class="feature-item">Interactive Web</div>
+          <div class="feature-item">Expert Engineering</div>
+          <div class="feature-item">Motion Graphics</div>
           <div class="feature-item">Premium Quality</div>
         </div>
       </div>
@@ -1586,35 +1567,35 @@
     </div>
   </div>
 
-  <!-- SECTION 2: INTERIORS STICKY STACK -->
+  <!-- SECTION 2: STICKY STACK -->
   <section class="interiors-section">
     <div class="interiors-container">
       <div class="sticky-left-content">
-        <h2 class="section-headline">We craft interiors that reflect your personality, bring comfort &amp; enhance the way you live every day.</h2>
+        <h2 class="section-headline">We craft digital spaces that reflect your brand personality &amp; enhance user engagement.</h2>
       </div>
 
       <div class="cards-stack-wrapper">
         <article class="card-item">
-          <img class="card-image" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop" alt="Personalized Approach Interior" loading="lazy">
+          <img class="card-image" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop" alt="Personalized Approach" loading="lazy">
           <div class="card-info">
             <h3 class="card-title">Personalized Approach</h3>
-            <p class="card-description">Personalized designs built for beauty, balance, and everyday flow.</p>
+            <p class="card-description">Tailored web solutions built for beauty, performance, and everyday flow.</p>
           </div>
         </article>
 
         <article class="card-item">
           <img class="card-image" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1000&auto=format&fit=crop" alt="Space Optimization" loading="lazy">
           <div class="card-info">
-            <h3 class="card-title">Space Optimization</h3>
-            <p class="card-description">Maximizing functionality without sacrificing aesthetic elegance.</p>
+            <h3 class="card-title">Layout Optimization</h3>
+            <p class="card-description">Maximizing interface functionality without sacrificing aesthetic elegance.</p>
           </div>
         </article>
 
         <article class="card-item">
           <img class="card-image" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1000&auto=format&fit=crop" alt="Material Selection" loading="lazy">
           <div class="card-info">
-            <h3 class="card-title">Material Selection</h3>
-            <p class="card-description">Handpicked textures and sustainable materials that elevate comfort.</p>
+            <h3 class="card-title">Asset Selection</h3>
+            <p class="card-description">Handpicked typography, textures, and modern assets that elevate experience.</p>
           </div>
         </article>
 
@@ -1622,19 +1603,19 @@
           <img class="card-image" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" alt="End-to-End Execution" loading="lazy">
           <div class="card-info">
             <h3 class="card-title">End-to-End Execution</h3>
-            <p class="card-description">Seamless transition from concept rendering to final staging.</p>
+            <p class="card-description">Seamless transition from concept rendering to final production deployment.</p>
           </div>
         </article>
       </div>
 
       <div class="sticky-right-content">
-        <p class="right-description">We believe your space should be a true reflection of you—how you live, what you love, and who you are.</p>
+        <p class="right-description">We believe your web presence should be a true reflection of your vision and business goals.</p>
         <a href="#" class="btn-more-about">MORE ABOUT <span class="icon-box">↗</span></a>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3: SERVICES SHOWCASE (Expanded proportions & clickable filter tabs with dynamic card changes) -->
+  <!-- SECTION 3: SERVICES SHOWCASE -->
   <section class="services-wrapper">
     <div class="services-container">
       <header class="header">
@@ -1651,13 +1632,11 @@
       </nav>
 
       <div class="stage-card">
-        
-        <!-- TAB VIEW 1: CREATIVE SUITE (Default) -->
         <div class="tab-content-view active-tab-view" id="tab-creative">
           <aside class="sidebar">
             <div class="sidebar-intro">
               <h3 class="title">Pro-level production, end to end</h3>
-              <p class="desc">Start with an idea. Direct the shots. Add sound. Explore variations. Explore workflows. Connect in Spaces. Your team, creating together.</p>
+              <p class="desc">Start with an idea. Direct the shots. Add sound. Explore variations. Connect in Spaces with your team.</p>
               <a href="#" class="tour-link">Take a tour &rarr;</a>
             </div>
 
@@ -1667,7 +1646,7 @@
                   <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                   Image
                 </div>
-                <p class="cat-subtext">Generate, edit, resize, upscale. Keep characters and brand consistent across every shot.</p>
+                <p class="cat-subtext">Generate, edit, resize, upscale assets with brand consistency.</p>
                 <div class="cat-progress"><div class="cat-progress-fill"></div></div>
               </button>
 
@@ -1676,7 +1655,7 @@
                   <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
                   Video
                 </div>
-                <p class="cat-subtext">Turn prompts into cinematic 4K video clips with dynamic motion controls.</p>
+                <p class="cat-subtext">Turn prompts into cinematic 4K video clips.</p>
                 <div class="cat-progress"><div class="cat-progress-fill"></div></div>
               </button>
 
@@ -1685,25 +1664,7 @@
                   <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
                   Audio
                 </div>
-                <p class="cat-subtext">Synthesize voices, generate ambient soundtracks, and isolate sound stems.</p>
-                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-              </button>
-
-              <button class="cat-item">
-                <div class="cat-item-header">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                  3D
-                </div>
-                <p class="cat-subtext">Sculpt and render textured 3D meshes directly from descriptive text prompts.</p>
-                <div class="cat-progress"><div class="cat-progress-fill"></div></div>
-              </button>
-
-              <button class="cat-item">
-                <div class="cat-item-header">
-                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                  Spaces
-                </div>
-                <p class="cat-subtext">Collaborative real-time rooms for teams to co-create and review assets.</p>
+                <p class="cat-subtext">Synthesize voices and generate soundtracks.</p>
                 <div class="cat-progress"><div class="cat-progress-fill"></div></div>
               </button>
             </div>
@@ -1711,21 +1672,13 @@
 
           <main class="showcase-area">
             <div class="media-viewport">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop" alt="Cinematic Visual Rendering">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop" alt="Visual Rendering">
             </div>
 
             <div class="tool-panel">
               <div class="tool-item">
                 <div class="tool-icon">🖼️</div>
-                <div class="tool-info"><div class="name">Image generator</div><div class="sub">Create images from text prompts</div></div>
-              </div>
-              <div class="tool-item">
-                <div class="tool-icon">✏️</div>
-                <div class="tool-info"><div class="name">Image editor</div><div class="sub">Edit and modify existing images</div></div>
-              </div>
-              <div class="tool-item">
-                <div class="tool-icon">🔍</div>
-                <div class="tool-info"><div class="name">Image Upscaler</div><div class="sub">Enhance resolution and detail</div></div>
+                <div class="tool-info"><div class="name">Image generator</div><div class="sub">Create visuals from text</div></div>
               </div>
             </div>
 
@@ -1735,38 +1688,30 @@
           </main>
         </div>
 
-        <!-- TAB VIEW 2: MCP & API -->
         <div class="tab-content-view" id="tab-mcp">
           <div class="generic-tab-display">
-            <h3>Model Context Protocol &amp; Developer APIs</h3>
-            <p>Integrate Magnific directly into your custom pipelines, enterprise infrastructure, and automated creative tools with our robust REST APIs and MCP servers.</p>
+            <h3>Model Context Protocol &amp; APIs</h3>
+            <p>Integrate Prixa directly into custom pipelines and automated creative tools.</p>
           </div>
         </div>
-
-        <!-- TAB VIEW 3: AGENTS -->
         <div class="tab-content-view" id="tab-agents">
           <div class="generic-tab-display">
             <h3>Autonomous Creative Agents</h3>
-            <p>Deploy specialized AI agents capable of executing multi-step production campaigns, generating brand variants, and maintaining visual consistency automatically.</p>
+            <p>Deploy specialized AI agents for multi-step campaigns.</p>
           </div>
         </div>
-
-        <!-- TAB VIEW 4: PLUGINS -->
         <div class="tab-content-view" id="tab-plugins">
           <div class="generic-tab-display">
-            <h3>Ecosystem Plugins &amp; Extensions</h3>
-            <p>Connect seamlessly with your favorite professional design software including Photoshop, Figma, Premiere Pro, and Blender through our official plugins.</p>
+            <h3>Ecosystem Plugins</h3>
+            <p>Connect seamlessly with your favorite professional software.</p>
           </div>
         </div>
-
-        <!-- TAB VIEW 5: STOCK -->
         <div class="tab-content-view" id="tab-stock">
           <div class="generic-tab-display">
-            <h3>Curated Generative Stock Library</h3>
-            <p>Explore millions of pristine, high-resolution assets, textures, 3D models, and audio stems ready for instant licensing and remixing.</p>
+            <h3>Curated Stock Library</h3>
+            <p>Explore high-resolution assets ready for instant licensing.</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -1777,30 +1722,31 @@
       <header class="motion-header">
         <span class="motion-badge">High Performance Motion</span>
         <h2 class="motion-title">Cinematic generation with real-time feedback</h2>
-        <p class="motion-subtitle">Render broadcast-quality motion assets instantly with direct hardware acceleration and intelligent video loops.</p>
+        <p class="motion-subtitle">Render broadcast-quality motion assets instantly with direct hardware acceleration.</p>
       </header>
 
       <div class="motion-viewport-card">
+        <!-- Replaced local video path with a reliable public CDN sample video URL -->
         <video autoplay loop muted playsinline class="media-video">
-          <source src="text-match-cut.mp4" type="video/mp4">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-code-31938-large.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
         <div class="motion-card-overlay">
           <div class="motion-overlay-tag">Live Stream</div>
           <h3 class="motion-overlay-title">4K Dynamic Motion Output</h3>
-          <p class="motion-overlay-desc">Seamless looping execution designed for fluid performance and optimized load times.</p>
+          <p class="motion-overlay-desc">Seamless looping execution designed for fluid performance.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 5: HACIENDA INTERACTIVE GALLERY -->
+  <!-- SECTION 5: PRIXA INTERACTIVE GALLERY -->
   <section class="hacienda-section-wrapper" id="haciendaScrollWrapper">
     <div class="hacienda-sticky-pin">
       <div class="hacienda-boxed-container" id="haciendaContainer">
         <div class="hacienda-bg-layer" id="haciendaBgLayer"></div>
         <div class="hacienda-overlay"></div>
-        <h2 class="hacienda-title-overlay" id="haciendaTitle">Hacienda</h2>
+        <h2 class="hacienda-title-overlay" id="haciendaTitle">Prixa</h2>
         <div class="hacienda-slider-dock">
           <div class="slider-handle-bar"></div>
           <div class="hacienda-pill-slider" id="haciendaPillSlider"></div>
@@ -1813,13 +1759,13 @@
   <section class="stack-text-section" id="stackTextSection">
     <div class="stack-text-sticky">
       <div class="stack-text-container" id="stackTextContainer">
-        <div class="stack-line top-slice" data-index="-3">MORRISON AWNINGS</div>
-        <div class="stack-line top-slice" data-index="-2">MORRISON AWNINGS</div>
-        <div class="stack-line top-slice" data-index="-1">MORRISON AWNINGS</div>
-        <div class="stack-line main-line" data-index="0">MORRISON AWNINGS</div>
-        <div class="stack-line bottom-slice" data-index="1">MORRISON AWNINGS</div>
-        <div class="stack-line bottom-slice" data-index="2">MORRISON AWNINGS</div>
-        <div class="stack-line bottom-slice" data-index="3">MORRISON AWNINGS</div>
+        <div class="stack-line top-slice" data-index="-3">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line top-slice" data-index="-2">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line top-slice" data-index="-1">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line main-line" data-index="0">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line bottom-slice" data-index="1">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line bottom-slice" data-index="2">PRIXA DIGITAL STUDIO</div>
+        <div class="stack-line bottom-slice" data-index="3">PRIXA DIGITAL STUDIO</div>
       </div>
     </div>
   </section>
@@ -1838,24 +1784,24 @@
   <section class="ticker-section">
     <div class="ticker-track">
       <div class="ticker-group">
-        <span class="ticker-text">Awning</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Awning Architecture" loading="lazy"></div>
-        <span class="ticker-text">Canopy</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Shaded Canopy" loading="lazy"></div>
-        <span class="ticker-text">Terrace</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Outdoor Terrace" loading="lazy"></div>
-        <span class="ticker-text">Furniture</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Bespoke Furniture" loading="lazy"></div>
+        <span class="ticker-text">Digital</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Architecture" loading="lazy"></div>
+        <span class="ticker-text">Design</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Canopy" loading="lazy"></div>
+        <span class="ticker-text">Platform</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Terrace" loading="lazy"></div>
+        <span class="ticker-text">Studio</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Furniture" loading="lazy"></div>
       </div>
       <div class="ticker-group" aria-hidden="true">
-        <span class="ticker-text">Awning</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Awning Architecture" loading="lazy"></div>
-        <span class="ticker-text">Canopy</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Shaded Canopy" loading="lazy"></div>
-        <span class="ticker-text">Terrace</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Outdoor Terrace" loading="lazy"></div>
-        <span class="ticker-text">Furniture</span>
-        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Bespoke Furniture" loading="lazy"></div>
+        <span class="ticker-text">Digital</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Architecture" loading="lazy"></div>
+        <span class="ticker-text">Design</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=600&auto=format&fit=crop" alt="Canopy" loading="lazy"></div>
+        <span class="ticker-text">Platform</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=600&auto=format&fit=crop" alt="Terrace" loading="lazy"></div>
+        <span class="ticker-text">Studio</span>
+        <div class="ticker-img-box"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" alt="Furniture" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -1866,7 +1812,7 @@
       <div class="footer-row-top">
         <h2 class="footer-title-prixa">PRIXA</h2>
         <div class="footer-gif-box">
-          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZuaGFkMzg3MGxmMmprZHpqN2Z4OHR5ZHZodnA5bDN2aDZreWJpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlTy9x899pAptpC/giphy.gif" alt="Prixa Dynamic Visual Element" loading="lazy">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZuaGFkMzg3MGxmMmprZHpqN2Z4OHR5ZHZodnA5bDN2aDZreWJpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlTy9x899pAptpC/giphy.gif" alt="Dynamic Visual Element" loading="lazy">
         </div>
         <ul class="footer-nav-list">
           <li><a href="index.html">Home</a></li>
@@ -1886,7 +1832,7 @@
       </div>
 
       <div class="footer-row-bottom">
-        <a href="contact.html" class="footer-cta-box">Get in Touch ↗</a>
+        <a href="#" class="footer-cta-box">Get in Touch ↗</a>
         <h2 class="footer-title-digital">DIGITAL</h2>
       </div>
 
@@ -1903,9 +1849,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // =========================================================================
-      // LOADER SCRIPT (0.7s intervals & single eye wink)
-      // =========================================================================
       const introLoader = document.getElementById('intro-loader');
       const pupilL = document.getElementById('pupilLeft');
       const pupilR = document.getElementById('pupilRight');
@@ -1949,9 +1892,6 @@
         }, 4200);
       }
 
-      // =========================================================================
-      // NAVIGATION & FEATURE ROLLER
-      // =========================================================================
       const hamburgerBtn = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
       const track = document.getElementById('featureTrack');
@@ -1983,9 +1923,6 @@
         updateFeatureRoll();
       }, 2000);
 
-      // =========================================================================
-      // SECTION 3 TAB SWITCHING LOGIC (Clickable Filter Tabs)
-      // =========================================================================
       const filterButtons = document.querySelectorAll('.filter-btn');
       const tabViews = document.querySelectorAll('.tab-content-view');
 
@@ -2004,18 +1941,12 @@
         });
       });
 
-      // =========================================================================
-      // HACIENDA INTERACTIVE GALLERY SLIDER
-      // =========================================================================
       const galleryData = [
-        { title: "Hacienda", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" },
+        { title: "Prixa", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" },
         { title: "Aura", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" },
         { title: "Cyan", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop" },
         { title: "Vogue", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop" },
-        { title: "Solace", image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop" },
-        { title: "Elysium", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop" },
-        { title: "Obsidian", image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?q=80&w=200&auto=format&fit=crop" },
-        { title: "Kroma", image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=200&auto=format&fit=crop" }
+        { title: "Solace", image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop", thumb: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop" }
       ];
 
       const scrollWrapper = document.getElementById('haciendaScrollWrapper');
@@ -2075,9 +2006,6 @@
         }
       }
 
-      // =========================================================================
-      // STACK TEXT REVEAL
-      // =========================================================================
       const stackSection = document.getElementById('stackTextSection');
       const stackLines = document.querySelectorAll('.stack-line');
 
@@ -2099,10 +2027,7 @@
         });
       }
 
-      // =========================================================================
-      // REVEAL TEXT ON SCROLL
-      // =========================================================================
-      const rawText = "For over 60 years, we have manufactured hand-crafted bespoke awnings and canopies in our London Thameside workshop. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism and our awnings can be seen in iconic shops, restaurants, hotels, flagship stores, bars and pubs across the UK.";
+      const rawText = "For over 60 years, we have manufactured hand-crafted bespoke digital solutions and immersive applications in our studio. Over that time, we have gained a reputation for outstanding quality, expertise and professionalism across global markets.";
       const revealParagraph = document.getElementById('revealParagraph');
 
       if (revealParagraph) {
